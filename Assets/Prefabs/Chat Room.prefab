@@ -241,17 +241,17 @@ MonoBehaviour:
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: 20
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 3
+  m_overflowMode: 0
   m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
   m_enableKerning: 0
-  m_enableExtraPadding: 0
+  m_enableExtraPadding: 1
   checkPaddingRequired: 0
   m_isRichText: 1
   m_parseCtrlCharacters: 1
@@ -420,7 +420,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_chatLog: {fileID: 114032350135078958}
   m_chatTextContainer: {fileID: 1616677058184726}
-  m_slideSpeed: 1.5
 --- !u!114 &114194136412590526
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -459,8 +458,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114671161731192090}
   m_HandleRect: {fileID: 224866505760884672}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -744,7 +743,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -500, y: 0}
-  m_SizeDelta: {x: 378.73, y: 581.1}
+  m_SizeDelta: {x: 400, y: 600}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!224 &224441869320430438
 RectTransform:
