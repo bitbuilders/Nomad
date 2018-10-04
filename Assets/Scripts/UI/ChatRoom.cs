@@ -8,7 +8,7 @@ public class ChatRoom : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] GameObject m_chatTextContainer = null;
-    [SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
+    //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
 
     StringBuilder m_text;
     RectTransform m_containerBounds;
@@ -25,18 +25,13 @@ public class ChatRoom : MonoBehaviour
 
     void Update()
     {
-        if (m_time <= 1.0f)
-        {
-            m_time += Time.deltaTime * m_slideSpeed;
-            float t = Interpolation.BounceOut(m_time);
-            float size = Mathf.Lerp(m_currentHeight, m_targetHeight, t);
-            m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size);
-        }
-
-        if (Input.GetButtonDown("Jump"))
-        {
-            AddMessage("Yo");
-        }
+        //if (m_time <= 1.0f)
+        //{
+        //    m_time += Time.deltaTime * m_slideSpeed;
+        //    float t = Interpolation.BounceOut(m_time);
+        //    float size = Mathf.Lerp(m_currentHeight, m_targetHeight, t);
+        //    m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size);
+        //}
     }
 
     public void AddMessage(string text)
@@ -53,7 +48,8 @@ public class ChatRoom : MonoBehaviour
 
         m_text.Append(text);
         m_chatLog.text = m_text.ToString();
-        Vector2 size = m_chatLog.GetPreferredValues(Mathf.Infinity, Mathf.Infinity);
+        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, Mathf.Infinity, Mathf.Infinity);
+        m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;
     }
