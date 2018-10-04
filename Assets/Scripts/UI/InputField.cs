@@ -26,16 +26,19 @@ public class InputField : MonoBehaviour
 
     private void SendMessages()
     {
-        if (m_inputField.text.Length <= 0)
+        if (m_inputField.text.Replace(" ", "").Length <= 0)
+        {
             return;
+        }
 
         string message = m_inputField.text;
         foreach (ChatRoom room in m_pairedRooms)
         {
             room.AddMessage(message);
         }
-        
+
         m_inputField.text = "";
+        m_inputField.ActivateInputField();
     }
 
     public void Select()

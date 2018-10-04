@@ -48,8 +48,10 @@ public class ChatRoom : MonoBehaviour
 
         m_text.Append(text);
         m_chatLog.text = m_text.ToString();
+        
         Vector2 parentSize = GetComponentInParent<RectTransform>().GetComponentInParent<RectTransform>().sizeDelta;
-        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x, Mathf.Infinity);
+        float padding = m_chatLog.margin.x * 2.0f;
+        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, Mathf.Infinity);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;
