@@ -28,6 +28,8 @@ public class InputField : MonoBehaviour
     {
         if (m_inputField.text.Replace(" ", "").Length <= 0)
         {
+            m_inputField.text = "";
+            m_inputField.ActivateInputField();
             return;
         }
 
