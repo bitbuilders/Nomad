@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using TMPro;
 
 public class InputField : MonoBehaviour
 {
     [SerializeField] TMP_InputField m_inputField = null;
     [SerializeField] List<ChatRoom> m_pairedRooms = null;
+
+    NetworkClient m_myClient;
 
     bool m_focused;
 
@@ -24,6 +28,13 @@ public class InputField : MonoBehaviour
         }
     }
 
+    public void Init()
+    {
+        m_myClient = new NetworkClient();
+        m_myClient.Connect("localhost", 7777);
+        m_myClient.RegisterHandler(MsgType.Connect, OnConnected);
+    }
+
     private void SendMessages()
     {
         if (m_inputField.text.Replace(" ", "").Length <= 0)
@@ -34,13 +45,20 @@ public class InputField : MonoBehaviour
         }
 
         string message = m_inputField.text;
+        var msg = new StringMessage("It worked!");
+        m_myClient.Send(1002, msg);
         foreach (ChatRoom room in m_pairedRooms)
         {
-            room.AddMessage(message);
+            //room.AddMessage(message);
         }
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();
+    }
+
+    public void OnConnected(NetworkMessage netMsg)
+    {
+        Debug.Log("Connected to server");
     }
 
     public void Select()

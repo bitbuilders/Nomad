@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.Networking.NetworkSystem;
 using TMPro;
 using System.Text;
 
@@ -15,12 +17,14 @@ public class ChatRoom : MonoBehaviour
     float m_targetHeight;
     float m_currentHeight;
     float m_time;
+    const short MyBeginMsg = 1002;
 
     void Start()
     {
         m_text = new StringBuilder(m_chatLog.text);
         m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
         AddMessage("Hi there");
+        NetworkServer.RegisterHandler(MyBeginMsg, RecieveMessage);
     }
 
     void Update()
@@ -55,5 +59,12 @@ public class ChatRoom : MonoBehaviour
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;
+    }
+
+    void RecieveMessage(NetworkMessage netMsg)
+    {
+        var beginMessage = netMsg.ReadMessage<StringMessage>();
+        AddMessage(beginMessage.value);
+        Debug.Log("recieved message: " + beginMessage.value);
     }
 }
