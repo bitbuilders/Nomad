@@ -6,7 +6,7 @@ using UnityEngine.Networking.NetworkSystem;
 using TMPro;
 using System.Text;
 
-public class ChatRoom : MonoBehaviour
+public class ChatRoom : NetworkBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] GameObject m_chatTextContainer = null;
@@ -24,7 +24,6 @@ public class ChatRoom : MonoBehaviour
         m_text = new StringBuilder(m_chatLog.text);
         m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
         AddMessage("Hi there");
-        NetworkServer.RegisterHandler(MyBeginMsg, RecieveMessage);
     }
 
     void Update()
@@ -61,10 +60,10 @@ public class ChatRoom : MonoBehaviour
         m_time = 0.0f;
     }
 
-    void RecieveMessage(NetworkMessage netMsg)
+    [ClientRpc]
+    public void RpcRecieveMessage(string msg)
     {
-        var beginMessage = netMsg.ReadMessage<StringMessage>();
-        AddMessage(beginMessage.value);
-        Debug.Log("recieved message: " + beginMessage.value);
+        AddMessage(msg);
+        Debug.Log("recieved message: " + msg);
     }
 }
