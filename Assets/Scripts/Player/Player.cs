@@ -13,22 +13,14 @@ public class Player : NetworkBehaviour
     [SerializeField] ToggleEvent m_onToggleShared = null;
     [SerializeField] ToggleEvent m_onToggleLocal = null;
     [SerializeField] ToggleEvent m_onToggleRemote = null;
+    [SerializeField] float m_respawnTime = 5.0f;
 
     GameObject m_mainCamera;
-
-    static int id = 0;
-
+    
     private void Start()
     {
         m_mainCamera = Camera.main.gameObject;
         EnablePlayer();
-
-        id++;
-
-        if (isLocalPlayer)
-        {
-            RpcRecieveMessage("Worked");
-        }
     }
 
     void DisablePlayer()
@@ -57,9 +49,22 @@ public class Player : NetworkBehaviour
             m_onToggleRemote.Invoke(true);
     }
 
-    [ClientRpc]
-    public void RpcRecieveMessage(string msg)
+    public void Die()
     {
-        Debug.Log(id + " recieved message: " + msg);
+        DisablePlayer();
+
+        Invoke("Respawn", m_respawnTime);
+    }
+
+    void Respawn()
+    {
+        if (isLocalPlayer)
+        {
+            Transform spawn = NetworkManager.singleton.GetStartPosition();
+            transform.position = spawn.position;
+            transform.rotation = spawn.rotation;
+        }
+
+        EnablePlayer();
     }
 }
