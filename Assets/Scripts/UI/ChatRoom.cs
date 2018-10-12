@@ -5,11 +5,13 @@ using System.Text;
 public class ChatRoom : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
+    [SerializeField] TextMeshProUGUI m_roomNameText = null;
     [SerializeField] GameObject m_chatTextContainer = null;
     //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
     
     public Player LocalOwner { get; private set; }
     public int ID { get; private set; }
+    public string Name { get; private set; }
 
     StringBuilder m_text;
     RectTransform m_containerBounds;
@@ -32,6 +34,11 @@ public class ChatRoom : MonoBehaviour
             ID = ChatRoomAssigner.Instance.GetRoomID();
         else
             ID = roomID;
+    }
+
+    public void SetRoomName(string roomName)
+    {
+        m_roomNameText.text = roomName;
     }
 
     void Update()
