@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using TMPro;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 public class InputField : MonoBehaviour
 {
@@ -42,14 +43,15 @@ public class InputField : MonoBehaviour
 
     public void Select()
     {
+        m_chatRoom.LocalOwner.EnableMovement(false);
     }
 
     public void DeSelect()
     {
+        m_chatRoom.LocalOwner.EnableMovement(true);
     }
 
     public void Submit()
     {
-
     }
 }

@@ -6,29 +6,38 @@ using UnityEngine.Networking;
 public class ChatRoomManager : NetworkBehaviour
 {
     [SerializeField] GameObject m_roomTemplate = null;
-    [SerializeField] Transform m_roomLocation = null;
 
+    Player m_localPlayer;
     List<ChatRoom> m_chatRooms;
+    Transform m_roomLocation = null;
 
     private void Start()
     {
+        if (!isLocalPlayer)
+            return;
+
         m_chatRooms = new List<ChatRoom>();
-        //CreateChatRoom();
+        m_localPlayer = GetComponent<Player>();
+        m_roomLocation = GameObject.Find("Chat Rooms").transform;
+        CreateChatRoom(-1);
     }
 
-    public void CreateChatRoom()
+    public void CreateChatRoom(int roomID)
     {
         GameObject obj = Instantiate(m_roomTemplate, Vector3.zero, Quaternion.identity, m_roomLocation);
-        m_chatRooms.Add(obj.GetComponent<ChatRoom>());
+        ChatRoom chatRoom = obj.GetComponentInChildren<ChatRoom>();
+        m_chatRooms.Add(chatRoom);
+        chatRoom.Initialize(m_localPlayer, roomID);
     }
 
     public void SendMessage(int roomID, string message)
     {
-        RpcAddToChatRoom(roomID, message);
+        string fullMessage = m_localPlayer.UserName + ": " + message;
+        RpcSendMessage(roomID, fullMessage);
     }
 
     [ClientRpc]
-    void RpcAddToChatRoom(int roomID, string message)
+    void RpcSendMessage(int roomID, string message)
     {
         foreach (ChatRoom room in m_chatRooms)
         {

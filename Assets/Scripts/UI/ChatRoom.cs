@@ -7,31 +7,31 @@ public class ChatRoom : MonoBehaviour
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] GameObject m_chatTextContainer = null;
     //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
-
-
+    
     public Player LocalOwner { get; private set; }
     public int ID { get; private set; }
-    public static int TotalCount { get; private set; }
 
     StringBuilder m_text;
     RectTransform m_containerBounds;
     float m_targetHeight;
     float m_currentHeight;
     float m_time;
-    const short MyBeginMsg = 1002;
 
     void Start()
     {
-        TotalCount++;
-        ID = TotalCount;
         m_text = new StringBuilder(m_chatLog.text);
         m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
         AddMessage("Hi there");
     }
 
-    public void Initialize(Player localOwner)
+    public void Initialize(Player localOwner, int roomID)
     {
         LocalOwner = localOwner;
+
+        if (roomID <= 0)
+            ID = ChatRoomAssigner.Instance.GetRoomID();
+        else
+            ID = roomID;
     }
 
     void Update()

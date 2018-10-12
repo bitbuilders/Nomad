@@ -10,12 +10,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
-        private Vector3 m_Move;
+        public Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 
+        public bool Enabled { get; set; }
         
         private void Start()
         {
+            Enabled = true;
             // get the transform of the main camera
             if (Camera.main != null)
             {

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 [System.Serializable]
 public class ToggleEvent : UnityEvent<bool> { }
@@ -15,12 +16,19 @@ public class Player : NetworkBehaviour
     [SerializeField] ToggleEvent m_onToggleRemote = null;
     [SerializeField] float m_respawnTime = 5.0f;
 
+    public string UserName { get; set; }
+
     GameObject m_mainCamera;
     
     private void Start()
     {
         m_mainCamera = Camera.main.gameObject;
         EnablePlayer();
+
+        if (isLocalPlayer)
+            UserName = "Colin";
+        else
+            UserName = "admin";
     }
 
     void DisablePlayer()
@@ -66,5 +74,10 @@ public class Player : NetworkBehaviour
         }
 
         EnablePlayer();
+    }
+
+    public void EnableMovement(bool enable)
+    {
+
     }
 }
