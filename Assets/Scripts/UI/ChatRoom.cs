@@ -1,16 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.Networking.NetworkSystem;
+﻿using UnityEngine;
 using TMPro;
 using System.Text;
 
-public class ChatRoom : NetworkBehaviour
+public class ChatRoom : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] GameObject m_chatTextContainer = null;
     //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
+
+
+    public Player LocalOwner { get; private set; }
+    public int ID { get; private set; }
+    public static int TotalCount { get; private set; }
 
     StringBuilder m_text;
     RectTransform m_containerBounds;
@@ -21,9 +22,16 @@ public class ChatRoom : NetworkBehaviour
 
     void Start()
     {
+        TotalCount++;
+        ID = TotalCount;
         m_text = new StringBuilder(m_chatLog.text);
         m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
         AddMessage("Hi there");
+    }
+
+    public void Initialize(Player localOwner)
+    {
+        LocalOwner = localOwner;
     }
 
     void Update()
@@ -58,12 +66,5 @@ public class ChatRoom : NetworkBehaviour
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;
-    }
-
-    [ClientRpc]
-    public void RpcRecieveMessage(string msg)
-    {
-        AddMessage(msg);
-        Debug.Log("recieved message: " + msg);
     }
 }

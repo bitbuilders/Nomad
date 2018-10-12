@@ -7,21 +7,18 @@ using TMPro;
 
 public class InputField : MonoBehaviour
 {
-    [SerializeField] TMP_InputField m_inputField = null;
-    [SerializeField] List<ChatRoom> m_pairedRooms = null;
+    [SerializeField] ChatRoom m_chatRoom = null;
 
-    NetworkClient nc;
-    bool m_focused;
+    TMP_InputField m_inputField = null;
 
     void Start()
     {
         m_inputField = GetComponent<TMP_InputField>();
-        m_focused = false;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Submit") && m_focused)
+        if (Input.GetButtonDown("Submit"))
         {
             SendMessages();
         }
@@ -37,11 +34,7 @@ public class InputField : MonoBehaviour
         }
 
         string message = m_inputField.text;
-
-        foreach (ChatRoom room in m_pairedRooms)
-        {
-            //room.AddMessage(message);
-        }
+        m_chatRoom.LocalOwner.GetComponent<ChatRoomManager>().SendMessage(m_chatRoom.ID, message);
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();
@@ -49,12 +42,10 @@ public class InputField : MonoBehaviour
 
     public void Select()
     {
-        m_focused = true;
     }
 
     public void DeSelect()
     {
-        m_focused = false;
     }
 
     public void Submit()
