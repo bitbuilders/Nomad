@@ -36,7 +36,7 @@ public class InputField : NetworkBehaviour
 
         string message = m_inputField.text;
         string fullMessage = m_chatRoom.LocalOwner.UserName + ": " + message;
-        m_chatRoom.LocalOwner.GetComponent<ChatRoomManager>().RpcSendMessage(m_chatRoom.ID, fullMessage);
+        //m_chatRoom.LocalOwner.GetComponent<ChatRoomManager>().RpcSendMessage(m_chatRoom.ID, fullMessage);
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();

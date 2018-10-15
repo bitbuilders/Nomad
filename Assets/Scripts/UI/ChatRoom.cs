@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Text;
+using UnityEngine.Networking;
 
-public class ChatRoom : MonoBehaviour
+public class ChatRoom : NetworkBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] TextMeshProUGUI m_roomNameText = null;

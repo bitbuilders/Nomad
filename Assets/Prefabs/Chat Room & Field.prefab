@@ -172,6 +172,7 @@ GameObject:
   - component: {fileID: 114279326727068296}
   - component: {fileID: 222407186770460166}
   - component: {fileID: 114469027412554412}
+  - component: {fileID: 114031094072859464}
   m_Layer: 5
   m_Name: Chat Room & Field
   m_TagString: Untagged
@@ -502,6 +503,38 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114031094072859464
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1227699095071200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 80
+    i1: 8
+    i2: 146
+    i3: 254
+    i4: 171
+    i5: 181
+    i6: 138
+    i7: 100
+    i8: 27
+    i9: 24
+    i10: 200
+    i11: 194
+    i12: 241
+    i13: 229
+    i14: 177
+    i15: 134
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &114046961328667910
 MonoBehaviour:
   m_ObjectHideFlags: 1

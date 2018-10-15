@@ -35,29 +35,38 @@ public class ChatRoomManager : NetworkBehaviour
         chatRoom.Initialize(m_localPlayer, roomID);
     }
 
-    [Command]
-    public void CmdSendMessage(int roomID, string message)
+    private void Update()
     {
-        RpcSendMessage(roomID, message);
+        if (Input.GetButtonDown("Jump") && isLocalPlayer)
+        {
+            CmdMessage("Hi");
+        }
     }
 
-    [Server]
-    void ServerSendMessage(int roomID, string message)
+    [Command]
+    void CmdMessage(string message)
     {
-        RpcSendMessage(roomID, message);
+        RpcRecieve(message);
     }
 
     [ClientRpc]
-    public void RpcSendMessage(int roomID, string message)
+    void RpcRecieve(string message)
     {
-        AddMessageToChatRoom(roomID, message);
+        foreach (ChatRoom room in m_chatRooms)
+        {
+            print(room.ID);
+            if (room.ID == 1)
+            {
+                room.AddMessage(message);
+            }
+        }
     }
 
     void AddMessageToChatRoom(int roomID, string message)
     {
-        print(m_chatRooms == null);
         foreach (ChatRoom room in m_chatRooms)
         {
+            print(room.ID);
             if (room.ID == roomID)
             {
                 room.AddMessage(message);
