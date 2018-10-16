@@ -6,7 +6,7 @@ using UnityEngine.Networking.NetworkSystem;
 using TMPro;
 using UnityStandardAssets.Characters.ThirdPerson;
 
-public class InputField : NetworkBehaviour
+public class InputField : MonoBehaviour
 {
     [SerializeField] ChatRoom m_chatRoom = null;
 
@@ -36,7 +36,7 @@ public class InputField : NetworkBehaviour
 
         string message = m_inputField.text;
         string fullMessage = m_chatRoom.LocalOwner.UserName + ": " + message;
-        //m_chatRoom.LocalOwner.GetComponent<ChatRoomManager>().RpcSendMessage(m_chatRoom.ID, fullMessage);
+        m_chatRoom.LocalOwner.GetComponent<ChatRoomMessenger>().SendMessageToRoom(message, m_chatRoom.ID);
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();
@@ -44,12 +44,12 @@ public class InputField : NetworkBehaviour
 
     public void Select()
     {
-        m_chatRoom.LocalOwner.EnableMovement(false);
+
     }
 
     public void DeSelect()
     {
-        m_chatRoom.LocalOwner.EnableMovement(true);
+
     }
 
     public void Submit()

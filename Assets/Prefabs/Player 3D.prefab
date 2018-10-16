@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 114782883401733354}
   - component: {fileID: 114159082325570402}
   - component: {fileID: 114374368413040842}
-  - component: {fileID: 114809710017966638}
+  - component: {fileID: 114045342612126078}
   - component: {fileID: 95219155842292226}
   - component: {fileID: 114781942848606538}
   - component: {fileID: 114165186914519310}
@@ -1653,8 +1653,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1157267753575086}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4806370079908042}
@@ -1664,7 +1664,7 @@ Transform:
   - {fileID: 4157242003675280}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4197623857647772
 Transform:
   m_ObjectHideFlags: 1
@@ -2728,6 +2728,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114045342612126078
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1157267753575086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0cf8333d154d334ab24ef230c3613b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114159082325570402
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2786,6 +2797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521b611700410be45810047f0a74e899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Move: {x: 0, y: 0, z: 0}
 --- !u!114 &114681335575830732
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2927,19 +2939,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: ToggleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_respawnTime: 5
---- !u!114 &114809710017966638
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1157267753575086}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 937c0086d76c7144aa1c3ceba8134f5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_roomTemplate: {fileID: 1227699095071200, guid: 500892feabb58a641b18c8c2f1e5b186,
-    type: 2}
 --- !u!114 &114816607836372516
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -3,7 +3,7 @@ using TMPro;
 using System.Text;
 using UnityEngine.Networking;
 
-public class ChatRoom : NetworkBehaviour
+public class ChatRoom : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] TextMeshProUGUI m_roomNameText = null;
@@ -24,7 +24,7 @@ public class ChatRoom : NetworkBehaviour
     {
         m_text = new StringBuilder(m_chatLog.text);
         m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
-        AddMessage("Hi there");
+        AddMessage("Welcome to the chat room!");
     }
 
     public void Initialize(Player localOwner, int roomID)

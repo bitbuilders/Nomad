@@ -26,6 +26,9 @@ public class Player : NetworkBehaviour
         EnablePlayer();
 
         if (isLocalPlayer)
+            ChatRoomManager.Instance.CreateChatRoom(this, 1);
+
+        if (isLocalPlayer)
             UserName = "Colin";
         else
             UserName = "admin";
