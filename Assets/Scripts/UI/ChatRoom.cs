@@ -5,41 +5,73 @@ using UnityEngine.Networking;
 
 public class ChatRoom : MonoBehaviour
 {
+    [SerializeField] RectTransform m_containerBounds = null;
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] TextMeshProUGUI m_roomNameText = null;
     [SerializeField] GameObject m_chatTextContainer = null;
+    [SerializeField] GameObject m_nameChange = null;
+    [SerializeField] TextMeshProUGUI m_namePlaceholder = null;
+    [SerializeField] TMP_InputField m_nameInputField = null;
+    [SerializeField] GameObject m_buttons = null;
+    [SerializeField] GameObject m_chatRoom = null;
+    [SerializeField] GameObject m_inputField = null;
     //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
-    
-    public Player LocalOwner { get; private set; }
+
     public int ID { get; private set; }
     public string Name { get; private set; }
 
+    RectTransform m_roomBounds;
     StringBuilder m_text;
-    RectTransform m_containerBounds;
     float m_targetHeight;
     float m_currentHeight;
     float m_time;
 
     void Start()
     {
+        Name = "Chat Room";
+        UpdateRoomName();
         m_text = new StringBuilder(m_chatLog.text);
-        m_containerBounds = m_chatTextContainer.GetComponent<RectTransform>();
         AddMessage("Welcome to the chat room!");
     }
 
-    public void Initialize(Player localOwner, int roomID)
+    public void Initialize(int roomID)
     {
-        LocalOwner = localOwner;
+        m_buttons.gameObject.SetActive(false);
+        m_chatRoom.gameObject.SetActive(false);
+        m_inputField.gameObject.SetActive(false);
+        m_roomBounds = GetComponent<RectTransform>();
+        m_roomBounds.sizeDelta = new Vector2(m_roomBounds.sizeDelta.x, 50.0f);
 
-        if (roomID <= 0)
-            ID = ChatRoomAssigner.Instance.GetRoomID();
+        if (roomID < 0)
+            ID = 0;
         else
             ID = roomID;
     }
 
     public void SetRoomName(string roomName)
     {
-        m_roomNameText.text = roomName;
+        Name = roomName;
+    }
+
+    public void SetRoomName(TMP_InputField roomName)
+    {
+        string name = roomName.text;
+        if (!string.IsNullOrEmpty(name.Trim()))
+        {
+            Name = name;
+        }
+    }
+
+    public void ChangeRoomName()
+    {
+        m_nameChange.SetActive(true);
+    }
+
+    public void UpdateRoomName()
+    {
+        m_roomNameText.text = Name;
+        m_namePlaceholder.text = Name;
+        m_nameInputField.text = "";
     }
 
     void Update()
@@ -68,9 +100,10 @@ public class ChatRoom : MonoBehaviour
         m_text.Append(text);
         m_chatLog.text = m_text.ToString();
         
-        Vector2 parentSize = GetComponentInParent<RectTransform>().GetComponentInParent<RectTransform>().sizeDelta;
+        //Vector2 parentSize = GetComponentInParent<RectTransform>().GetComponentInParent<RectTransform>().sizeDelta;
+        Vector2 parentSize = m_roomBounds.sizeDelta;
         float padding = m_chatLog.margin.x * 2.0f;
-        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, Mathf.Infinity);
+        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, parentSize.y);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;

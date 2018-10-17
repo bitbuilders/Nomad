@@ -16,12 +16,13 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
         m_roomLocation = GameObject.Find("Chat Rooms").transform;
     }
     
-    public void CreateChatRoom(Player localPlayer, int roomID)
+    public void CreateChatRoom(int roomID)
     {
         GameObject obj = Instantiate(m_roomTemplate, Vector3.zero, Quaternion.identity, m_roomLocation);
+        obj.transform.SetSiblingIndex(m_roomLocation.childCount - 2);
         ChatRoom chatRoom = obj.GetComponentInChildren<ChatRoom>();
         m_chatRooms.Add(chatRoom);
-        chatRoom.Initialize(localPlayer, roomID);
+        chatRoom.Initialize(roomID);
     }
 
     public void AddMessageToChatRoom(int roomID, string message)

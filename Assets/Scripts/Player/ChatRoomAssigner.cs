@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class ChatRoomAssigner : Singleton<ChatRoomAssigner>
+public class ChatRoomAssigner : NetworkBehaviour
 {
-    public int TotalRoomCount { get; private set; }
+    [SyncVar] public int RoomID;
 
-    public int GetRoomID()
+    [Command]
+    public void CmdIncrementRoomID()
     {
-        return ++TotalRoomCount;
+        ++RoomID;
     }
 }

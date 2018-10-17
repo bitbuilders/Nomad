@@ -35,8 +35,8 @@ public class InputField : MonoBehaviour
         }
 
         string message = m_inputField.text;
-        string fullMessage = m_chatRoom.LocalOwner.UserName + ": " + message;
-        m_chatRoom.LocalOwner.GetComponent<ChatRoomMessenger>().SendMessageToRoom(message, m_chatRoom.ID);
+        LocalPlayerData.Instance.LocalPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(message, m_chatRoom.ID);
+        //m_chatRoom.LocalOwner.GetComponent<ChatRoomMessenger>().SendMessageToRoom(message, m_chatRoom.ID);
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();

@@ -9,7 +9,7 @@ public class ChatRoomMessenger : NetworkBehaviour
 
     private void Start()
     {
-        m_localPlayer = FindObjectOfType<Player>();
+        m_localPlayer = GetComponent<Player>();
     }
 
     public void SendMessageToRoom(string message, int roomID)
