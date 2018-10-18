@@ -6,9 +6,9 @@ public class ChatRoomCreator : MonoBehaviour
 {
     public void CreateChatRoom()
     {
-        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-        localPlayer.GetComponent<NetworkData>().CmdIncrementRoomID();
-        int room = localPlayer.GetComponent<NetworkData>().CurrentRoomID;
-        ChatRoomManager.Instance.CreateChatRoom(room);
+        //GetComponent<NetworkData>().CmdIncrementRoomID();
+        //int room = GetComponent<NetworkData>().CurrentRoomID;
+        //ChatRoomManager.Instance.CreateChatRoom(room);
+        LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerChatRoomManager>().CmdCreateChatRoom();
     }
 }
