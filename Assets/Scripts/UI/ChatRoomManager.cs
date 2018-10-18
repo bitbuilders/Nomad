@@ -19,10 +19,18 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
     public void CreateChatRoom(int roomID)
     {
         GameObject obj = Instantiate(m_roomTemplate, Vector3.zero, Quaternion.identity, m_roomLocation);
-        obj.transform.SetSiblingIndex(m_roomLocation.childCount - 2);
+        obj.transform.SetAsFirstSibling();
+        //obj.transform.SetSiblingIndex(m_roomLocation.childCount - 2);
         ChatRoom chatRoom = obj.GetComponentInChildren<ChatRoom>();
         m_chatRooms.Add(chatRoom);
         chatRoom.Initialize(roomID);
+        print("Chat room ID: " + roomID + " created!");
+    }
+
+    public void RemoveChatRoom(GameObject room)
+    {
+        m_chatRooms.Remove(room.GetComponent<ChatRoom>());
+        Destroy(room);
     }
 
     public void AddMessageToChatRoom(int roomID, string message)

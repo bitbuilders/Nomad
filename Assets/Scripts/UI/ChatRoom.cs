@@ -40,7 +40,7 @@ public class ChatRoom : MonoBehaviour
         m_chatRoom.gameObject.SetActive(false);
         m_inputField.gameObject.SetActive(false);
         m_roomBounds = GetComponent<RectTransform>();
-        m_roomBounds.sizeDelta = new Vector2(m_roomBounds.sizeDelta.x, 50.0f);
+        ChangeRoomName();
 
         if (roomID < 0)
             ID = 0;
@@ -65,6 +65,7 @@ public class ChatRoom : MonoBehaviour
     public void ChangeRoomName()
     {
         m_nameChange.SetActive(true);
+        m_nameInputField.ActivateInputField();
     }
 
     public void UpdateRoomName()
@@ -107,5 +108,10 @@ public class ChatRoom : MonoBehaviour
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;
+    }
+
+    public void DestroyChatRoom()
+    {
+        ChatRoomManager.Instance.RemoveChatRoom(gameObject);
     }
 }

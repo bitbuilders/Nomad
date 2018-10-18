@@ -31,4 +31,25 @@ public class ChatRoomMessenger : NetworkBehaviour
     {
         ChatRoomManager.Instance.AddMessageToChatRoom(roomID, message);
     }
+
+    public void SendInviteToRoom(string playerName, int roomID)
+    {
+        CmdSendInvite(playerName, roomID);
+    }
+
+    [Command]
+    void CmdSendInvite(string playerName, int roomID)
+    {
+        RpcRecieveInvite(playerName, roomID);
+    }
+
+    [ClientRpc]
+    void RpcRecieveInvite(string playerName, int roomID)
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.UserName == playerName)
+        {
+            ChatRoomManager.Instance.CreateChatRoom(roomID);
+        }
+    }
 }
