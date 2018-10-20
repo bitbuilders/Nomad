@@ -23,8 +23,12 @@ public class PlayerChatRoomManager : NetworkBehaviour
     [ClientRpc]
     void RpcCreate(int room)
     {
-        print(room);
         if (isLocalPlayer)
+        {
             ChatRoomManager.Instance.CreateChatRoom(room);
+            Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+            string creationMessage = Colors.ConvertToColor(localPlayer.UserName + " created the room", Colors.ColorType.WHITE);
+            localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(creationMessage, room);
+        }
     }
 }

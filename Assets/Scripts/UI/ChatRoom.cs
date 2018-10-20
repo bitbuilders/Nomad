@@ -31,7 +31,8 @@ public class ChatRoom : MonoBehaviour
         Name = "Chat Room";
         UpdateRoomName();
         m_text = new StringBuilder(m_chatLog.text);
-        AddMessage("Welcome to the chat room!");
+        string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
+        AddMessage(welcomeMessage);
     }
 
     public void Initialize(int roomID)

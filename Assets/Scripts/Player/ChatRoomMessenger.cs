@@ -14,8 +14,7 @@ public class ChatRoomMessenger : NetworkBehaviour
 
     public void SendMessageToRoom(string message, int roomID)
     {
-        string fullMessage = m_localPlayer.UserName + ": " + message;
-        CmdSendMessageToServer(fullMessage, roomID);
+        CmdSendMessageToServer(message, roomID);
     }
 
     [Command]
@@ -50,6 +49,8 @@ public class ChatRoomMessenger : NetworkBehaviour
         if (localPlayer.UserName == playerName)
         {
             ChatRoomManager.Instance.CreateChatRoom(roomID);
+            string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " has joined the room!", Colors.ColorType.WHITE);
+            SendMessageToRoom(joinMessage, roomID);
         }
     }
 }
