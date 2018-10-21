@@ -6,8 +6,12 @@ using TMPro;
 public class DirectMessageManager : Singleton<DirectMessageManager>
 {
     [SerializeField] GameObject m_messageRoom = null;
+    [SerializeField] TextMeshProUGUI m_messageRoomText = null;
+    [SerializeField] TextMeshProUGUI m_messageRoomTitleText = null;
+    [SerializeField] ChatRoom m_messageChatRoom = null;
 
     List<PlayerMessageRoom> m_messageRooms;
+    PlayerMessageRoom m_currentRoom;
     Transform m_roomLocation;
 
     private void Start()
@@ -18,17 +22,23 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
 
     public void CreateMessageRoom(string playerName)
     {
-        if (!IsLocalPlayer(playerName))
-            return;
         GameObject go = Instantiate(m_messageRoom, Vector3.zero, Quaternion.identity, m_roomLocation);
         TextMeshProUGUI pName = go.GetComponentInChildren<TextMeshProUGUI>();
         pName.text = playerName;
-        m_messageRooms.Add(go.GetComponent<PlayerMessageRoom>());
+        PlayerMessageRoom pmr = go.GetComponent<PlayerMessageRoom>();
+        pmr.Name = playerName;
+        m_messageRooms.Add(pmr);
     }
 
-    bool IsLocalPlayer(string playerName)
+    public void SetCurrentMessageRoom(PlayerMessageRoom room)
     {
-        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-        return localPlayer.UserName == playerName;
+        m_currentRoom = room;
+        m_messageRoomText.text = room.Messages;
+        m_messageRoomTitleText.text = room.Name;
+    }
+
+    public void AddMessageToRoom(string message)
+    {
+
     }
 }

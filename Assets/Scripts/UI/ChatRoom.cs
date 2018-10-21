@@ -8,7 +8,6 @@ public class ChatRoom : MonoBehaviour
     [SerializeField] RectTransform m_containerBounds = null;
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] TextMeshProUGUI m_roomNameText = null;
-    [SerializeField] GameObject m_chatTextContainer = null;
     [SerializeField] GameObject m_nameChange = null;
     [SerializeField] TextMeshProUGUI m_namePlaceholder = null;
     [SerializeField] TMP_InputField m_nameInputField = null;

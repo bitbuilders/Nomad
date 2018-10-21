@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMessageRoom : MonoBehaviour {
+public class PlayerMessageRoom : MonoBehaviour
+{
+    public string Messages { get; set; }
+    public string Name { get; set; }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private void Start()
+    {
+        Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE);
+    }
+
+    public void SetAsCurrentRoom()
+    {
+        DirectMessageManager.Instance.SetCurrentMessageRoom(this);
+    }
 }
