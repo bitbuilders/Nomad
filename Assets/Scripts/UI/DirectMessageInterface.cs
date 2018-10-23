@@ -14,7 +14,9 @@ public class DirectMessageInterface : MonoBehaviour
         string playerName = m_conversationNameInput.text;
         if (LocalPlayerData.Instance.PlayerExists(playerName))
         {
-            DirectMessageManager.Instance.CreateMessageRoom(playerName);
+            PlayerMessageRoom room = DirectMessageManager.Instance.CreateMessageRoom(playerName);
+            room.Initialize();
+            room.SetAsCurrentRoom();
         }
         else
         {
@@ -30,9 +32,15 @@ public class DirectMessageInterface : MonoBehaviour
 
     public void SendDirectMessageMessage()
     {
+        PlayerMessageRoom room = DirectMessageManager.Instance.CurrentRoom;
+        if (!room)
+        {
+            m_messageContentInput.text = "";
+            InitializeInputField();
+            return;
+        }
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         string message = localPlayer.UserName + ": " + m_messageContentInput.text;
-        PlayerMessageRoom room = DirectMessageManager.Instance.CurrentRoom;
         LocalPlayerData.Instance.LocalPlayer.GetComponent<DirectMessenger>().SendDirectMessage(message, room.Name);
         m_messageContentInput.text = "";
         InitializeInputField();

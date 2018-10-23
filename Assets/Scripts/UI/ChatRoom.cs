@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 public class ChatRoom : MonoBehaviour
 {
     [SerializeField] RectTransform m_containerBounds = null;
+    [SerializeField] RectTransform m_roomViewTransform = null;
     [SerializeField] TextMeshProUGUI m_chatLog = null;
     [SerializeField] TextMeshProUGUI m_roomNameText = null;
     [SerializeField] GameObject m_nameChange = null;
@@ -18,8 +19,7 @@ public class ChatRoom : MonoBehaviour
 
     public int ID { get; private set; }
     public string Name { get; private set; }
-
-    RectTransform m_roomBounds;
+    
     StringBuilder m_text;
     float m_targetHeight;
     float m_currentHeight;
@@ -39,7 +39,6 @@ public class ChatRoom : MonoBehaviour
         m_buttons.gameObject.SetActive(false);
         m_chatRoom.gameObject.SetActive(false);
         m_inputField.gameObject.SetActive(false);
-        m_roomBounds = GetComponent<RectTransform>();
         ChangeRoomName();
 
         if (roomID < 0)
@@ -100,11 +99,10 @@ public class ChatRoom : MonoBehaviour
 
         m_text.Append(text);
         m_chatLog.text = m_text.ToString();
-        
-        //Vector2 parentSize = GetComponentInParent<RectTransform>().GetComponentInParent<RectTransform>().sizeDelta;
-        Vector2 parentSize = m_roomBounds.sizeDelta;
+
+        Vector2 bounds = m_roomViewTransform.sizeDelta;
         float padding = m_chatLog.margin.x * 2.0f;
-        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, parentSize.y - padding);
+        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, bounds.x - padding, bounds.y - padding);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;

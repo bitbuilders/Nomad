@@ -12,6 +12,12 @@ public class PlayerMessageRoom : MonoBehaviour
 
     private void Start()
     {
+        Initialize();
+    }
+
+    // Will sometimes need to call before start
+    public void Initialize()
+    {
         Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE) + Messages;
         m_messageInterface = GameObject.Find("Menu").GetComponent<DirectMessageInterface>();
     }

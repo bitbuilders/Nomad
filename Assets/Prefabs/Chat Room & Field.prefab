@@ -4454,6 +4454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_containerBounds: {fileID: 224413274247549690}
+  m_roomViewTransform: {fileID: 224590965972612156}
   m_chatLog: {fileID: 114557595584243228}
   m_roomNameText: {fileID: 114077179929367332}
   m_nameChange: {fileID: 1317613956406416}
