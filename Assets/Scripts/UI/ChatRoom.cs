@@ -104,7 +104,7 @@ public class ChatRoom : MonoBehaviour
         //Vector2 parentSize = GetComponentInParent<RectTransform>().GetComponentInParent<RectTransform>().sizeDelta;
         Vector2 parentSize = m_roomBounds.sizeDelta;
         float padding = m_chatLog.margin.x * 2.0f;
-        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, parentSize.y);
+        Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, parentSize.x - padding, parentSize.y - padding);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
         m_targetHeight = size.y;
         m_time = 0.0f;

@@ -6,6 +6,7 @@ using TMPro;
 public class DirectMessageInterface : MonoBehaviour
 {
     [SerializeField] TMP_InputField m_conversationNameInput = null;
+    [SerializeField] TMP_InputField m_messageContentInput = null;
     [SerializeField] TextMeshProUGUI m_notificationText = null;
 
     public void CreateNewConversation()
@@ -25,5 +26,33 @@ public class DirectMessageInterface : MonoBehaviour
     {
         m_conversationNameInput.text = "";
         m_conversationNameInput.ActivateInputField();
+    }
+
+    public void SendDirectMessageMessage()
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        string message = localPlayer.UserName + ": " + m_messageContentInput.text;
+        PlayerMessageRoom room = DirectMessageManager.Instance.CurrentRoom;
+        LocalPlayerData.Instance.LocalPlayer.GetComponent<DirectMessenger>().SendDirectMessage(message, room.Name);
+        m_messageContentInput.text = "";
+        InitializeInputField();
+    }
+
+    public void InitializeInputField()
+    {
+        m_messageContentInput.ActivateInputField();
+    }
+
+    public void OnMessageContentChange()
+    {
+        if (m_messageContentInput.text.Contains("\n") && !string.IsNullOrEmpty(m_messageContentInput.text.Trim()))
+        {
+            m_messageContentInput.text = m_messageContentInput.text.Replace("\n", "").Trim();
+            SendDirectMessageMessage();
+        }
+        else if (string.IsNullOrEmpty(m_messageContentInput.text.Trim()))
+        {
+            m_messageContentInput.text = "";
+        }
     }
 }

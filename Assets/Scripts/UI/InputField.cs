@@ -21,13 +21,13 @@ public class InputField : MonoBehaviour
     {
         if (Input.GetButtonDown("Submit"))
         {
-            SendMessages();
+            //SendMessages();
         }
     }
 
     private void SendMessages()
     {
-        if (m_inputField.text.Replace(" ", "").Length <= 0)
+        if (m_inputField.text.Trim().Length <= 0)
         {
             m_inputField.text = "";
             m_inputField.ActivateInputField();
@@ -43,17 +43,16 @@ public class InputField : MonoBehaviour
         m_inputField.ActivateInputField();
     }
 
-    public void Select()
+    public void OnValueChange()
     {
-
-    }
-
-    public void DeSelect()
-    {
-
-    }
-
-    public void Submit()
-    {
+        if (m_inputField.text.Contains("\n") && !string.IsNullOrEmpty(m_inputField.text.Trim()))
+        {
+            m_inputField.text = m_inputField.text.Replace("\n", "").Trim();
+            SendMessages();
+        }
+        else if (string.IsNullOrEmpty(m_inputField.text.Trim()))
+        {
+            m_inputField.text = "";
+        }
     }
 }

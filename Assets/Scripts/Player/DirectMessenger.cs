@@ -11,25 +11,25 @@ public class DirectMessenger : NetworkBehaviour
     {
         m_localPlayer = GetComponent<Player>();
     }
-
-    public void CreateNewConversation(string playerName)
-    {
-        bool playerExists = LocalPlayerData.Instance.PlayerExists(playerName);
-        if (playerExists)
-        {
-            CmdSendNewConversation(playerName);
-        }
-    }
     
-    [Command]
-    void CmdSendNewConversation(string playerName)
+    public void SendDirectMessage(string message, string playerName)
     {
-        RpcReceiveConversation(playerName);
+        CmdServerMessage(message, m_localPlayer.UserName, playerName);
+    }
+
+    [Command]
+    void CmdServerMessage(string message, string sender, string recipient)
+    {
+        RpcReceiveDirectMessage(message, sender, recipient);
     }
 
     [ClientRpc]
-    void RpcReceiveConversation(string playerName)
+    void RpcReceiveDirectMessage(string message, string sender, string recipient)
     {
-        DirectMessageManager.Instance.CreateMessageRoom(playerName);
+        string localUsername = LocalPlayerData.Instance.LocalPlayer.UserName;
+        if (recipient != localUsername && sender != localUsername)
+            return;
+        
+        DirectMessageManager.Instance.AddMessageToRoom(message, sender, recipient);
     }
 }

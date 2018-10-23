@@ -23,5 +23,9 @@ public class ConversationCreationDialog : MonoBehaviour
             m_createButton.onClick.Invoke();
             gameObject.SetActive(false);
         }
+        else if (string.IsNullOrEmpty(m_conversatioNameField.text.Trim()))
+        {
+            m_conversatioNameField.text = "";
+        }
     }
 }

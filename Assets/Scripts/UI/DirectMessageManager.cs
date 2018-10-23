@@ -2,43 +2,92 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 public class DirectMessageManager : Singleton<DirectMessageManager>
 {
     [SerializeField] GameObject m_messageRoom = null;
+    [SerializeField] RectTransform m_messageRoomContainer = null;
+    [SerializeField] RectTransform m_messageRoomParent = null;
     [SerializeField] TextMeshProUGUI m_messageRoomText = null;
     [SerializeField] TextMeshProUGUI m_messageRoomTitleText = null;
-    [SerializeField] ChatRoom m_messageChatRoom = null;
+    [SerializeField] Transform m_roomLocation = null;
 
     List<PlayerMessageRoom> m_messageRooms;
-    PlayerMessageRoom m_currentRoom;
-    Transform m_roomLocation;
+    public PlayerMessageRoom CurrentRoom;
 
     private void Start()
     {
-        m_roomLocation = GameObject.Find("Player Rooms").GetComponent<Transform>();
         m_messageRooms = new List<PlayerMessageRoom>();
     }
 
-    public void CreateMessageRoom(string playerName)
+    public PlayerMessageRoom CreateMessageRoom(string playerName)
     {
+        if (RoomExists(playerName))
+        {
+            return m_messageRooms.Where(room => room.Name == playerName).ToList()[0];
+        }
+
         GameObject go = Instantiate(m_messageRoom, Vector3.zero, Quaternion.identity, m_roomLocation);
         TextMeshProUGUI pName = go.GetComponentInChildren<TextMeshProUGUI>();
         pName.text = playerName;
         PlayerMessageRoom pmr = go.GetComponent<PlayerMessageRoom>();
         pmr.Name = playerName;
         m_messageRooms.Add(pmr);
+
+        return pmr;
     }
 
     public void SetCurrentMessageRoom(PlayerMessageRoom room)
     {
-        m_currentRoom = room;
+        CurrentRoom = room;
         m_messageRoomText.text = room.Messages;
         m_messageRoomTitleText.text = room.Name;
+
+        Vector2 parentX = m_messageRoomParent.sizeDelta;
+        Vector2 sizeY = m_messageRoomContainer.sizeDelta;
+        float padding = m_messageRoomText.margin.x * 2.0f;
+        Vector2 size = m_messageRoomText.GetPreferredValues(m_messageRoomText.text, parentX.x - padding, sizeY.y - padding);
+        m_messageRoomContainer.sizeDelta = new Vector2(m_messageRoomContainer.sizeDelta.x, size.y);
     }
 
-    public void AddMessageToRoom(string message)
+    public void AddMessageToRoom(string message, string sender, string recipient)
     {
+        bool hasRoom = false;
+        foreach (PlayerMessageRoom room in m_messageRooms)
+        {
+            if (room.Name == sender || room.Name == recipient)
+            {
+                room.AddMessage(message);
+                hasRoom = true;
 
+                if (room == CurrentRoom)
+                {
+                    SetCurrentMessageRoom(room);
+                }
+            }
+        }
+
+        if (!hasRoom)
+        {
+            PlayerMessageRoom pmr = CreateMessageRoom(sender);
+            pmr.AddMessage(message);
+        }
+    }
+
+    bool RoomExists(string playerName)
+    {
+        bool exists = false;
+
+        foreach (PlayerMessageRoom room in m_messageRooms)
+        {
+            if (room.Name == playerName)
+            {
+                exists = true;
+                break;
+            }
+        }
+
+        return exists;
     }
 }
