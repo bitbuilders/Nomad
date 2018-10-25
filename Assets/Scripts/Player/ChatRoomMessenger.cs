@@ -31,26 +31,24 @@ public class ChatRoomMessenger : NetworkBehaviour
         ChatRoomManager.Instance.AddMessageToChatRoom(roomID, message);
     }
 
-    public void SendInviteToRoom(string playerName, int roomID)
+    public void SendInviteToRoom(string sender, string playerName, string roomName, int roomID)
     {
-        CmdSendInvite(playerName, roomID);
+        CmdSendInvite(sender, playerName, roomName, roomID);
     }
 
     [Command]
-    void CmdSendInvite(string playerName, int roomID)
+    void CmdSendInvite(string sender, string playerName, string roomName, int roomID)
     {
-        RpcRecieveInvite(playerName, roomID);
+        RpcRecieveInvite(sender, playerName, roomName, roomID);
     }
 
     [ClientRpc]
-    void RpcRecieveInvite(string playerName, int roomID)
+    void RpcRecieveInvite(string sender, string playerName, string roomName, int roomID)
     {
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         if (localPlayer.UserName == playerName)
         {
-            ChatRoomManager.Instance.CreateChatRoom(roomID);
-            string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " has joined the room!", Colors.ColorType.WHITE);
-            SendMessageToRoom(joinMessage, roomID);
+            NotificationManager.Instance.CreateNotification(Notification.NotificationType.ROOM_INVITE, sender, roomName, roomID);
         }
     }
 }

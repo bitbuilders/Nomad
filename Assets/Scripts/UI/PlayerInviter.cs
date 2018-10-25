@@ -13,7 +13,9 @@ public class PlayerInviter : MonoBehaviour
     {
         string name = m_inviteInput.text;
         int room = m_chatRoom.ID;
-        LocalPlayerData.Instance.LocalPlayer.GetComponent<ChatRoomMessenger>().SendInviteToRoom(name, room);
+        string roomName = m_chatRoom.Name;
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        localPlayer.GetComponent<ChatRoomMessenger>().SendInviteToRoom(localPlayer.UserName, name, roomName, room);
         ResetInputField(true);
     }
 
