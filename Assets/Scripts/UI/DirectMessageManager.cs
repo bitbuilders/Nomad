@@ -71,6 +71,7 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
         if (!hasRoom)
         {
             PlayerMessageRoom pmr = CreateMessageRoom(sender);
+            pmr.Initialize();
             pmr.AddMessage(message);
         }
     }
