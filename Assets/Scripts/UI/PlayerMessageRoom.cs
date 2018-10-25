@@ -9,6 +9,7 @@ public class PlayerMessageRoom : MonoBehaviour
     public string Name { get; set; }
 
     DirectMessageInterface m_messageInterface;
+    DirectMessageNotification m_dmNotification;
 
     private void Start()
     {
@@ -20,12 +21,14 @@ public class PlayerMessageRoom : MonoBehaviour
     {
         Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE) + Messages;
         m_messageInterface = GameObject.Find("Menu").GetComponent<DirectMessageInterface>();
+        m_dmNotification = GetComponent<DirectMessageNotification>();
     }
 
     public void SetAsCurrentRoom()
     {
         DirectMessageManager.Instance.SetCurrentMessageRoom(this);
         m_messageInterface.InitializeInputField();
+        m_dmNotification.RemoveNotifications();
     }
 
     public void AddMessage(string message)
@@ -35,5 +38,10 @@ public class PlayerMessageRoom : MonoBehaviour
         sb.Append(message);
 
         Messages = sb.ToString();
+
+        if (DirectMessageManager.Instance.CurrentRoom != this)
+        {
+            m_dmNotification.AddNewNotification();
+        }
     }
 }
