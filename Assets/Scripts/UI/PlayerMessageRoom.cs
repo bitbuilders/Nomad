@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerMessageRoom : MonoBehaviour
 {
     public string Messages { get; set; }
+    public string StartMessage { get; set; }
     public string Name { get; set; }
 
     DirectMessageInterface m_messageInterface;
@@ -19,7 +20,8 @@ public class PlayerMessageRoom : MonoBehaviour
     // Will sometimes need to call before start
     public void Initialize()
     {
-        Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE) + Messages;
+        string startMessage = string.IsNullOrEmpty(StartMessage) ? "" : "\n" + StartMessage;
+        Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE) + startMessage;
         m_messageInterface = GameObject.Find("Menu").GetComponent<DirectMessageInterface>();
         m_dmNotification = GetComponent<DirectMessageNotification>();
     }
