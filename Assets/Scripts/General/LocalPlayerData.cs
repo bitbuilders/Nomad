@@ -23,4 +23,22 @@ public class LocalPlayerData : Singleton<LocalPlayerData>
 
         return exists;
     }
+
+    public bool MultipleUsernames()
+    {
+        bool multiple = false;
+        string localUser = LocalPlayer.UserName;
+
+        Player[] players = FindObjectsOfType<Player>();
+        foreach (Player p in players)
+        {
+            if (p.UserName == localUser && p != LocalPlayer)
+            {
+                multiple = true;
+                break;
+            }
+        }
+
+        return multiple;
+    }
 }

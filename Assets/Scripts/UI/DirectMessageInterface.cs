@@ -12,11 +12,20 @@ public class DirectMessageInterface : MonoBehaviour
     public void CreateNewConversation()
     {
         string playerName = m_conversationNameInput.text;
+        bool targetHasLocalName = (playerName == LocalPlayerData.Instance.LocalPlayer.UserName);
+        bool multipleWithLocalName = LocalPlayerData.Instance.MultipleUsernames();
         if (LocalPlayerData.Instance.PlayerExists(playerName))
         {
-            PlayerMessageRoom room = DirectMessageManager.Instance.CreateMessageRoom(playerName);
-            room.Initialize();
-            room.SetAsCurrentRoom();
+            if (targetHasLocalName && !multipleWithLocalName)
+            {
+                m_notificationText.gameObject.SetActive(true);
+            }
+            else
+            {
+                PlayerMessageRoom room = DirectMessageManager.Instance.CreateMessageRoom(playerName);
+                room.Initialize();
+                room.SetAsCurrentRoom();
+            }
         }
         else
         {
