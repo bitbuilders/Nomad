@@ -28,14 +28,16 @@ public class PlayerMovement : MonoBehaviour
     Animator m_animator;
     Rigidbody m_rigidbody;
     Quaternion m_lastRotation;
+    GameObject m_childAvatar;
     Vector3 m_velocity;
     Vector3 m_rotation;
     bool m_canMove;
 
-    private void Start()
+    private void OnEnable()
     {
         m_animator = GetComponentInChildren<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
+        m_childAvatar = m_animator.gameObject;
 
         m_canMove = true;
     }
@@ -46,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         OnGround = points.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
 
-        transform.rotation *= Quaternion.Euler(m_rotation);
+        m_childAvatar.transform.rotation *= Quaternion.Euler(m_rotation);
 
         float magnitude = m_velocity.magnitude;
         Quaternion camRot = m_camera.transform.rotation;
@@ -56,8 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (OnGround)
         {
-            transform.position += transform.rotation * rotatedVelocity;
-            m_lastRotation = transform.rotation;
+            transform.position += m_childAvatar.transform.rotation * rotatedVelocity;
+            m_lastRotation = m_childAvatar.transform.rotation;
         }
         else
         {
