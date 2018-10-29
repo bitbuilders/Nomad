@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     [Header("Movement")]
     [SerializeField] [Range(0.0f, 50.0f)] float m_acceleration = 5.0f;
@@ -22,6 +23,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask m_groundMask = 0;
     [Header("Camera")]
     [SerializeField] Camera m_camera;
+    [Header("Network")]
+    [SerializeField] [Range(0.0f, 20.0f)] float m_movementUpdateRate = 0.1f;
     
     public bool OnGround { get; private set; }
 
@@ -31,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
     GameObject m_childAvatar;
     Vector3 m_velocity;
     Vector3 m_rotation;
+    float m_rigidFactor = 80.0f;
+    float m_updateTime;
     bool m_canMove;
 
     private void OnEnable()
@@ -48,32 +53,32 @@ public class PlayerMovement : MonoBehaviour
         OnGround = points.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
 
-        m_childAvatar.transform.rotation *= Quaternion.Euler(m_rotation);
+        if (!isLocalPlayer)
+            return;
 
-        float magnitude = m_velocity.magnitude;
-        Quaternion camRot = m_camera.transform.rotation;
-        Vector3 rotatedVelocity = /*camRot * */ m_velocity;
-        rotatedVelocity.y = 0.0f;
-        rotatedVelocity = rotatedVelocity.normalized * magnitude;
-
-        if (OnGround)
+        m_updateTime += Time.deltaTime;
+        if (m_updateTime >= m_movementUpdateRate)
         {
-            transform.position += m_childAvatar.transform.rotation * rotatedVelocity;
-            m_lastRotation = m_childAvatar.transform.rotation;
+            m_updateTime = 0.0f;
+            CmdUpdateMotionData(m_velocity, m_rotation);
         }
-        else
-        {
-            transform.position += m_lastRotation * rotatedVelocity;
-        }
-
 
         if (Input.GetButtonDown("Jump") && OnGround && m_canMove)
         {
-            m_animator.SetTrigger("Jump");
+            CmdSendAnimationTrigger("Jump");
+            //m_animator.SetTrigger("Jump");
         }
     }
 
     private void FixedUpdate()
+    {
+        if (isLocalPlayer)
+            UpdateMovement();
+
+        UpdateAnimator();
+    }
+
+    void UpdateMovement()
     {
         float inZ = Input.GetAxis("Vertical");
         if (OnGround && m_canMove)
@@ -115,11 +120,6 @@ public class PlayerMovement : MonoBehaviour
         {
             m_rotation.y = 0.0f;
         }
-        
-        bool right = m_rotation.y > 0.0f;
-        m_animator.SetBool("TurnRight", right);
-        bool turn = m_rotation.magnitude > 0.5f;
-        m_animator.SetBool("Turn", turn);
 
         if (m_rigidbody.velocity.y > 0.1f)
         {
@@ -130,11 +130,40 @@ public class PlayerMovement : MonoBehaviour
             m_rigidbody.velocity += (Vector3.up * Physics.gravity.y) * (m_fallSpeed - 1.0f) * Time.deltaTime;
         }
 
-        float runSpeed = Mathf.Abs(m_velocity.z) + inZ * 0.05f;
+        m_childAvatar.transform.rotation *= Quaternion.Euler(m_rotation);
+
+        float magnitude = m_velocity.magnitude;
+        Quaternion camRot = m_camera.transform.rotation;
+        Vector3 rotatedVelocity = /*camRot * */ m_velocity;
+        rotatedVelocity.y = 0.0f;
+        rotatedVelocity = rotatedVelocity.normalized * magnitude;
+
+        Vector3 rigidVelocity = new Vector3(m_velocity.x * m_rigidFactor, m_rigidbody.velocity.y, m_velocity.z * m_rigidFactor);
+        if (OnGround)
+        {
+            m_rigidbody.velocity = m_childAvatar.transform.rotation * rigidVelocity;
+            //transform.position += m_childAvatar.transform.rotation * rotatedVelocity;
+            m_lastRotation = m_childAvatar.transform.rotation;
+        }
+        else
+        {
+            m_rigidbody.velocity = m_lastRotation * rigidVelocity;
+            //transform.position += m_lastRotation * rotatedVelocity;
+        }
+    }
+
+    void UpdateAnimator()
+    {
+        float runSpeed = Mathf.Abs(m_velocity.z);
         m_animator.SetFloat("RunSpeed", runSpeed);
 
         float dir = m_velocity.z > 0.0f ? 1.0f : -1.0f;
         m_animator.SetFloat("RunDirection", dir);
+
+        bool right = m_rotation.y > 0.0f;
+        m_animator.SetBool("TurnRight", right);
+        bool turn = m_rotation.magnitude > 0.5f;
+        m_animator.SetBool("Turn", turn);
     }
 
     public void Jump()
@@ -152,5 +181,30 @@ public class PlayerMovement : MonoBehaviour
     public void EnableMovement()
     {
         m_canMove = true;
+    }
+
+    [Command]
+    void CmdUpdateMotionData(Vector3 velocity, Vector3 rotation)
+    {
+        RpcReceiveMotionData(velocity, rotation);
+    }
+
+    [ClientRpc]
+    void RpcReceiveMotionData(Vector3 velocity, Vector3 rotation)
+    {
+        m_velocity = velocity;
+        m_rotation = rotation;
+    }
+
+    [Command]
+    void CmdSendAnimationTrigger(string trigger)
+    {
+        RpcRecieveAnimationTrigger(trigger);
+    }
+
+    [ClientRpc]
+    void RpcRecieveAnimationTrigger(string trigger)
+    {
+        m_animator.SetTrigger(trigger);
     }
 }

@@ -2431,8 +2431,8 @@ MonoBehaviour:
   m_lookOffset: 2
   m_acceleration: 10
   m_maxSpeedX: 1.4
-  m_maxSpeedY: 4
-  m_idleFriction: 10
+  m_maxSpeedY: 3
+  m_idleFriction: 17
   m_stiffness: 7
   m_maxPitch: -20
   m_minPitch: 40
@@ -2513,17 +2513,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114850485610556376}
-        m_MethodName: set_enabled
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
     m_TypeName: ToggleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_onToggleRemote:
     m_PersistentCalls:
@@ -2559,7 +2548,7 @@ MonoBehaviour:
   m_SyncRotationAxis: 2
   m_RotationSyncCompression: 0
   m_MovementThreshold: 0.001
-  m_InterpolateRotation: 0.5
+  m_InterpolateRotation: 0.4
   m_InterpolateMovement: 0.5
 --- !u!114 &114705602898134942
 MonoBehaviour:
@@ -2610,17 +2599,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578856476574356}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 348a3fd04a7528f41baba267036a60d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_acceleration: 0.3
-  m_maxSpeed: 0.085
+  m_maxSpeed: 0.06
   m_idleFriction: 0.3
   m_rotationAcceleration: 25
   m_rotationMaxSpeed: 4
-  m_rotationIdleFriction: 10
+  m_rotationIdleFriction: 25
   m_jumpForce: 7
   m_airControl: 0.2
   m_jumpResistance: 2.5
@@ -2630,6 +2619,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   m_camera: {fileID: 20060712495617430}
+  m_movementUpdateRate: 0.1
 --- !u!114 &114966336664007122
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2641,16 +2631,16 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
-  m_SendInterval: 0.033333335
-  m_SyncRotationAxis: 2
+  m_TransformSyncMode: 3
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
   m_MovementTheshold: 0.001
   m_VelocityThreshold: 0.0001
   m_SnapThreshold: 5
   m_InterpolateRotation: 7
-  m_InterpolateMovement: 0.1
+  m_InterpolateMovement: 1
 --- !u!136 &136316960062043182
 CapsuleCollider:
   m_ObjectHideFlags: 1
