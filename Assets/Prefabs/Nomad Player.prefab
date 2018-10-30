@@ -2619,7 +2619,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   m_camera: {fileID: 20060712495617430}
-  m_movementUpdateRate: 0.1
+  m_movementUpdateRate: 0.111
 --- !u!114 &114966336664007122
 MonoBehaviour:
   m_ObjectHideFlags: 1
