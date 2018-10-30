@@ -422,7 +422,7 @@ Prefab:
     - target: {fileID: 224357315512551794, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00001770813
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 224647621701163122, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
@@ -2430,7 +2430,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &1527981354
 MonoBehaviour:
