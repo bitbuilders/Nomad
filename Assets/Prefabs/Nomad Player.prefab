@@ -2547,9 +2547,9 @@ MonoBehaviour:
   m_SendInterval: 0.1
   m_SyncRotationAxis: 2
   m_RotationSyncCompression: 0
-  m_MovementThreshold: 0.001
-  m_InterpolateRotation: 0.4
-  m_InterpolateMovement: 0.5
+  m_MovementThreshold: 5
+  m_InterpolateRotation: 0.2
+  m_InterpolateMovement: 0
 --- !u!114 &114705602898134942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2607,9 +2607,9 @@ MonoBehaviour:
   m_acceleration: 0.3
   m_maxSpeed: 0.06
   m_idleFriction: 0.3
-  m_rotationAcceleration: 25
-  m_rotationMaxSpeed: 4
-  m_rotationIdleFriction: 25
+  m_rotationAcceleration: 15
+  m_rotationMaxSpeed: 3
+  m_rotationIdleFriction: 15
   m_jumpForce: 7
   m_airControl: 0.2
   m_jumpResistance: 2.5
