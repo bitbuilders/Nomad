@@ -7,7 +7,8 @@ public class Notification : MonoBehaviour
 {
     public enum NotificationType
     {
-        ROOM_INVITE
+        ROOM_INVITE,
+        PARTY_INVITE
     }
 
     [SerializeField] TextMeshProUGUI m_notificationTypeText = null;
@@ -27,9 +28,20 @@ public class Notification : MonoBehaviour
     public void AcceptInvitation()
     {
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-        ChatRoomManager.Instance.CreateChatRoom(m_roomID, m_roomNameText.text);
-        string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " has joined the room!", Colors.ColorType.WHITE);
-        localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(joinMessage, m_roomID);
+
+        switch (Type)
+        {
+            case NotificationType.ROOM_INVITE:
+                ChatRoomManager.Instance.CreateChatRoom(m_roomID, m_roomNameText.text);
+                string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " has joined the room!", Colors.ColorType.WHITE);
+                localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(joinMessage, m_roomID);
+                break;
+            case NotificationType.PARTY_INVITE:
+                PartyManager.Instance.SetupParty(m_senderNameText.text);
+                PartyManager.Instance.AddPlayerToParty(localPlayer.UserName);
+                break;
+        }
+
         Destroy(gameObject);
     }
 
@@ -52,6 +64,11 @@ public class Notification : MonoBehaviour
             case NotificationType.ROOM_INVITE:
                 m_notificationTypeText.text = "Room Invite";
                 m_roomNameText.text = room;
+                m_roomNameText.gameObject.SetActive(true);
+                break;
+            case NotificationType.PARTY_INVITE:
+                m_notificationTypeText.text = "Party Invite";
+                m_roomNameText.gameObject.SetActive(false);
                 break;
         }
     }

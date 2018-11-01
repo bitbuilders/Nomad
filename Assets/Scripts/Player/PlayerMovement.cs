@@ -9,6 +9,7 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] [Range(0.0f, 50.0f)] float m_acceleration = 5.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_maxSpeed = 10.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_idleFriction = 5.0f;
+    [SerializeField] [Range(0.0f, 5.0f)] float m_idleCountdown = 0.01f;
     [Header("Rotation")]
     [SerializeField] [Range(0.0f, 900.0f)] float m_rotationAcceleration = 90.0f;
     [SerializeField] [Range(0.0f, 900.0f)] float m_rotationMaxSpeed = 180.0f;
@@ -36,7 +37,9 @@ public class PlayerMovement : NetworkBehaviour
     Vector3 m_rotation;
     float m_rigidFactor = 80.0f;
     float m_updateTime;
+    float m_idleTime;
     bool m_canMove;
+    bool m_idle;
 
     private void OnEnable()
     {
@@ -45,11 +48,12 @@ public class PlayerMovement : NetworkBehaviour
         m_childAvatar = m_animator.gameObject;
 
         m_canMove = true;
+        m_idle = true;
     }
 
     private void Update()
     {
-        Collider[] points = Physics.OverlapSphere(m_groundTouch.position, 0.15f, m_groundMask);
+        Collider[] points = Physics.OverlapSphere(m_groundTouch.position, 0.231f, m_groundMask);
         OnGround = points.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
 
@@ -60,7 +64,7 @@ public class PlayerMovement : NetworkBehaviour
         if (m_updateTime >= m_movementUpdateRate)
         {
             m_updateTime = 0.0f;
-            CmdUpdateMotionData(m_velocity, m_rotation);
+            CmdUpdateMotionData(m_velocity, m_rotation, m_idle);
         }
 
         if (Input.GetButtonDown("Jump") && OnGround && m_canMove)
@@ -81,6 +85,20 @@ public class PlayerMovement : NetworkBehaviour
     void UpdateMovement()
     {
         float inZ = Input.GetAxis("Vertical");
+        if (inZ == 0.0f)
+        {
+            m_idleTime += Time.deltaTime;
+            if (m_idleTime >= m_idleCountdown)
+            {
+                m_idle = true;
+            }
+        }
+        else
+        {
+            m_idle = false;
+            m_idleTime = 0.0f;
+        }
+
         if (OnGround && m_canMove)
         {
             float speed = m_acceleration * Time.deltaTime;
@@ -154,7 +172,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void UpdateAnimator()
     {
-        float runSpeed = Mathf.Abs(m_velocity.z);
+        float runSpeed = m_idle ? 0.0f : m_velocity.magnitude + 0.02f;
         m_animator.SetFloat("RunSpeed", runSpeed);
 
         float dir = m_velocity.z > 0.0f ? 1.0f : -1.0f;
@@ -184,16 +202,17 @@ public class PlayerMovement : NetworkBehaviour
     }
 
     [Command]
-    void CmdUpdateMotionData(Vector3 velocity, Vector3 rotation)
+    void CmdUpdateMotionData(Vector3 velocity, Vector3 rotation, bool idle)
     {
-        RpcReceiveMotionData(velocity, rotation);
+        RpcReceiveMotionData(velocity, rotation, idle);
     }
 
     [ClientRpc]
-    void RpcReceiveMotionData(Vector3 velocity, Vector3 rotation)
+    void RpcReceiveMotionData(Vector3 velocity, Vector3 rotation, bool idle)
     {
         m_velocity = velocity;
         m_rotation = rotation;
+        m_idle = idle;
     }
 
     [Command]
