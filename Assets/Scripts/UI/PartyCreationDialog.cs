@@ -28,7 +28,15 @@ public class PartyCreationDialog : MonoBehaviour
         }
 
         if (invited.Count > 0)
+        {
             PartyManager.Instance.InvitePlayersToParty(leader, invited);
+            PartyManager.Instance.ShowPartyWindow();
+        }
+    }
+
+    public void ShowDialog()
+    {
+        PartyManager.Instance.SetupPartyCreation();
     }
 
     public void Cancel()
@@ -38,6 +46,6 @@ public class PartyCreationDialog : MonoBehaviour
         m_p3Name.text = "";
         m_p4Name.text = "";
 
-        gameObject.SetActive(false);
+        PartyManager.Instance.DisableParty();
     }
 }

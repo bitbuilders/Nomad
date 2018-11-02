@@ -2620,9 +2620,9 @@ MonoBehaviour:
   m_maxSpeed: 0.06
   m_idleFriction: 0.3
   m_idleCountdown: 0.05
-  m_rotationAcceleration: 15
-  m_rotationMaxSpeed: 3
-  m_rotationIdleFriction: 15
+  m_rotationAcceleration: 30
+  m_rotationMaxSpeed: 3.5
+  m_rotationIdleFriction: 30
   m_jumpForce: 7
   m_airControl: 0.2
   m_jumpResistance: 2.5
