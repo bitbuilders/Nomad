@@ -6,15 +6,13 @@ using UnityEngine.Networking;
 public class PlayerChatRoomManager : NetworkBehaviour
 {
     NetworkData m_networkData;
-
-    private void Start()
-    {
-        m_networkData = GameObject.Find("Network Data").GetComponent<NetworkData>();
-    }
     
     [Command]
     public void CmdCreateChatRoom()
     {
+        if (m_networkData == null)
+            m_networkData = GameObject.Find("Network Data").GetComponent<NetworkData>();
+
         m_networkData.CmdIncrementRoomID();
         int room = m_networkData.CurrentRoomID;
         RpcCreate(room);

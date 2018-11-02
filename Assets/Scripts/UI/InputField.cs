@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
 using TMPro;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 public class InputField : MonoBehaviour
 {

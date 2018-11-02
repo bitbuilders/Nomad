@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.Networking.NetworkSystem;
-using UnityStandardAssets.Characters.ThirdPerson;
 
 [System.Serializable]
 public class ToggleEvent : UnityEvent<bool> { }
