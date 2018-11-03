@@ -51,7 +51,7 @@ public class PlayerShoot : NetworkBehaviour
 
             if (enemy)
             {
-                bool died = enemy.TakeDamage();
+                enemy.TakeDamage();
             }
         }
 

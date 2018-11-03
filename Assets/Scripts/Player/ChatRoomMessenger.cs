@@ -5,13 +5,6 @@ using UnityEngine.Networking;
 
 public class ChatRoomMessenger : NetworkBehaviour
 {
-    Player m_localPlayer;
-
-    private void Start()
-    {
-        m_localPlayer = GetComponent<Player>();
-    }
-
     public void SendMessageToRoom(string message, int roomID)
     {
         CmdSendMessageToServer(message, roomID);

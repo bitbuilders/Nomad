@@ -2,9 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalPlayerData : Singleton<LocalPlayerData>
+public class LocalPlayerData : MonoBehaviour
 {
     public Player LocalPlayer { get; set; }
+    public string TempUsername { get; set; }
+
+    public static LocalPlayerData Instance;
+
+    private void Start()
+    {
+        if (Instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Initialize(Player localPlayer)
+    {
+        LocalPlayer = localPlayer;
+        LocalPlayer.UserName = TempUsername;
+    }
 
     public bool PlayerExists(string playerName)
     {

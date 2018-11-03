@@ -26,14 +26,8 @@ public class Player : NetworkBehaviour
 
         if (isLocalPlayer)
         {
-            LocalPlayerData.Instance.LocalPlayer = this;
-            //ChatRoomManager.Instance.CreateChatRoom(LocalPlayerData.Instance.LocalPlayer, 1);
+            LocalPlayerData.Instance.Initialize(this);
         }
-
-        if (isLocalPlayer)
-            UserName = "Colin";
-        else
-            UserName = "admin";
     }
 
     void DisablePlayer()

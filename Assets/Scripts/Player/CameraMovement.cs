@@ -11,7 +11,6 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] [Range(0.0f, 180.0f)] float m_maxSpeedX = 2.0f;
     [SerializeField] [Range(0.0f, 180.0f)] float m_maxSpeedY = 4.0f;
     [SerializeField] [Range(0.0f, 180.0f)] float m_idleFriction = 10.0f;
-    [SerializeField] [Range(0.0f, 20.0f)] float m_stiffness = 3.0f;
     [Header("Limits")]
     [SerializeField] [Range(0.0f, -90.0f)] float m_maxPitch = -35.0f;
     [SerializeField] [Range(0.0f, 90.0f)] float m_minPitch = 65.0f;
