@@ -38,6 +38,32 @@ public class Party : MonoBehaviour
 
     public void JoinParty(string player)
     {
+        ClearCurrentParty();
+
+        PartyMessenger pm = LocalPlayerData.Instance.LocalPlayer.GetComponent<PartyMessenger>();
+        // Adds themself to party
+        AddToParty(player);
+
+        // Adds new player to all current members' party, and adds all current members to new player's plarty
+        foreach (string name in m_members)
+        {
+            if (name != player)
+            {
+                pm.AddPlayerToParty(name, player);
+                pm.AddPlayerToParty(player, name);
+            }
+        }
+
+        // Adds leader to their party, and vice versa
+        if (m_leader != player)
+        {
+            pm.AddPlayerToParty(m_leader, player);
+            pm.AddPlayerToParty(player, m_leader);
+        }
+    }
+
+    public void AddToParty(string player)
+    {
         GameObject go = Instantiate(m_partyPlayer, Vector3.zero, Quaternion.identity, m_partyMemberLocations);
         PartyPlayer pp = go.GetComponent<PartyPlayer>();
         pp.Initialize(player);
@@ -48,5 +74,17 @@ public class Party : MonoBehaviour
     void UpdateUI()
     {
         m_partyName.text = m_leader + "'s";
+    }
+
+    void ClearCurrentParty()
+    {
+        m_members.Clear();
+
+        Transform[] children = m_partyMemberLocations.GetComponentsInChildren<Transform>();
+        foreach (Transform child in children)
+        {
+            if (child != m_partyMemberLocations)
+                Destroy(child.gameObject);
+        }
     }
 }

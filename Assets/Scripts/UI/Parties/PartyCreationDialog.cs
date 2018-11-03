@@ -15,13 +15,18 @@ public class PartyCreationDialog : MonoBehaviour
     {
         List<string> invited = new List<string>() { m_p1Name.text, m_p2Name.text, m_p3Name.text, m_p4Name.text };
         string leader = LocalPlayerData.Instance.LocalPlayer.UserName;
+        LocalPlayerData localData = LocalPlayerData.Instance;
 
         for (int i = 0; i < invited.Count; i++)
         {
             if (invited.Count == 0)
                 break;
 
-            if (string.IsNullOrEmpty(invited[i].Trim()))
+            string player = invited[i].Trim();
+            bool hasNameAsLeader = (leader == player);
+            bool multipleLeaderUsername = (localData.MultipleUsernames());
+            bool invalidName = (hasNameAsLeader && !multipleLeaderUsername);
+            if (string.IsNullOrEmpty(player) || !localData.PlayerExists(player) || invalidName)
             {
                 invited.RemoveAt(i);
                 i--;

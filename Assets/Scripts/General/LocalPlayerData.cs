@@ -35,7 +35,6 @@ public class LocalPlayerData : MonoBehaviour
         Player[] players = FindObjectsOfType<Player>();
         foreach (Player p in players)
         {
-            print(p.UserName + " | " + playerName);
             if (p.UserName == playerName && p != LocalPlayer)
             {
                 exists = true;

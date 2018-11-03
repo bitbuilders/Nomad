@@ -8,6 +8,7 @@ public class Menu : MonoBehaviour
 {
     [SerializeField] TMP_InputField m_username = null;
     [SerializeField] TMP_InputField m_ipAddress = null;
+    [SerializeField] LANToggle m_lanToggle = null;
 
     private void Start()
     {
@@ -22,7 +23,16 @@ public class Menu : MonoBehaviour
     public void StartClient()
     {
         SetPlayerData();
-        NomadNetworkManager.Instance.networkAddress = m_ipAddress.text.Trim();
+
+        if (m_lanToggle.LAN)
+        {
+            NomadNetworkManager.Instance.networkAddress = m_ipAddress.text.Trim();
+        }
+        else
+        {
+
+        }
+
         NomadNetworkManager.Instance.StartClient();
     }
 

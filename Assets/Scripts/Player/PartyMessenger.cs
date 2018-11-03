@@ -33,20 +33,24 @@ public class PartyMessenger : NetworkBehaviour
         }
     }
 
-    public void AddPlayerToParty(string player)
+    public void AddPlayerToParty(string player, string addedPlayer)
     {
-        CmdAddPlayer(player);
+        CmdAddPlayer(player, addedPlayer);
     }
 
     [Command]
-    void CmdAddPlayer(string player)
+    void CmdAddPlayer(string player, string addedPlayer)
     {
-        RpcReceivePlayer(player);
+        RpcReceivePlayer(player, addedPlayer);
     }
 
     [ClientRpc]
-    void RpcReceivePlayer(string player)
+    void RpcReceivePlayer(string player, string addedPlayer)
     {
-
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.UserName == player)
+        {
+            PartyManager.Instance.AddPlayerToParty(addedPlayer);
+        }
     }
 }

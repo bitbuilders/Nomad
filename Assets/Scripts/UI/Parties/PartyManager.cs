@@ -8,6 +8,8 @@ public class PartyManager : Singleton<PartyManager>
     [SerializeField] GameObject m_partyButton = null;
     [SerializeField] GameObject m_partyCreate = null;
     [SerializeField] GameObject m_partyWindow = null;
+    [SerializeField] GameObject m_inviteButton = null;
+    [SerializeField] GameObject m_partyIcon = null;
     
     public void InvitePlayersToParty(string leader, List<string> invited)
     {
@@ -19,12 +21,19 @@ public class PartyManager : Singleton<PartyManager>
 
     public void AddPlayerToParty(string player)
     {
-        LocalPlayerData.Instance.LocalPlayer.GetComponent<PartyMessenger>().AddPlayerToParty(player);
+        m_localParty.AddToParty(player);
     }
 
     public void SetupParty(string leader)
     {
         m_localParty.ChangeParty(leader);
+        ShowPartyWindow();
+        m_localParty.JoinParty(LocalPlayerData.Instance.LocalPlayer.UserName);
+
+        if (leader == LocalPlayerData.Instance.LocalPlayer.UserName)
+            m_inviteButton.SetActive(true);
+        else
+            m_inviteButton.SetActive(false);
     }
 
     public void SetupPartyCreation()
@@ -32,6 +41,7 @@ public class PartyManager : Singleton<PartyManager>
         m_partyCreate.SetActive(true);
         m_partyButton.SetActive(false);
         m_partyWindow.SetActive(false);
+        m_partyIcon.SetActive(false);
     }
 
     public void ShowPartyWindow()
@@ -39,11 +49,12 @@ public class PartyManager : Singleton<PartyManager>
         m_partyCreate.SetActive(false);
         m_partyButton.SetActive(false);
         m_partyWindow.SetActive(true);
+        m_partyIcon.SetActive(false);
     }
 
     public void HidePartyWindow()
     {
-
+        m_partyIcon.SetActive(true);
     }
 
     public void DisableParty()
@@ -51,5 +62,6 @@ public class PartyManager : Singleton<PartyManager>
         m_partyCreate.SetActive(false);
         m_partyButton.SetActive(true);
         m_partyWindow.SetActive(false);
+        m_partyIcon.SetActive(false);
     }
 }

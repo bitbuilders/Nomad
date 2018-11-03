@@ -38,7 +38,6 @@ public class Notification : MonoBehaviour
                 break;
             case NotificationType.PARTY_INVITE:
                 PartyManager.Instance.SetupParty(m_senderNameText.text);
-                PartyManager.Instance.AddPlayerToParty(localPlayer.UserName);
                 break;
         }
 
