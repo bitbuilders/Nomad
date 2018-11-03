@@ -15,7 +15,7 @@ public class Player : NetworkBehaviour
     [SerializeField] ToggleEvent m_onToggleRemote = null;
     [SerializeField] float m_respawnTime = 5.0f;
 
-    public string UserName { get; set; }
+    [SyncVar(hook = "OnChangeUsername")] public string UserName;
 
     GameObject m_mainCamera;
     
@@ -27,8 +27,23 @@ public class Player : NetworkBehaviour
         if (isLocalPlayer)
         {
             LocalPlayerData.Instance.Initialize(this);
+            CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
+            //CmdSendUsername(UserName);
         }
     }
+
+    [Command]
+    void CmdChangeUsername(string username)
+    {
+        UserName = username;
+        CmdSendUsername(UserName);
+    }
+
+    void OnChangeUsername(string username)
+    {
+
+    }
+
 
     void DisablePlayer()
     {
@@ -78,5 +93,18 @@ public class Player : NetworkBehaviour
     public void EnableMovement(bool enable)
     {
 
+    }
+
+    [Command]
+    void CmdSendUsername(string username)
+    {
+        RpcReceiveUsername(username);
+    }
+
+    [ClientRpc]
+    void RpcReceiveUsername(string username)
+    {
+        UserName = username;
+        gameObject.name = UserName;
     }
 }

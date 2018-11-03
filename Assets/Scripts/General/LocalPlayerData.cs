@@ -35,7 +35,8 @@ public class LocalPlayerData : MonoBehaviour
         Player[] players = FindObjectsOfType<Player>();
         foreach (Player p in players)
         {
-            if (p.UserName == playerName)
+            print(p.UserName + " | " + playerName);
+            if (p.UserName == playerName && p != LocalPlayer)
             {
                 exists = true;
                 break;
@@ -54,7 +55,7 @@ public class LocalPlayerData : MonoBehaviour
         Player[] players = FindObjectsOfType<Player>();
         foreach (Player p in players)
         {
-            if (p.UserName == localUser && p != LocalPlayer)
+            if (p.UserName == localUser)
             {
                 multiple = true;
                 break;

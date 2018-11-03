@@ -5,13 +5,7 @@ using UnityEngine;
 public class NotificationManager : Singleton<NotificationManager>
 {
     [SerializeField] GameObject m_notificationTemplate = null;
-
-    Transform m_notificationLocation;
-
-    private void Start()
-    {
-        m_notificationLocation = GameObject.Find("Notifications").transform;
-    }
+    [SerializeField] Transform m_notificationLocation = null;
 
     public void CreateNotification(Notification.NotificationType type, string senderName, string roomName, int roomID)
     {
