@@ -7,21 +7,21 @@ using TMPro;
 
 public class InputField : MonoBehaviour
 {
+    [System.Serializable]
+    public enum OutputType
+    {
+        CHAT_ROOM,
+        PARTY
+    }
+
     [SerializeField] ChatRoom m_chatRoom = null;
+    [SerializeField] OutputType m_outputType = OutputType.CHAT_ROOM;
 
     TMP_InputField m_inputField = null;
 
     void Start()
     {
         m_inputField = GetComponent<TMP_InputField>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetButtonDown("Submit"))
-        {
-            //SendMessages();
-        }
     }
 
     private void SendMessages()
@@ -35,8 +35,16 @@ public class InputField : MonoBehaviour
 
         string message = m_inputField.text;
         string fullMessage = LocalPlayerData.Instance.LocalPlayer.UserName + ": " + message;
-        LocalPlayerData.Instance.LocalPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(fullMessage, m_chatRoom.ID);
-        //m_chatRoom.LocalOwner.GetComponent<ChatRoomMessenger>().SendMessageToRoom(message, m_chatRoom.ID);
+        
+        switch (m_outputType)
+        {
+            case OutputType.CHAT_ROOM:
+                LocalPlayerData.Instance.LocalPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(fullMessage, m_chatRoom.ID);
+                break;
+            case OutputType.PARTY:
+                PartyManager.Instance.SendChatMessage(fullMessage);
+                break;
+        }
 
         m_inputField.text = "";
         m_inputField.ActivateInputField();

@@ -14,8 +14,8 @@ public class PartyCreationDialog : MonoBehaviour
     public void CreateParty()
     {
         List<string> invited = new List<string>() { m_p1Name.text, m_p2Name.text, m_p3Name.text, m_p4Name.text };
-        string leader = LocalPlayerData.Instance.LocalPlayer.UserName;
         LocalPlayerData localData = LocalPlayerData.Instance;
+        string leader = localData.LocalPlayer.UserName;
 
         for (int i = 0; i < invited.Count; i++)
         {
@@ -37,6 +37,7 @@ public class PartyCreationDialog : MonoBehaviour
         {
             PartyManager.Instance.InvitePlayersToParty(leader, invited);
             PartyManager.Instance.ShowPartyWindow();
+            PartyManager.Instance.SetupParty(leader);
         }
     }
 

@@ -20,16 +20,9 @@ public class PartyMessenger : NetworkBehaviour
     void RpcReceiveInvites(string leader, string invited)
     {
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-        if (localPlayer.UserName == leader)
+        if (invited == localPlayer.UserName)
         {
-            PartyManager.Instance.SetupParty(leader);
-        }
-        else
-        {
-            if (invited == localPlayer.UserName)
-            {
-                NotificationManager.Instance.CreateNotification(Notification.NotificationType.PARTY_INVITE, leader, "", 0);
-            }
+            NotificationManager.Instance.CreateNotification(Notification.NotificationType.PARTY_INVITE, leader, "", 0);
         }
     }
 
@@ -93,6 +86,27 @@ public class PartyMessenger : NetworkBehaviour
         if (localPlayer.UserName == player)
         {
             PartyManager.Instance.MakeLeader(leader);
+        }
+    }
+
+    public void SendChatMessage(string player, string message)
+    {
+        CmdSendMessage(player, message);
+    }
+
+    [Command]
+    void CmdSendMessage(string player, string message)
+    {
+        RpcReceiveMessage(player, message);
+    }
+
+    [ClientRpc]
+    void RpcReceiveMessage(string player, string message)
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.UserName == player)
+        {
+            PartyManager.Instance.ReceiveChatMessage(message);
         }
     }
 }

@@ -10,6 +10,8 @@ public class Party : MonoBehaviour
     [SerializeField] GameObject m_partyPlayer = null;
     [SerializeField] Transform m_partyMemberLocations = null;
     [SerializeField] TMP_InputField m_inviteName = null;
+    [SerializeField] ChatRoom m_chatRoom = null;
+    [SerializeField] GameObject m_chatRoomAndField = null;
 
     List<string> m_members;
     string m_leader;
@@ -39,19 +41,16 @@ public class Party : MonoBehaviour
             else
                 m_leader = "";
         }
-
-        ClearCurrentParty();
-
+        
         PartyManager.Instance.DisableParty();
         
         PartyMessenger pm = localPlayer.GetComponent<PartyMessenger>();
-        m_members.Remove(localName);
         foreach (string player in m_members)
         {
             pm.RemovePlayerFromParty(player, localName);
         }
 
-        pm.RemovePlayerFromParty(m_leader, localName);
+        ClearCurrentParty();
     }
 
     void SendLeaderNotification(string newLeader)
@@ -89,21 +88,25 @@ public class Party : MonoBehaviour
         // Adds themself to party
         AddToParty(localName);
 
-        // Adds new player to all current members' party, and adds all current members to new player's plarty
-        foreach (string name in m_members)
-        {
-            if (name != localName)
-            {
-                pm.AddPlayerToParty(name, localName);
-                pm.AddPlayerToParty(localName, name);
-            }
-        }
-
         // Adds leader to their party, and vice versa
         if (m_leader != localName)
         {
             pm.AddPlayerToParty(m_leader, localName);
-            pm.AddPlayerToParty(localName, m_leader);
+            AddToParty(m_leader);
+        }
+    }
+
+    public void SendJoinNotification(string player)
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        PartyMessenger pm = localPlayer.GetComponent<PartyMessenger>();
+        foreach (string name in m_members)
+        {
+            if (name != player && name != m_leader)
+            {
+                pm.AddPlayerToParty(name, player);
+                pm.AddPlayerToParty(player, name);
+            }
         }
     }
 
@@ -115,6 +118,11 @@ public class Party : MonoBehaviour
         pp.Initialize(player);
 
         m_members.Add(player);
+
+        if (m_leader == LocalPlayerData.Instance.LocalPlayer.UserName && m_leader != player)
+        {
+            SendJoinNotification(player);
+        }
     }
 
     public void InviteToParty(TMP_InputField name)
@@ -129,6 +137,10 @@ public class Party : MonoBehaviour
         if (exists && !invalidName)
         {
             localData.LocalPlayer.GetComponent<PartyMessenger>().SendPlayerInvites(m_leader, player);
+        }
+        else
+        {
+            // ERROR
         }
     }
 
@@ -146,7 +158,42 @@ public class Party : MonoBehaviour
     public void SetAsLeader(string leader)
     {
         m_leader = leader;
-        m_members.Remove(m_leader);
+        UpdateUI();
+    }
+
+    public void SendChatMessage(string message)
+    {
+        foreach (string player in m_members)
+        {
+            LocalPlayerData.Instance.LocalPlayer.GetComponent<PartyMessenger>().SendChatMessage(player, message);
+        }
+    }
+
+    public void ReceiveMessage(string message)
+    {
+        m_chatRoom.AddMessage(message);
+    }
+
+    public void ShowChatRoom()
+    {
+        m_chatRoomAndField.SetActive(true);
+    }
+
+    public void HideChatRoom()
+    {
+        m_chatRoomAndField.SetActive(false);
+    }
+
+    public void ToggleChatRoom()
+    {
+        if (m_chatRoomAndField.activeSelf)
+        {
+            HideChatRoom();
+        }
+        else
+        {
+            ShowChatRoom();
+        }
     }
 
     void UpdateUI()
@@ -163,7 +210,9 @@ public class Party : MonoBehaviour
         foreach (Transform child in children)
         {
             if (child != m_partyMemberLocations)
+            {
                 Destroy(child.gameObject);
+            }
         }
     }
 }

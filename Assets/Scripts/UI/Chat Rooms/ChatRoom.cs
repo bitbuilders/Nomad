@@ -27,7 +27,6 @@ public class ChatRoom : MonoBehaviour
 
     void Start()
     {
-        UpdateRoomName();
         m_text = new StringBuilder(m_chatLog.text);
         string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
         AddMessage(welcomeMessage);
@@ -40,6 +39,7 @@ public class ChatRoom : MonoBehaviour
         m_chatRoom.gameObject.SetActive(false);
         m_inputField.gameObject.SetActive(false);
         ChangeRoomName();
+        UpdateRoomName();
 
         if (roomID < 0)
             ID = 0;
