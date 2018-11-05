@@ -41,16 +41,58 @@ public class PartyMessenger : NetworkBehaviour
     [Command]
     void CmdAddPlayer(string player, string addedPlayer)
     {
-        RpcReceivePlayer(player, addedPlayer);
+        RpcReceivePlayerAdd(player, addedPlayer);
     }
 
     [ClientRpc]
-    void RpcReceivePlayer(string player, string addedPlayer)
+    void RpcReceivePlayerAdd(string player, string addedPlayer)
     {
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         if (localPlayer.UserName == player)
         {
             PartyManager.Instance.AddPlayerToParty(addedPlayer);
+        }
+    }
+
+    public void RemovePlayerFromParty(string player, string removedPlayer)
+    {
+        CmdSendRemovePlayer(player, removedPlayer);
+    }
+
+    [Command]
+    void CmdSendRemovePlayer(string player, string removedPlayer)
+    {
+        RpcReceivePlayerRemove(player, removedPlayer);
+    }
+
+    [ClientRpc]
+    void RpcReceivePlayerRemove(string player, string removedPlayer)
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.UserName == player)
+        {
+            PartyManager.Instance.RemovePlayerFromParty(removedPlayer);
+        }
+    }
+
+    public void NewLeader(string player, string leader)
+    {
+        CmdSendNewLeader(player, leader);
+    }
+
+    [Command]
+    void CmdSendNewLeader(string player, string leader)
+    {
+        RpcReceiveNewLeader(player, leader);
+    }
+
+    [ClientRpc]
+    void RpcReceiveNewLeader(string player, string leader)
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.UserName == player)
+        {
+            PartyManager.Instance.MakeLeader(leader);
         }
     }
 }

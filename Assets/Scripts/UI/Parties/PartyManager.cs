@@ -24,16 +24,29 @@ public class PartyManager : Singleton<PartyManager>
         m_localParty.AddToParty(player);
     }
 
+    public void RemovePlayerFromParty(string player)
+    {
+        m_localParty.RemoveFromParty(player);
+    }
+
     public void SetupParty(string leader)
     {
         m_localParty.ChangeParty(leader);
         ShowPartyWindow();
-        m_localParty.JoinParty(LocalPlayerData.Instance.LocalPlayer.UserName);
+        m_localParty.JoinParty();
 
         if (leader == LocalPlayerData.Instance.LocalPlayer.UserName)
             m_inviteButton.SetActive(true);
         else
             m_inviteButton.SetActive(false);
+    }
+
+    public void MakeLeader(string leader)
+    {
+        if (leader == LocalPlayerData.Instance.LocalPlayer.UserName)
+            m_inviteButton.SetActive(true);
+
+        m_localParty.SetAsLeader(leader);
     }
 
     public void SetupPartyCreation()
@@ -54,6 +67,9 @@ public class PartyManager : Singleton<PartyManager>
 
     public void HidePartyWindow()
     {
+        m_partyCreate.SetActive(false);
+        m_partyButton.SetActive(false);
+        m_partyWindow.SetActive(false);
         m_partyIcon.SetActive(true);
     }
 
