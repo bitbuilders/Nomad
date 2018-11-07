@@ -10,7 +10,8 @@ GameObject:
   - component: {fileID: 493494}
   - component: {fileID: 3319948}
   - component: {fileID: 2347890}
-  m_Layer: 0
+  - component: {fileID: 65226300691741986}
+  m_Layer: 10
   m_Name: Old_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 154630}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.7617722, y: 0.2871665, z: 14.794197}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,3 +84,15 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 154630}
   m_IsPrefabAsset: 1
+--- !u!65 &65226300691741986
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 154630}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.16, y: 4.2613444, z: 1.1}
+  m_Center: {x: 0.07, y: 1.8618172, z: 0.05}

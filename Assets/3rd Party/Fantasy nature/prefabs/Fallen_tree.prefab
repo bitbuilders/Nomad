@@ -10,7 +10,8 @@ GameObject:
   - component: {fileID: 488752}
   - component: {fileID: 3334600}
   - component: {fileID: 2326278}
-  m_Layer: 0
+  - component: {fileID: 136122166095123970}
+  m_Layer: 10
   m_Name: Fallen_tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 229.6, y: 0, z: 0}
+  m_LocalPosition: {x: -6.192253, y: 0.55972254, z: 16.776398}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -83,3 +84,16 @@ Prefab:
   m_SourcePrefab: {fileID: 0}
   m_RootGameObject: {fileID: 131288}
   m_IsPrefabAsset: 1
+--- !u!136 &136122166095123970
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 131288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 3.88
+  m_Direction: 2
+  m_Center: {x: -0.009288192, y: 0.01372686, z: 0.000000059604645}
