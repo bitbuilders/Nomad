@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4621771439932030}
   - component: {fileID: 33065816537387818}
   - component: {fileID: 23902662591655386}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: plants
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 33408005778391428}
   - component: {fileID: 23499441707919112}
   - component: {fileID: 64586226566757768}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 33651769916351250}
   - component: {fileID: 23500436177434324}
   - component: {fileID: 64482055893968300}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: roof
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4305438277127826}
   - component: {fileID: 33212852458678752}
   - component: {fileID: 23040008901013574}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 33541008060886314}
   - component: {fileID: 23359937450548684}
   - component: {fileID: 64951367725445870}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 33989285563912108}
   - component: {fileID: 23748906590590788}
   - component: {fileID: 64777114522734512}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: brick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4997625944798602}
   - component: {fileID: 95820858657893762}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Medieva_fantasy_house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
