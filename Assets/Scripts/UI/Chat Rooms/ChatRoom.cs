@@ -19,14 +19,17 @@ public class ChatRoom : MonoBehaviour
 
     public int ID { get; private set; }
     public string Name { get; private set; }
-    
+
+    Animator m_animator;
     StringBuilder m_text;
+    Vector3 m_startSize;
     float m_targetHeight;
     float m_currentHeight;
     float m_time;
 
     void Start()
     {
+        m_animator = GetComponent<Animator>();
         m_text = new StringBuilder(m_chatLog.text);
         string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
         AddMessage(welcomeMessage);
@@ -77,11 +80,19 @@ public class ChatRoom : MonoBehaviour
     public void HideRoom()
     {
         ChatRoomManager.Instance.HideChatRoom();
+        m_animator.SetTrigger("ExpandUp");
     }
 
     public void OpenRoom()
     {
         ChatRoomManager.Instance.OpenChatRoom();
+        m_animator.SetTrigger("ExpandDown");
+    }
+
+    public void Create()
+    {
+        GetComponent<Animator>().SetTrigger("Create");
+        m_nameChange.SetActive(false);
     }
 
     void Update()

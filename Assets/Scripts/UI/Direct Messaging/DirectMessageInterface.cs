@@ -9,6 +9,13 @@ public class DirectMessageInterface : MonoBehaviour
     [SerializeField] TMP_InputField m_messageContentInput = null;
     [SerializeField] TextMeshProUGUI m_notificationText = null;
 
+    Animator m_animator;
+
+    private void Start()
+    {
+        m_animator = GetComponent<Animator>();
+    }
+
     public void CreateNewConversation()
     {
         string playerName = m_conversationNameInput.text;
@@ -33,16 +40,18 @@ public class DirectMessageInterface : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    public void Hide()
     {
-        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
-        playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
-    }
-
-    private void OnDisable()
-    {
+        m_animator.SetTrigger("SlideOut");
         PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
         playerMove.RemoveState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+    }
+
+    public void Expand()
+    {
+        m_animator.SetTrigger("SlideIn");
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
     }
 
     public void InitializePlayerNameField()

@@ -13,8 +13,15 @@ public class Party : MonoBehaviour
     [SerializeField] ChatRoom m_chatRoom = null;
     [SerializeField] GameObject m_chatRoomAndField = null;
 
+    Animator m_animator;
     List<string> m_members;
     string m_leader;
+    bool m_chatOpen;
+
+    private void Start()
+    {
+        m_animator = GetComponent<Animator>();
+    }
 
     public void ChangeParty(string leader)
     {
@@ -22,6 +29,7 @@ public class Party : MonoBehaviour
         m_members = new List<string>();
 
         UpdateUI();
+        m_chatOpen = false;
     }
 
     public void LeaveParty()
@@ -153,6 +161,19 @@ public class Party : MonoBehaviour
     public void Hide()
     {
         PartyManager.Instance.HidePartyWindow();
+        m_animator.SetTrigger("ExpandUpSmall");
+        HideChatRoom();
+        m_chatOpen = false;
+    }
+
+    public void Show()
+    {
+        m_animator.SetTrigger("ExpandDownSmall");
+    }
+
+    public void HideForReal()
+    {
+        gameObject.SetActive(false);
     }
 
     public void SetAsLeader(string leader)
@@ -176,27 +197,29 @@ public class Party : MonoBehaviour
 
     public void ShowChatRoom()
     {
-        m_chatRoomAndField.SetActive(true);
         PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
         playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipLeft();
     }
 
     public void HideChatRoom()
     {
-        m_chatRoomAndField.SetActive(false);
         PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
         playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipRight();
     }
 
     public void ToggleChatRoom()
     {
-        if (m_chatRoomAndField.activeSelf)
+        if (m_chatOpen)
         {
             HideChatRoom();
+            m_chatOpen = false;
         }
         else
         {
             ShowChatRoom();
+            m_chatOpen = true;
         }
     }
 

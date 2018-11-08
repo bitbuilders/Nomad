@@ -9,12 +9,14 @@ public class EmoteSelector : MonoBehaviour
     [SerializeField] [Range(0.0f, 5.0f)] float m_emoteFadeOutTime = 0.2f;
     [Range(0.0f, 5.0f)] public float ColorTransitionInTime = 0.15f;
     [Range(0.0f, 5.0f)] public float ColorTransitionOutTime = 0.15f;
+    [SerializeField] Canvas m_canvas;
     [SerializeField] List<Image> m_sliceImages;
     
     public string CurrentEmote { get; set; }
 
     PlayerMovement.PlayerState m_cannotEmoteState;
     float m_time;
+    float m_size;
     bool m_fadeIn;
     bool m_fade;
 
@@ -24,6 +26,9 @@ public class EmoteSelector : MonoBehaviour
         SetRaycastActive(false);
         m_fadeIn = false;
         m_fade = false;
+
+        RectTransform childWidthAndHeight = GetComponentInChildren<EmoteSlice>().GetComponent<RectTransform>();
+        m_size = childWidthAndHeight.sizeDelta.x;
 
         m_cannotEmoteState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
@@ -42,6 +47,7 @@ public class EmoteSelector : MonoBehaviour
             m_fade = true;
             
             playerMove.AddState(PlayerMovement.PlayerState.EMOTE);
+            SetWheelPosition();
         }
         else if (Input.GetButtonUp("Emote") && m_fadeIn)
         {
@@ -58,6 +64,15 @@ public class EmoteSelector : MonoBehaviour
             float duration = (m_fadeIn) ? m_emoteFadeInTime : m_emoteFadeOutTime;
             Fade(m_fadeIn, duration);
         }
+    }
+
+    void SetWheelPosition()
+    {
+        Vector3 mousePos = Input.mousePosition;
+        float scaledSize = m_size * m_canvas.scaleFactor + 5.0f;
+        mousePos.x = Mathf.Clamp(mousePos.x, scaledSize, Screen.width - scaledSize);
+        mousePos.y = Mathf.Clamp(mousePos.y, scaledSize, Screen.height - scaledSize);
+        transform.position = mousePos;
     }
 
     void Fade(bool fadeIn, float duration)

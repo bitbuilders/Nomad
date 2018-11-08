@@ -32,7 +32,7 @@ public class Notification : MonoBehaviour
         switch (Type)
         {
             case NotificationType.ROOM_INVITE:
-                ChatRoomManager.Instance.CreateChatRoom(m_roomID, m_roomNameText.text);
+                ChatRoomManager.Instance.CreateChatRoom(m_roomID, true, m_roomNameText.text);
                 string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " has joined the room!", Colors.ColorType.WHITE);
                 localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(joinMessage, m_roomID);
                 break;

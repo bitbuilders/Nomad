@@ -11,6 +11,14 @@ public class PartyCreationDialog : MonoBehaviour
     [SerializeField] TMP_InputField m_p3Name = null;
     [SerializeField] TMP_InputField m_p4Name = null;
 
+    Animator m_animator;
+
+    private void Start()
+    {
+        m_animator = GetComponent<Animator>();
+        gameObject.SetActive(false);
+    }
+
     public void CreateParty()
     {
         List<string> invited = new List<string>() { m_p1Name.text, m_p2Name.text, m_p3Name.text, m_p4Name.text };
@@ -38,6 +46,9 @@ public class PartyCreationDialog : MonoBehaviour
             PartyManager.Instance.InvitePlayersToParty(leader, invited);
             PartyManager.Instance.ShowPartyWindow();
             PartyManager.Instance.SetupParty(leader);
+
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
         }
     }
 
@@ -46,6 +57,8 @@ public class PartyCreationDialog : MonoBehaviour
         PartyManager.Instance.SetupPartyCreation();
         PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
         playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_animator.SetTrigger("Expand");
+
     }
 
     public void Cancel()
@@ -55,8 +68,14 @@ public class PartyCreationDialog : MonoBehaviour
         m_p3Name.text = "";
         m_p4Name.text = "";
 
-        PartyManager.Instance.DisableParty();
         PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
         playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_animator.SetTrigger("Shrink");
+    }
+
+    public void Hide()
+    {
+        PartyManager.Instance.DisableParty();
+        gameObject.SetActive(false);
     }
 }

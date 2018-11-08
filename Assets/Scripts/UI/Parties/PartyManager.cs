@@ -66,7 +66,6 @@ public class PartyManager : Singleton<PartyManager>
         m_partyButton.SetActive(false);
         m_partyWindow.SetActive(false);
         m_partyIcon.SetActive(false);
-        m_partyChatRoom.SetActive(false);
     }
 
     public void ShowPartyWindow()
@@ -75,24 +74,19 @@ public class PartyManager : Singleton<PartyManager>
         m_partyButton.SetActive(false);
         m_partyWindow.SetActive(true);
         m_partyIcon.SetActive(false);
-        m_partyChatRoom.SetActive(false);
     }
 
     public void HidePartyWindow()
     {
         m_partyCreate.SetActive(false);
         m_partyButton.SetActive(false);
-        m_partyWindow.SetActive(false);
         m_partyIcon.SetActive(true);
-        m_partyChatRoom.SetActive(false);
     }
 
     public void DisableParty()
     {
-        m_partyCreate.SetActive(false);
         m_partyButton.SetActive(true);
         m_partyWindow.SetActive(false);
         m_partyIcon.SetActive(false);
-        m_partyChatRoom.SetActive(false);
     }
 }
