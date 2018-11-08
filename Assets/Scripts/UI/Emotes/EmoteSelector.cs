@@ -10,33 +10,75 @@ public class EmoteSelector : MonoBehaviour
     [Range(0.0f, 5.0f)] public float ColorTransitionInTime = 0.15f;
     [Range(0.0f, 5.0f)] public float ColorTransitionOutTime = 0.15f;
     [SerializeField] List<Image> m_sliceImages;
-
-
+    
     public string CurrentEmote { get; set; }
+
+    PlayerMovement.PlayerState m_cannotEmoteState;
+    float m_time;
+    bool m_fadeIn;
+    bool m_fade;
 
     private void Start()
     {
         SetImageAlpha(0.0f);
         SetRaycastActive(false);
+        m_fadeIn = false;
+        m_fade = false;
+
+        m_cannotEmoteState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Emote"))
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        PlayerMovement playerMove = null;
+        if (localPlayer)
+            playerMove = localPlayer.GetComponent<PlayerMovement>();
+
+        if (Input.GetButtonDown("Emote") && !playerMove.ContainsStates(m_cannotEmoteState))
         {
             SetRaycastActive(true);
-            Fade(true, m_emoteFadeInTime);
+            m_fadeIn = true;
+            m_fade = true;
+            
+            playerMove.AddState(PlayerMovement.PlayerState.EMOTE);
         }
-        else if (Input.GetButtonUp("Emote"))
+        else if (Input.GetButtonUp("Emote") && m_fadeIn)
         {
             SetRaycastActive(false);
-            Fade(false, m_emoteFadeOutTime);
+            m_fadeIn = false;
             SendEmote();
+            m_fade = true;
+            
+            playerMove.RemoveState(PlayerMovement.PlayerState.EMOTE);
+        }
+
+        if (m_fade)
+        {
+            float duration = (m_fadeIn) ? m_emoteFadeInTime : m_emoteFadeOutTime;
+            Fade(m_fadeIn, duration);
+        }
+    }
+
+    void Fade(bool fadeIn, float duration)
+    {
+        m_time += Time.deltaTime;
+        m_time = Mathf.Clamp(m_time, 0.0f, duration);
+        float t = (fadeIn) ? m_time / duration : 1.0f - (m_time / duration);
+        SetImageAlpha(t);
+
+        if (m_time == duration)
+        {
+            m_fade = false;
+            m_time = 0.0f;
         }
     }
 
     void SendEmote()
     {
+        if (string.IsNullOrEmpty(CurrentEmote))
+            return;
+
         string emote = CurrentEmote.Trim();
         if (!string.IsNullOrEmpty(emote) && emote != "None")
             LocalPlayerData.Instance.LocalPlayer.GetComponent<EmoteMessenger>().Emote(emote);
@@ -58,11 +100,5 @@ public class EmoteSelector : MonoBehaviour
             c.a = alpha;
             i.color = c;
         }
-    }
-
-    public void Fade(bool fadeIn, float time)
-    {
-        // TODO: Use fading within this class with a toggle (doesn't work atm when quickly tapping emote button)
-        UIJuice.Instance.FadeAlpha(m_sliceImages, fadeIn, time);
     }
 }

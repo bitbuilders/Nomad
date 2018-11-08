@@ -9,6 +9,7 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
     
     List<ChatRoom> m_chatRooms;
     Transform m_roomLocation = null;
+    int m_openRooms = 0;
 
     private void Start()
     {
@@ -41,6 +42,24 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
             {
                 room.AddMessage(message);
             }
+        }
+    }
+
+    public void OpenChatRoom()
+    {
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.AddState(PlayerMovement.PlayerState.CHAT_ROOM);
+        m_openRooms++;
+    }
+
+    public void HideChatRoom()
+    {
+        m_openRooms--;
+
+        if (m_openRooms == 0)
+        {
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.RemoveState(PlayerMovement.PlayerState.CHAT_ROOM);
         }
     }
 }

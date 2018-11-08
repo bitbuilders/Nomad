@@ -5,6 +5,17 @@ using UnityEngine.Networking;
 
 public class PlayerMovement : NetworkBehaviour
 {
+    [System.Serializable]
+    public enum PlayerState
+    {
+        NONE = 1,
+        CHAT_ROOM = 2,
+        EMOTE = 4,
+        DIRECT_MESSAGE = 8,
+        PARTY_MESSAGE = 16,
+        IN_AIR = 32
+    }
+
     [Header("Movement")]
     [SerializeField] [Range(0.0f, 50.0f)] float m_acceleration = 5.0f;
     [SerializeField] [Range(0.0f, 50.0f)] float m_maxSpeed = 10.0f;
@@ -28,17 +39,18 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] [Range(0.0f, 20.0f)] float m_movementUpdateRate = 0.1f;
     
     public bool OnGround { get; private set; }
+    public PlayerState State { get; private set; }
 
     Animator m_animator;
     Rigidbody m_rigidbody;
     Quaternion m_lastRotation;
     GameObject m_childAvatar;
+    PlayerState m_cannotMoveState;
     Vector3 m_velocity;
     Vector3 m_rotation;
     float m_rigidFactor = 80.0f;
     float m_updateTime;
     float m_idleTime;
-    bool m_canMove;
     bool m_idle;
 
     private void OnEnable()
@@ -46,9 +58,10 @@ public class PlayerMovement : NetworkBehaviour
         m_animator = GetComponentInChildren<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_childAvatar = m_animator.gameObject;
-
-        m_canMove = true;
+        
         m_idle = true;
+
+        m_cannotMoveState = (PlayerState.CHAT_ROOM | PlayerState.DIRECT_MESSAGE | PlayerState.PARTY_MESSAGE);
     }
 
     private void Update()
@@ -67,7 +80,10 @@ public class PlayerMovement : NetworkBehaviour
             CmdUpdateMotionData(m_velocity, m_rotation, m_idle);
         }
 
-        if (Input.GetButtonDown("Jump") && OnGround && m_canMove)
+        if (!CanMove())
+            return;
+
+        if (Input.GetButtonDown("Jump") && OnGround && !HasState(PlayerState.IN_AIR))
         {
             CmdSendAnimationTrigger("Jump");
             //m_animator.SetTrigger("Jump");
@@ -76,8 +92,15 @@ public class PlayerMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (isLocalPlayer)
+        if (isLocalPlayer && CanMove())
             UpdateMovement();
+        else if (isLocalPlayer)
+        {
+            m_rotation = Vector3.zero;
+            m_velocity = Vector3.zero;
+            m_rigidbody.velocity = m_velocity;
+            m_idle = true;
+        }
 
         UpdateAnimator();
     }
@@ -99,7 +122,7 @@ public class PlayerMovement : NetworkBehaviour
             m_idleTime = 0.0f;
         }
 
-        if (OnGround && m_canMove)
+        if (OnGround && !HasState(PlayerState.IN_AIR))
         {
             float speed = m_acceleration * Time.deltaTime;
             m_velocity.z += inZ * speed;
@@ -193,12 +216,12 @@ public class PlayerMovement : NetworkBehaviour
 
     public void DisableMovement()
     {
-        m_canMove = false;
+        AddState(PlayerState.IN_AIR);
     }
 
     public void EnableMovement()
     {
-        m_canMove = true;
+        RemoveState(PlayerState.IN_AIR);
     }
 
     [Command]
@@ -225,5 +248,37 @@ public class PlayerMovement : NetworkBehaviour
     void RpcRecieveAnimationTrigger(string trigger)
     {
         m_animator.SetTrigger(trigger);
+    }
+
+    public void AddState(PlayerState state)
+    {
+        State |= state;
+    }
+
+    public void RemoveState(PlayerState state)
+    {
+        State &= ~state;
+    }
+
+    public bool HasState(PlayerState state)
+    {
+        return (State & state) == state;
+    }
+
+    public bool ContainsStates(PlayerState states)
+    {
+        return (~(State & states) & states) != states;
+    }
+
+    public bool CanMove()
+    {
+        bool canRotate = true;
+
+        if (ContainsStates(m_cannotMoveState))
+        {
+            canRotate = false;
+        }
+
+        return canRotate;
     }
 }

@@ -44,6 +44,8 @@ public class PartyCreationDialog : MonoBehaviour
     public void ShowDialog()
     {
         PartyManager.Instance.SetupPartyCreation();
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
 
     public void Cancel()
@@ -54,5 +56,7 @@ public class PartyCreationDialog : MonoBehaviour
         m_p4Name.text = "";
 
         PartyManager.Instance.DisableParty();
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
 }

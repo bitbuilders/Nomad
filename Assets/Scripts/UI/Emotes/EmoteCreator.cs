@@ -53,7 +53,6 @@ public class EmoteCreator : MonoBehaviour
             m_camera = Camera.main;
 
         Vector3 dir = m_camera.gameObject.transform.position - transform.position;
-        Debug.DrawLine(m_camera.gameObject.transform.position, transform.position);
         Quaternion look = Quaternion.LookRotation(dir);
         m_rectTransform.rotation = look;
     }

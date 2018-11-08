@@ -18,12 +18,17 @@ public class CameraMovement : MonoBehaviour
     [Header("Input")]
     [SerializeField] GameObject m_target = null;
 
+    PlayerMovement m_playerMovement;
+    PlayerMovement.PlayerState m_cannotRotateState;
     Vector3 m_targetPosition;
     Vector3 m_rotation;
     Vector3 m_speed;
 
     private void Start()
     {
+        m_cannotRotateState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.EMOTE | PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_playerMovement = GetComponentInParent<PlayerMovement>();
+
         Vector3 dir = transform.position - m_target.transform.position;
         m_targetPosition = m_target.transform.position + Vector3.up;
         transform.position = dir.normalized * m_distanceFromTarget + m_targetPosition;
@@ -60,6 +65,14 @@ public class CameraMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (CanRotate() || Input.GetMouseButton(1))
+            Rotate();
+        else
+            m_speed = Vector3.zero;
+    }
+
+    public void Rotate()
+    {
         float inX = Input.GetAxis("Mouse X");
         float inY = -Input.GetAxis("Mouse Y");
         float speed = m_acceleration * Time.deltaTime;
@@ -91,5 +104,17 @@ public class CameraMovement : MonoBehaviour
 
         m_rotation += m_speed;
         m_rotation.x = Mathf.Clamp(m_rotation.x, m_maxPitch, m_minPitch);
+    }
+
+    public bool CanRotate()
+    {
+        bool canRotate = true;
+        
+        if (m_playerMovement.ContainsStates(m_cannotRotateState))
+        {
+            canRotate = false;
+        }
+
+        return canRotate;
     }
 }

@@ -33,6 +33,18 @@ public class DirectMessageInterface : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+    }
+
+    private void OnDisable()
+    {
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.RemoveState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+    }
+
     public void InitializePlayerNameField()
     {
         m_conversationNameInput.text = "";

@@ -2470,7 +2470,7 @@ MonoBehaviour:
   m_lookOffset: 2
   m_acceleration: 10
   m_maxSpeedX: 1.4
-  m_maxSpeedY: 3
+  m_maxSpeedY: 2
   m_idleFriction: 17
   m_maxPitch: -20
   m_minPitch: 40
@@ -2791,7 +2791,7 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578856476574356}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 42c37ec3afd0ba14ea03b8707ec78349, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.23

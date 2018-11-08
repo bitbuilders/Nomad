@@ -177,11 +177,15 @@ public class Party : MonoBehaviour
     public void ShowChatRoom()
     {
         m_chatRoomAndField.SetActive(true);
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
 
     public void HideChatRoom()
     {
         m_chatRoomAndField.SetActive(false);
+        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+        playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
     }
 
     public void ToggleChatRoom()

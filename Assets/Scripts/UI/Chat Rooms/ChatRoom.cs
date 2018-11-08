@@ -74,6 +74,16 @@ public class ChatRoom : MonoBehaviour
         m_nameInputField.text = "";
     }
 
+    public void HideRoom()
+    {
+        ChatRoomManager.Instance.HideChatRoom();
+    }
+
+    public void OpenRoom()
+    {
+        ChatRoomManager.Instance.OpenChatRoom();
+    }
+
     void Update()
     {
         //if (m_time <= 1.0f)
@@ -111,5 +121,6 @@ public class ChatRoom : MonoBehaviour
     public void DestroyChatRoom()
     {
         ChatRoomManager.Instance.RemoveChatRoom(gameObject);
+        ChatRoomManager.Instance.HideChatRoom();
     }
 }
