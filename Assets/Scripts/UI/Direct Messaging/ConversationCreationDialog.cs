@@ -9,10 +9,17 @@ public class ConversationCreationDialog : MonoBehaviour
     [SerializeField] Button m_createButton = null;
 
     TMP_InputField m_conversatioNameField;
+    Animator m_animator;
 
     private void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         m_conversatioNameField = GetComponentInChildren<TMP_InputField>();
+        m_animator = GetComponent<Animator>();
     }
 
     public void OnValueChange()
@@ -28,5 +35,20 @@ public class ConversationCreationDialog : MonoBehaviour
         {
             m_conversatioNameField.text = "";
         }
+    }
+
+    public void Expand()
+    {
+        m_animator.SetTrigger("Expand");
+    }
+
+    public void Shrink()
+    {
+        m_animator.SetTrigger("Shrink");
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }

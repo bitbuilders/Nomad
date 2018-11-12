@@ -9,6 +9,13 @@ public class PlayerInviter : MonoBehaviour
     [SerializeField] TMP_InputField m_inviteInput = null;
     [SerializeField] ChatRoom m_chatRoom = null;
 
+    Animator m_animator;
+
+    private void Start()
+    {
+        m_animator = GetComponent<Animator>();
+    }
+
     public void SendInvite()
     {
         string name = m_inviteInput.text;
@@ -16,19 +23,21 @@ public class PlayerInviter : MonoBehaviour
         string roomName = m_chatRoom.Name;
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         localPlayer.GetComponent<ChatRoomMessenger>().SendInviteToRoom(localPlayer.UserName, name, roomName, room);
-        ResetInputField(true);
+        ResetInputField();
+        m_animator.SetTrigger("Shrink");
     }
 
-    public void ResetInputField(bool hide)
+    public void ResetInputField()
     {
+        gameObject.SetActive(true);
         m_inviteInput.text = "";
         m_inviteInput.ActivateInputField();
-        gameObject.SetActive(!hide);
     }
 
     public void CancelInvite()
     {
-        ResetInputField(true);
+        ResetInputField();
+        m_animator.SetTrigger("Shrink");
     }
 
     public void OnValueChange()

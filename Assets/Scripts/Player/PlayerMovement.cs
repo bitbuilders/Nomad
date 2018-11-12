@@ -98,7 +98,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             m_rotation = Vector3.zero;
             m_velocity = Vector3.zero;
-            m_rigidbody.velocity = m_velocity;
+            m_rigidbody.velocity = new Vector3(0.0f, m_rigidbody.velocity.y, 0.0f);
             m_idle = true;
         }
 

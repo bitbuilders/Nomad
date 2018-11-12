@@ -15,7 +15,8 @@ public class ChatRoom : MonoBehaviour
     [SerializeField] GameObject m_buttons = null;
     [SerializeField] GameObject m_chatRoom = null;
     [SerializeField] GameObject m_inputField = null;
-    //[SerializeField] [Range(0.0f, 10.0f)] float m_slideSpeed = 1.0f;
+    [SerializeField] GameObject m_editButton = null;
+    [SerializeField] GameObject m_roomButton = null;
 
     public int ID { get; private set; }
     public string Name { get; private set; }
@@ -23,8 +24,6 @@ public class ChatRoom : MonoBehaviour
     Animator m_animator;
     StringBuilder m_text;
     Vector3 m_startSize;
-    float m_targetHeight;
-    float m_currentHeight;
     float m_time;
 
     void Start()
@@ -33,6 +32,12 @@ public class ChatRoom : MonoBehaviour
         m_text = new StringBuilder(m_chatLog.text);
         string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
         AddMessage(welcomeMessage);
+        m_nameChange.GetComponent<Animator>().SetTrigger("Expand");
+    }
+
+    private void Update()
+    {
+        m_time += Time.deltaTime;
     }
 
     public void Initialize(int roomID, string name = "Chat Room")
@@ -66,7 +71,7 @@ public class ChatRoom : MonoBehaviour
 
     public void ChangeRoomName()
     {
-        m_nameChange.SetActive(true);
+        ShowDialog(m_nameChange);
         m_nameInputField.ActivateInputField();
     }
 
@@ -77,33 +82,56 @@ public class ChatRoom : MonoBehaviour
         m_nameInputField.text = "";
     }
 
+    public void ShowDialog(GameObject dialog)
+    {
+        dialog.SetActive(true);
+        dialog.GetComponent<Animator>().SetTrigger("Expand");
+    }
+
+    public void HideDialog(GameObject dialog)
+    {
+        dialog.GetComponent<Animator>().SetTrigger("Shrink");
+    }
+
     public void HideRoom()
     {
-        ChatRoomManager.Instance.HideChatRoom();
-        m_animator.SetTrigger("ExpandUp");
+        if (m_time >= 0.2f)
+        {
+            m_roomButton.SetActive(true);
+            m_inputField.SetActive(false);
+            m_chatRoom.SetActive(false);
+            m_buttons.SetActive(false);
+            m_editButton.SetActive(false);
+            ChatRoomManager.Instance.HideChatRoom();
+            m_animator.SetTrigger("ExpandUp");
+            m_time = 0.0f;
+        }
     }
 
     public void OpenRoom()
     {
-        ChatRoomManager.Instance.OpenChatRoom();
-        m_animator.SetTrigger("ExpandDown");
+        if (m_chatRoom.activeInHierarchy)
+            return;
+
+        m_animator.SetTrigger("Create");
+        if (m_time >= 0.2f)
+        {
+            HideDialog(m_nameChange);
+            m_roomButton.SetActive(true);
+            m_inputField.SetActive(true);
+            m_chatRoom.SetActive(true);
+            m_buttons.SetActive(true);
+            m_editButton.SetActive(true);
+            ChatRoomManager.Instance.OpenChatRoom();
+            m_animator.SetTrigger("ExpandDown");
+            m_time = 0.0f;
+        }
     }
 
     public void Create()
     {
         GetComponent<Animator>().SetTrigger("Create");
-        m_nameChange.SetActive(false);
-    }
-
-    void Update()
-    {
-        //if (m_time <= 1.0f)
-        //{
-        //    m_time += Time.deltaTime * m_slideSpeed;
-        //    float t = Interpolation.BounceOut(m_time);
-        //    float size = Mathf.Lerp(m_currentHeight, m_targetHeight, t);
-        //    m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size);
-        //}
+        HideDialog(m_nameChange);
     }
 
     public void AddMessage(string text)
@@ -111,11 +139,6 @@ public class ChatRoom : MonoBehaviour
         if (m_text.Length > 0)
         {
             m_text.Append("\n");
-            m_currentHeight = m_containerBounds.sizeDelta.y;
-        }
-        else
-        {
-            m_currentHeight = 0.0f;
         }
 
         m_text.Append(text);
@@ -125,8 +148,6 @@ public class ChatRoom : MonoBehaviour
         float padding = m_chatLog.margin.x * 2.0f;
         Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, bounds.x - padding, bounds.y - padding);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
-        m_targetHeight = size.y;
-        m_time = 0.0f;
     }
 
     public void DestroyChatRoom()

@@ -16,9 +16,16 @@ public class Party : MonoBehaviour
     Animator m_animator;
     List<string> m_members;
     string m_leader;
+    float m_lastTime;
     bool m_chatOpen;
 
     private void Start()
+    {
+        Initialize();
+        gameObject.SetActive(false);
+    }
+
+    public void Initialize()
     {
         m_animator = GetComponent<Animator>();
     }
@@ -30,6 +37,7 @@ public class Party : MonoBehaviour
 
         UpdateUI();
         m_chatOpen = false;
+        m_animator.SetTrigger("ExpandDownSmall");
     }
 
     public void LeaveParty()
@@ -160,15 +168,28 @@ public class Party : MonoBehaviour
 
     public void Hide()
     {
-        PartyManager.Instance.HidePartyWindow();
-        m_animator.SetTrigger("ExpandUpSmall");
-        HideChatRoom();
-        m_chatOpen = false;
+        float time = Time.time - m_lastTime;
+        if (time >= 0.51f)
+        {
+            PartyManager.Instance.HidePartyWindow();
+            m_animator.SetTrigger("ExpandUpSmall");
+            HideChatRoom();
+            m_chatOpen = false;
+            m_lastTime = Time.time;
+        }
     }
 
-    public void Show()
+    public void Show(GameObject caller = null)
     {
-        m_animator.SetTrigger("ExpandDownSmall");
+        float time = Time.time - m_lastTime;
+        if (time >= 0.51f)
+        {
+            gameObject.SetActive(true);
+            if (caller)
+                caller.SetActive(false);
+            m_animator.SetTrigger("ExpandDownSmall");
+            m_lastTime = Time.time;
+        }
     }
 
     public void HideForReal()

@@ -8,7 +8,6 @@ public class PartyManager : Singleton<PartyManager>
     [SerializeField] GameObject m_partyButton = null;
     [SerializeField] GameObject m_partyCreate = null;
     [SerializeField] GameObject m_partyWindow = null;
-    [SerializeField] GameObject m_partyChatRoom = null;
     [SerializeField] GameObject m_inviteButton = null;
     [SerializeField] GameObject m_partyIcon = null;
     
@@ -32,8 +31,9 @@ public class PartyManager : Singleton<PartyManager>
 
     public void SetupParty(string leader)
     {
-        m_localParty.ChangeParty(leader);
         ShowPartyWindow();
+        m_localParty.Initialize();
+        m_localParty.ChangeParty(leader);
         m_localParty.JoinParty();
 
         if (leader == LocalPlayerData.Instance.LocalPlayer.UserName)
@@ -70,7 +70,6 @@ public class PartyManager : Singleton<PartyManager>
 
     public void ShowPartyWindow()
     {
-        m_partyCreate.SetActive(false);
         m_partyButton.SetActive(false);
         m_partyWindow.SetActive(true);
         m_partyIcon.SetActive(false);
@@ -88,5 +87,10 @@ public class PartyManager : Singleton<PartyManager>
         m_partyButton.SetActive(true);
         m_partyWindow.SetActive(false);
         m_partyIcon.SetActive(false);
+    }
+
+    public void ShowPartyButton()
+    {
+        m_partyButton.SetActive(true);
     }
 }

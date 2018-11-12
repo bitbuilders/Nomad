@@ -43,8 +43,8 @@ public class PartyCreationDialog : MonoBehaviour
 
         if (invited.Count > 0)
         {
+            Cancel();
             PartyManager.Instance.InvitePlayersToParty(leader, invited);
-            PartyManager.Instance.ShowPartyWindow();
             PartyManager.Instance.SetupParty(leader);
 
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
@@ -75,7 +75,7 @@ public class PartyCreationDialog : MonoBehaviour
 
     public void Hide()
     {
-        PartyManager.Instance.DisableParty();
+        PartyManager.Instance.ShowPartyButton();
         gameObject.SetActive(false);
     }
 }

@@ -42,7 +42,7 @@ public class EmoteSlice : MonoBehaviour
     {
         m_time += Time.deltaTime;
         m_time = Mathf.Clamp(m_time, 0.0f, m_fadeInTime);
-        float t = (fadeIn) ? m_time / m_fadeInTime : 1.0f - (m_time / m_fadeInTime);
+        float t = (fadeIn) ? m_time / m_fadeInTime : 1.0f - (m_time / m_fadeOutTime);
         Color c = Color.Lerp(m_normalColor, m_highlightColor, t);
         m_image.color = new Color(c.r, c.g, c.b, m_image.color.a);
     }

@@ -8,12 +8,15 @@ public class DirectMessageInterface : MonoBehaviour
     [SerializeField] TMP_InputField m_conversationNameInput = null;
     [SerializeField] TMP_InputField m_messageContentInput = null;
     [SerializeField] TextMeshProUGUI m_notificationText = null;
+    [SerializeField] GameObject m_conversationDialog = null;
 
     Animator m_animator;
+    ConversationCreationDialog m_creationDialog;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
+        m_creationDialog = m_conversationDialog.GetComponent<ConversationCreationDialog>();
     }
 
     public void CreateNewConversation()
@@ -56,8 +59,11 @@ public class DirectMessageInterface : MonoBehaviour
 
     public void InitializePlayerNameField()
     {
+        m_conversationDialog.SetActive(true);
+        m_creationDialog.Initialize();
         m_conversationNameInput.text = "";
         m_conversationNameInput.ActivateInputField();
+        m_creationDialog.Expand();
     }
 
     public void SendDirectMessageMessage()
