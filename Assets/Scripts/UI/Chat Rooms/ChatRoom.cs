@@ -84,28 +84,49 @@ public class ChatRoom : MonoBehaviour
 
     public void ShowDialog(GameObject dialog)
     {
+        Animator animator = dialog.GetComponent<Animator>();
+        if (!animator.runtimeAnimatorController)
+            return;
         dialog.SetActive(true);
-        dialog.GetComponent<Animator>().SetTrigger("Expand");
+        animator.SetTrigger("Expand");
     }
 
     public void HideDialog(GameObject dialog)
     {
-        dialog.GetComponent<Animator>().SetTrigger("Shrink");
+        Animator animator = dialog.GetComponent<Animator>();
+        if (!animator.runtimeAnimatorController)
+            return;
+        animator.SetTrigger("Shrink");
     }
 
     public void HideRoom()
     {
         if (m_time >= 0.2f)
         {
-            m_roomButton.SetActive(true);
-            m_inputField.SetActive(false);
-            m_chatRoom.SetActive(false);
-            m_buttons.SetActive(false);
-            m_editButton.SetActive(false);
-            ChatRoomManager.Instance.HideChatRoom();
-            m_animator.SetTrigger("ExpandUp");
-            m_time = 0.0f;
+            Hide();
         }
+    }
+
+    public void Hide()
+    {
+        if (m_nameChange.activeInHierarchy)
+        {
+            m_nameChange.GetComponent<Animator>().SetTrigger("Shrink");
+        }
+
+        //TODO: Invite and Delete dialog
+
+        if (!m_chatRoom.activeInHierarchy)
+            return;
+
+        m_roomButton.SetActive(true);
+        m_inputField.SetActive(false);
+        m_chatRoom.SetActive(false);
+        m_buttons.SetActive(false);
+        m_editButton.SetActive(false);
+        ChatRoomManager.Instance.HideChatRoom();
+        m_animator.SetTrigger("ExpandUp");
+        m_time = 0.0f;
     }
 
     public void OpenRoom()
@@ -116,7 +137,8 @@ public class ChatRoom : MonoBehaviour
         m_animator.SetTrigger("Create");
         if (m_time >= 0.2f)
         {
-            HideDialog(m_nameChange);
+            if (m_nameChange.activeInHierarchy)
+                HideDialog(m_nameChange);
             m_roomButton.SetActive(true);
             m_inputField.SetActive(true);
             m_chatRoom.SetActive(true);
