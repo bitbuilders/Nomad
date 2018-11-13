@@ -12,6 +12,8 @@ public class Party : MonoBehaviour
     [SerializeField] TMP_InputField m_inviteName = null;
     [SerializeField] ChatRoom m_chatRoom = null;
     [SerializeField] GameObject m_chatRoomAndField = null;
+    [SerializeField] GameObject m_inviteDialog = null;
+    [SerializeField] GameObject m_leaveDialog = null;
 
     Animator m_animator;
     List<string> m_members;
@@ -160,12 +162,6 @@ public class Party : MonoBehaviour
         }
     }
 
-    public void ShowInvitationDialog()
-    {
-        m_inviteName.text = "";
-        m_inviteName.ActivateInputField();
-    }
-
     public void Hide()
     {
         float time = Time.time - m_lastTime;
@@ -242,6 +238,38 @@ public class Party : MonoBehaviour
             ShowChatRoom();
             m_chatOpen = true;
         }
+    }
+
+    public void ShowInviteDialog()
+    {
+        if (m_leaveDialog.activeInHierarchy)
+            Minimize(m_leaveDialog);
+        Maximize(m_inviteDialog);
+
+        m_inviteName.text = "";
+        m_inviteName.ActivateInputField();
+    }
+
+    public void ShowLeaveDialog()
+    {
+        if (m_inviteDialog.activeInHierarchy)
+            Minimize(m_inviteDialog);
+        Maximize(m_leaveDialog);
+    }
+
+    public void HideDialog(GameObject dialog)
+    {
+        Minimize(dialog);
+    }
+
+    void Minimize(GameObject dialog)
+    {
+        dialog.GetComponent<Animator>().SetTrigger("Shrink");
+    }
+
+    void Maximize(GameObject dialog)
+    {
+        dialog.GetComponent<Animator>().SetTrigger("Expand");
     }
 
     void UpdateUI()

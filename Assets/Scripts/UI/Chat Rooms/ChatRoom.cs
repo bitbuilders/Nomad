@@ -17,6 +17,8 @@ public class ChatRoom : MonoBehaviour
     [SerializeField] GameObject m_inputField = null;
     [SerializeField] GameObject m_editButton = null;
     [SerializeField] GameObject m_roomButton = null;
+    [SerializeField] GameObject m_inviteDialog = null;
+    [SerializeField] GameObject m_deleteDialog = null;
 
     public int ID { get; private set; }
     public string Name { get; private set; }
@@ -32,7 +34,8 @@ public class ChatRoom : MonoBehaviour
         m_text = new StringBuilder(m_chatLog.text);
         string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
         AddMessage(welcomeMessage);
-        m_nameChange.GetComponent<Animator>().SetTrigger("Expand");
+        if (m_nameChange)
+            m_nameChange.GetComponent<Animator>().SetTrigger("Expand");
     }
 
     private void Update()
@@ -99,6 +102,22 @@ public class ChatRoom : MonoBehaviour
         animator.SetTrigger("Shrink");
     }
 
+    public void HideAllDialog()
+    {
+        if (m_nameChange.activeInHierarchy)
+        {
+            m_nameChange.GetComponent<Animator>().SetTrigger("Shrink");
+        }
+        if (m_inviteDialog.activeInHierarchy)
+        {
+            m_inviteDialog.GetComponent<Animator>().SetTrigger("Shrink");
+        }
+        if (m_deleteDialog.activeInHierarchy)
+        {
+            m_deleteDialog.GetComponent<Animator>().SetTrigger("Shrink");
+        }
+    }
+
     public void HideRoom()
     {
         if (m_time >= 0.2f)
@@ -109,12 +128,7 @@ public class ChatRoom : MonoBehaviour
 
     public void Hide()
     {
-        if (m_nameChange.activeInHierarchy)
-        {
-            m_nameChange.GetComponent<Animator>().SetTrigger("Shrink");
-        }
-
-        //TODO: Invite and Delete dialog
+        HideAllDialog();
 
         if (!m_chatRoom.activeInHierarchy)
             return;

@@ -6,15 +6,18 @@ using UnityEngine.Networking;
 public class ChatRoomManager : Singleton<ChatRoomManager>
 {
     [SerializeField] GameObject m_roomTemplate = null;
+    [SerializeField] GameObject m_hideRoomsButton = null;
     
     List<ChatRoom> m_chatRooms;
     Transform m_roomLocation = null;
     int m_openRooms = 0;
+    int m_createdRooms = 0;
 
     private void Start()
     {
         m_chatRooms = new List<ChatRoom>();
         m_roomLocation = GameObject.Find("Chat Rooms").transform;
+        m_hideRoomsButton.SetActive(false);
     }
     
     public void CreateChatRoom(int roomID, bool fromNotification, string roomName = "Chat Room")
@@ -26,6 +29,8 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
         m_chatRooms.Add(chatRoom);
         chatRoom.Initialize(roomID, roomName);
         print("Chat room ID: " + roomID + " created!");
+        m_createdRooms++;
+        m_hideRoomsButton.SetActive(true);
 
         if (fromNotification)
             chatRoom.Create();
@@ -35,6 +40,9 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
     {
         m_chatRooms.Remove(room.GetComponent<ChatRoom>());
         Destroy(room);
+        m_createdRooms--;
+        if (m_createdRooms == 0)
+            m_hideRoomsButton.SetActive(false);
     }
 
     public void AddMessageToChatRoom(int roomID, string message)
