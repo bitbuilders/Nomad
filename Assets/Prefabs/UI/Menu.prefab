@@ -732,6 +732,7 @@ GameObject:
   - component: {fileID: 224780318364415368}
   - component: {fileID: 222931404442152716}
   - component: {fileID: 114519758568168200}
+  - component: {fileID: 114718898803671038}
   - component: {fileID: 114240570129399426}
   - component: {fileID: 114466164065459988}
   - component: {fileID: 95004696207937792}
@@ -1409,8 +1410,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4285247982
+  m_fontColor: {r: 0.93333334, g: 0.69411767, b: 0.41960785, a: 1}
   m_enableVertexGradient: 0
   m_fontColorGradient:
     topLeft: {r: 1, g: 1, b: 1, a: 1}
@@ -2249,7 +2250,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224472767821815642}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2854,7 +2855,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224248368793708062}
   m_Direction: 0
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2938,8 +2939,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114601352019489326}
   m_HandleRect: {fileID: 224696701645207638}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9999999
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3004,6 +3005,19 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+--- !u!114 &114718898803671038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1949053995828284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77c4a6e107971b14094035eb0f8c824e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_notificationImage: {fileID: 0}
+  m_isParent: 1
 --- !u!114 &114723263318573244
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4224,7 +4238,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.00007644467}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 521.3}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224200478214637842
@@ -4260,7 +4274,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.00012207031, y: -0.000030517578}
+  m_AnchoredPosition: {x: -0.00012207031, y: 0.000004367578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224233798567231920

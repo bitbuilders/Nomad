@@ -15,21 +15,30 @@ public class Party : MonoBehaviour
     [SerializeField] GameObject m_inviteDialog = null;
     [SerializeField] GameObject m_leaveDialog = null;
 
+    public bool Hidden { get; private set; }
+
     Animator m_animator;
+    NotificationImageAlert m_notificationAlert;
     List<string> m_members;
     string m_leader;
     float m_lastTime;
+    float m_lastChatClick;
     bool m_chatOpen;
 
     private void Start()
     {
         Initialize();
+        Hidden = false;
         gameObject.SetActive(false);
     }
 
     public void Initialize()
     {
         m_animator = GetComponent<Animator>();
+        m_lastChatClick = 0.0f;
+        m_lastTime = 0.0f;
+        m_notificationAlert = GetComponent<NotificationImageAlert>();
+        m_notificationAlert.Initialize();
     }
 
     public void ChangeParty(string leader)
@@ -165,26 +174,42 @@ public class Party : MonoBehaviour
     public void Hide()
     {
         float time = Time.time - m_lastTime;
-        if (time >= 0.51f)
+        if (time >= 0.51f && !Hidden)
         {
+            if (m_inviteDialog.activeInHierarchy)
+                HideDialog(m_inviteDialog);
+            if (m_leaveDialog.activeInHierarchy)
+                HideDialog(m_leaveDialog);
+
             PartyManager.Instance.HidePartyWindow();
-            m_animator.SetTrigger("ExpandUpSmall");
-            HideChatRoom();
+            if (m_chatOpen)
+                StartCoroutine(MinimizeWithChat());
+            else
+                m_animator.SetTrigger("ExpandUpSmall");
             m_chatOpen = false;
             m_lastTime = Time.time;
+            Hidden = true;
         }
+    }
+
+    IEnumerator MinimizeWithChat()
+    {
+        HideChatRoom();
+        yield return new WaitForSeconds(0.501f);
+        m_animator.SetTrigger("ExpandUpSmall");
     }
 
     public void Show(GameObject caller = null)
     {
         float time = Time.time - m_lastTime;
-        if (time >= 0.51f)
+        if (time >= 0.51f && Hidden)
         {
             gameObject.SetActive(true);
             if (caller)
                 caller.SetActive(false);
             m_animator.SetTrigger("ExpandDownSmall");
             m_lastTime = Time.time;
+            Hidden = false;
         }
     }
 
@@ -210,20 +235,38 @@ public class Party : MonoBehaviour
     public void ReceiveMessage(string message)
     {
         m_chatRoom.AddMessage(message);
+
+        if (!m_chatOpen)
+        {
+            m_notificationAlert.AddNewNotification();
+        }
     }
 
     public void ShowChatRoom()
     {
-        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
-        playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
-        m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipLeft();
+        float delta = Time.time - m_lastChatClick;
+        if (delta >= 0.5f)
+        {
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.AddState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+            m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipLeft();
+            m_lastChatClick = Time.time;
+            m_chatOpen = true;
+            m_notificationAlert.RemoveNotifications();
+        }
     }
 
     public void HideChatRoom()
     {
-        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
-        playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
-        m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipRight();
+        float delta = Time.time - m_lastChatClick;
+        if (delta >= 0.5f)
+        {
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+            m_chatRoomAndField.GetComponent<PartyChatRoom>().FlipRight();
+            m_lastChatClick = Time.time;
+            m_chatOpen = false;
+        }
     }
 
     public void ToggleChatRoom()
@@ -231,12 +274,10 @@ public class Party : MonoBehaviour
         if (m_chatOpen)
         {
             HideChatRoom();
-            m_chatOpen = false;
         }
         else
         {
             ShowChatRoom();
-            m_chatOpen = true;
         }
     }
 

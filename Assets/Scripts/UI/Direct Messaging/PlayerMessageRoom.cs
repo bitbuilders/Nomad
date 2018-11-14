@@ -10,27 +10,28 @@ public class PlayerMessageRoom : MonoBehaviour
     public string Name { get; set; }
 
     DirectMessageInterface m_messageInterface;
-    DirectMessageNotification m_dmNotification;
-
-    private void Start()
-    {
-        Initialize();
-    }
+    public NotificationImageAlert NotificationAlert { get; private set; }
+    NotificationImageAlert m_parentNotification;
 
     // Will sometimes need to call before start
-    public void Initialize()
+    public void Initialize(NotificationImageAlert parentNotification)
     {
+        m_parentNotification = parentNotification;
+        NotificationAlert = GetComponent<NotificationImageAlert>();
+        NotificationAlert.Initialize();
         string startMessage = string.IsNullOrEmpty(StartMessage) ? "" : "\n" + StartMessage;
+        if (!string.IsNullOrEmpty(startMessage))
+            NotificationAlert.AddNewNotification();
         Messages = Colors.ConvertToColor("This is a private room with " + Name, Colors.ColorType.WHITE) + startMessage;
-        m_messageInterface = GameObject.Find("Menu").GetComponent<DirectMessageInterface>();
-        m_dmNotification = GetComponent<DirectMessageNotification>();
+        m_messageInterface = GameObject.Find("DM Menu").GetComponent<DirectMessageInterface>();
     }
 
     public void SetAsCurrentRoom()
     {
         DirectMessageManager.Instance.SetCurrentMessageRoom(this);
         m_messageInterface.InitializeInputField();
-        m_dmNotification.RemoveNotifications();
+        NotificationAlert.RemoveNotifications();
+        m_parentNotification.UpdateStatus();
     }
 
     public void AddMessage(string message)
@@ -43,7 +44,7 @@ public class PlayerMessageRoom : MonoBehaviour
 
         if (DirectMessageManager.Instance.CurrentRoom != this)
         {
-            m_dmNotification.AddNewNotification();
+            NotificationAlert.AddNewNotification();
         }
     }
 }

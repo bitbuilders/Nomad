@@ -616,8 +616,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114912085357181278}
   m_HandleRect: {fileID: 224093423752371648}
   m_Direction: 0
-  m_Value: 0.16666667
-  m_Size: 0.99999976
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -774,8 +774,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114092344661197736}
   m_HandleRect: {fileID: 224875262599446652}
   m_Direction: 2
-  m_Value: 0.0000006271593
-  m_Size: 0.5332821
+  m_Value: 0.0000019277384
+  m_Size: 0.60521775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -970,6 +970,10 @@ MonoBehaviour:
   m_buttons: {fileID: 0}
   m_chatRoom: {fileID: 1983127224840462}
   m_inputField: {fileID: 1927798009484836}
+  m_editButton: {fileID: 0}
+  m_roomButton: {fileID: 0}
+  m_inviteDialog: {fileID: 0}
+  m_deleteDialog: {fileID: 0}
 --- !u!114 &114688802354577952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1467,7 +1471,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0.000076293945, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0.0022125244, y: -0.0002746582}
   m_SizeDelta: {x: 0, y: 521.3}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224395871097895748
@@ -1604,7 +1608,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -295, y: 0.00012207031}
-  m_SizeDelta: {x: 400, y: 425}
+  m_SizeDelta: {x: 400, y: 500}
   m_Pivot: {x: 1, y: 1}
 --- !u!224 &224794106083618384
 RectTransform:

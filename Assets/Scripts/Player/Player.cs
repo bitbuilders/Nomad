@@ -27,6 +27,7 @@ public class Player : NetworkBehaviour
         if (isLocalPlayer)
         {
             LocalPlayerData.Instance.Initialize(this);
+            GameLobby.Instance.LocalPlayerMovement = GetComponent<PlayerMovement>();
             CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
             //CmdSendUsername(UserName);
         }
@@ -43,8 +44,7 @@ public class Player : NetworkBehaviour
     {
 
     }
-
-
+    
     void DisablePlayer()
     {
         if (isLocalPlayer)

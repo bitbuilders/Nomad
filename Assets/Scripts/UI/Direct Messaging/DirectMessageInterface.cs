@@ -10,15 +10,21 @@ public class DirectMessageInterface : MonoBehaviour
     [SerializeField] TextMeshProUGUI m_notificationText = null;
     [SerializeField] GameObject m_conversationDialog = null;
 
+    public bool Hidden { get; private set; }
+
     Animator m_animator;
     ConversationCreationDialog m_creationDialog;
-    bool m_hidden;
+    NotificationImageAlert m_notificationAlert;
+    float m_time;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
         m_creationDialog = m_conversationDialog.GetComponent<ConversationCreationDialog>();
-        m_hidden = true;
+        m_notificationAlert = GetComponent<NotificationImageAlert>();
+        m_notificationAlert.Initialize();
+        Hidden = true;
+        m_time = 0.0f;
     }
 
     public void CreateNewConversation()
@@ -35,7 +41,6 @@ public class DirectMessageInterface : MonoBehaviour
             else
             {
                 PlayerMessageRoom room = DirectMessageManager.Instance.CreateMessageRoom(playerName);
-                room.Initialize();
                 room.SetAsCurrentRoom();
             }
         }
@@ -47,23 +52,41 @@ public class DirectMessageInterface : MonoBehaviour
 
     public void Hide()
     {
-        if (!m_hidden)
+        float delta = Time.time - m_time;
+        bool longEnough = (delta >= 0.5f);
+        if (!Hidden && longEnough)
         {
-            m_hidden = true;
+            Hidden = true;
             m_animator.SetTrigger("SlideOut");
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
             playerMove.RemoveState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+            m_time = Time.time;
         }
     }
 
     public void Expand()
     {
-        if (m_hidden)
+        float delta = Time.time - m_time;
+        bool longEnough = (delta >= 0.5f);
+        if (Hidden && longEnough)
         {
-            m_hidden = false;
+            Hidden = false;
             m_animator.SetTrigger("SlideIn");
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
             playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+            m_time = Time.time;
+        }
+    }
+
+    public void ToggleVisibility()
+    {
+        if (Hidden)
+        {
+            Expand();
+        }
+        else
+        {
+            Hide();
         }
     }
 

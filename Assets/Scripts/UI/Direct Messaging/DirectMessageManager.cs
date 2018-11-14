@@ -12,6 +12,7 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
     [SerializeField] TextMeshProUGUI m_messageRoomText = null;
     [SerializeField] TextMeshProUGUI m_messageRoomTitleText = null;
     [SerializeField] Transform m_roomLocation = null;
+    [SerializeField] NotificationImageAlert m_notificationAlert;
 
     List<PlayerMessageRoom> m_messageRooms;
     public PlayerMessageRoom CurrentRoom;
@@ -21,7 +22,7 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
         m_messageRooms = new List<PlayerMessageRoom>();
     }
 
-    public PlayerMessageRoom CreateMessageRoom(string playerName)
+    public PlayerMessageRoom CreateMessageRoom(string playerName, string startMessage = "")
     {
         if (RoomExists(playerName))
         {
@@ -32,6 +33,8 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
         TextMeshProUGUI pName = go.GetComponentInChildren<TextMeshProUGUI>();
         pName.text = playerName;
         PlayerMessageRoom pmr = go.GetComponent<PlayerMessageRoom>();
+        pmr.StartMessage = startMessage;
+        pmr.Initialize(m_notificationAlert);
         pmr.Name = playerName;
         m_messageRooms.Add(pmr);
 
@@ -70,10 +73,11 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
 
         if (!hasRoom)
         {
-            PlayerMessageRoom pmr = CreateMessageRoom(sender);
-            pmr.StartMessage = message; // Need to do before initialize
-            pmr.Initialize();
+            PlayerMessageRoom pmr = CreateMessageRoom(sender, message);
+            m_notificationAlert.AddChild(pmr.NotificationAlert);
         }
+
+        m_notificationAlert.UpdateStatus();
     }
 
     bool RoomExists(string playerName)

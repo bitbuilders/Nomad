@@ -10,17 +10,17 @@ public class RoomUIManager : MonoBehaviour
 
     Animator m_animator;
     float m_time;
-    bool m_hidden;
+    bool Hidden;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
-        m_hidden = false;
+        Hidden = false;
     }
 
     public void ToggleVisibility()
     {
-        if (m_hidden)
+        if (Hidden)
         {
             Show();
         }
@@ -38,7 +38,7 @@ public class RoomUIManager : MonoBehaviour
             m_time = Time.time;
             HideRooms();
             m_animator.SetTrigger("SlideOutTop");
-            m_hidden = true;
+            Hidden = true;
             m_hideButtonText.text = "v";
         }
     }
@@ -50,7 +50,7 @@ public class RoomUIManager : MonoBehaviour
         {
             m_time = Time.time;
             m_animator.SetTrigger("SlideInTop");
-            m_hidden = false;
+            Hidden = false;
             m_hideButtonText.text = "^";
         }
     }

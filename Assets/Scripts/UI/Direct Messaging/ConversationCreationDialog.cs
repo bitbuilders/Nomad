@@ -29,7 +29,7 @@ public class ConversationCreationDialog : MonoBehaviour
             m_conversatioNameField.text = m_conversatioNameField.text.Replace("\n", "").Trim();
             m_createButton.onClick.Invoke();
             m_conversatioNameField.text = "";
-            gameObject.SetActive(false);
+            Shrink();
         }
         else if (string.IsNullOrEmpty(m_conversatioNameField.text.Trim()))
         {
