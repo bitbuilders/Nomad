@@ -12,11 +12,13 @@ public class DirectMessageInterface : MonoBehaviour
 
     Animator m_animator;
     ConversationCreationDialog m_creationDialog;
+    bool m_hidden;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
         m_creationDialog = m_conversationDialog.GetComponent<ConversationCreationDialog>();
+        m_hidden = true;
     }
 
     public void CreateNewConversation()
@@ -45,16 +47,24 @@ public class DirectMessageInterface : MonoBehaviour
 
     public void Hide()
     {
-        m_animator.SetTrigger("SlideOut");
-        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
-        playerMove.RemoveState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+        if (!m_hidden)
+        {
+            m_hidden = true;
+            m_animator.SetTrigger("SlideOut");
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.RemoveState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+        }
     }
 
     public void Expand()
     {
-        m_animator.SetTrigger("SlideIn");
-        PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
-        playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+        if (m_hidden)
+        {
+            m_hidden = false;
+            m_animator.SetTrigger("SlideIn");
+            PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
+            playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
+        }
     }
 
     public void InitializePlayerNameField()
