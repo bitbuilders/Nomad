@@ -57,6 +57,7 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
     public void AddMessageToRoom(string message, string sender, string recipient)
     {
         bool hasRoom = false;
+        int ignore = 1;
         foreach (PlayerMessageRoom room in m_messageRooms)
         {
             if (room.Name == sender || room.Name == recipient)
@@ -67,6 +68,9 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
                 if (room == CurrentRoom)
                 {
                     SetCurrentMessageRoom(room);
+
+                    if (GameLobby.Instance.DMOpen)
+                        ignore = 0;
                 }
             }
         }
@@ -77,7 +81,7 @@ public class DirectMessageManager : Singleton<DirectMessageManager>
             m_notificationAlert.AddChild(pmr.NotificationAlert);
         }
 
-        m_notificationAlert.UpdateStatus();
+        m_notificationAlert.UpdateStatus(ignore);
     }
 
     bool RoomExists(string playerName)

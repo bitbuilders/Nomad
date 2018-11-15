@@ -14,6 +14,7 @@ public class Player : NetworkBehaviour
     [SerializeField] ToggleEvent m_onToggleLocal = null;
     [SerializeField] ToggleEvent m_onToggleRemote = null;
     [SerializeField] float m_respawnTime = 5.0f;
+    [SerializeField] Nametag m_nametag = null;
 
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
 
@@ -24,6 +25,7 @@ public class Player : NetworkBehaviour
         m_mainCamera = Camera.main.gameObject;
         EnablePlayer();
 
+        m_nametag.Initialize();
         if (isLocalPlayer)
         {
             LocalPlayerData.Instance.Initialize(this);
@@ -31,6 +33,9 @@ public class Player : NetworkBehaviour
             CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
             //CmdSendUsername(UserName);
         }
+
+        string name = (string.IsNullOrEmpty(UserName)) ? "Lost Nomad" : UserName;
+        m_nametag.UpdateName(name);
     }
 
     [Command]
@@ -42,7 +47,7 @@ public class Player : NetworkBehaviour
 
     void OnChangeUsername(string username)
     {
-
+        m_nametag.UpdateName(username);
     }
     
     void DisablePlayer()

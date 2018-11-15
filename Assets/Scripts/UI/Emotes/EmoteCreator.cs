@@ -10,6 +10,7 @@ public class EmoteCreator : MonoBehaviour
     [SerializeField] [Range(0.0f, 10.0f)] float m_linger = 3.0f;
     [SerializeField] Camera m_camera;
 
+    Animator m_animator;
     Image m_image;
     RectTransform m_rectTransform;
     float m_time;
@@ -17,6 +18,7 @@ public class EmoteCreator : MonoBehaviour
 
     private void Start()
     {
+        m_animator = GetComponent<Animator>();
         m_image = GetComponent<Image>();
         m_rectTransform = GetComponent<RectTransform>();
         m_active = false;
@@ -52,19 +54,22 @@ public class EmoteCreator : MonoBehaviour
         if (!m_camera.gameObject.activeInHierarchy)
             m_camera = Camera.main;
 
-        Vector3 dir = m_camera.gameObject.transform.position - transform.position;
+        Vector3 dir = transform.position - m_camera.gameObject.transform.position;
         Quaternion look = Quaternion.LookRotation(dir);
         m_rectTransform.rotation = look;
     }
 
     public void CreateEmote(Sprite image)
     {
-        m_image.sprite = image;
-        m_time = 0.0f;
-        m_active = true;
-        Fade(true, m_fadeInTime);
-        // Do animation
-
+        if (!m_active)
+        {
+            m_image.sprite = image;
+            m_time = 0.0f;
+            m_active = true;
+            Fade(true, m_fadeInTime);
+            // Do animation
+            m_animator.SetTrigger("Spawn");
+        }
     }
 
     void RemoveEmote()
@@ -72,10 +77,11 @@ public class EmoteCreator : MonoBehaviour
         m_time = 0.0f;
         m_active = false;
         Fade(false, m_fadeOutTime);
+        m_animator.SetTrigger("Stop");
     }
 
     void Fade(bool fadeIn, float time)
     {
-        UIJuice.Instance.FadeAlpha(m_image, fadeIn, time);
+        UIJuice.Instance.FadeAlpha(m_image, fadeIn, time, false);
     }
 }

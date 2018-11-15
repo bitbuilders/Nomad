@@ -37,6 +37,7 @@ public class DirectMessageInterface : MonoBehaviour
             if (targetHasLocalName && !multipleWithLocalName)
             {
                 m_notificationText.gameObject.SetActive(true);
+                FadeError();
             }
             else
             {
@@ -47,7 +48,13 @@ public class DirectMessageInterface : MonoBehaviour
         else
         {
             m_notificationText.gameObject.SetActive(true);
+            FadeError();
         }
+    }
+
+    void FadeError()
+    {
+        UIJuice.Instance.Blink(m_notificationText, 0.2f, 1.0f, true, 1.0f);
     }
 
     public void Hide()
@@ -75,6 +82,8 @@ public class DirectMessageInterface : MonoBehaviour
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
             playerMove.AddState(PlayerMovement.PlayerState.DIRECT_MESSAGE);
             m_time = Time.time;
+            if (m_notificationAlert.NewNotifications > 0)
+                m_notificationAlert.RemoveNotification();
         }
     }
 

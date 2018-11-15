@@ -32,6 +32,17 @@ public class Party : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (m_inviteDialog.activeInHierarchy)
+                HideDialog(m_inviteDialog);
+            if (m_leaveDialog.activeInHierarchy)
+                HideDialog(m_leaveDialog);
+        }
+    }
+
     public void Initialize()
     {
         m_animator = GetComponent<Animator>();
@@ -195,7 +206,7 @@ public class Party : MonoBehaviour
     IEnumerator MinimizeWithChat()
     {
         HideChatRoom();
-        yield return new WaitForSeconds(0.501f);
+        yield return new WaitForSeconds(0.4f);
         m_animator.SetTrigger("ExpandUpSmall");
     }
 
@@ -253,6 +264,7 @@ public class Party : MonoBehaviour
             m_lastChatClick = Time.time;
             m_chatOpen = true;
             m_notificationAlert.RemoveNotifications();
+            m_chatRoom.ActivateInputField();
         }
     }
 

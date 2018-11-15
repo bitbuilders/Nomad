@@ -41,11 +41,15 @@ public class NotificationImageAlert : MonoBehaviour
         UpdateStatus();
     }
 
-    public void UpdateStatus()
+    public void UpdateStatus(int ignoredNotifications = 0)
     {
+        if (NewNotifications < 0)
+            NewNotifications = 0;
+
         if (m_isParent)
         {
-            NewNotifications = 0;
+            // To allow for some notifications to keep passthrough
+            NewNotifications = ignoredNotifications;
             foreach (NotificationImageAlert child in m_children)
             {
                 NewNotifications += child.NewNotifications;

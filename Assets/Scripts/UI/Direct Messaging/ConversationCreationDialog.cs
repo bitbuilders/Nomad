@@ -16,6 +16,14 @@ public class ConversationCreationDialog : MonoBehaviour
         Initialize();
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Shrink();
+        }
+    }
+
     public void Initialize()
     {
         m_conversatioNameField = GetComponentInChildren<TMP_InputField>();

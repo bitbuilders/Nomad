@@ -48,6 +48,6 @@ public class Menu : MonoBehaviour
         if (!string.IsNullOrEmpty(username))
             LocalPlayerData.Instance.TempUsername = username;
         else
-            LocalPlayerData.Instance.TempUsername = "Complacent Nomad";
+            LocalPlayerData.Instance.TempUsername = "Lost Nomad";
     }
 }

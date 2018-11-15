@@ -7,6 +7,7 @@ public class EmoteSelector : MonoBehaviour
 {
     [SerializeField] [Range(0.0f, 5.0f)] float m_emoteFadeInTime = 0.2f;
     [SerializeField] [Range(0.0f, 5.0f)] float m_emoteFadeOutTime = 0.2f;
+    [SerializeField] [Range(0.0f, 5.0f)] float m_cooldown = 0.3f;
     [Range(0.0f, 5.0f)] public float ColorTransitionInTime = 0.15f;
     [Range(0.0f, 5.0f)] public float ColorTransitionOutTime = 0.15f;
     [SerializeField] Canvas m_canvas;
@@ -16,6 +17,7 @@ public class EmoteSelector : MonoBehaviour
 
     PlayerMovement.PlayerState m_cannotEmoteState;
     float m_time;
+    float m_cooldownTime;
     float m_size;
     bool m_fadeIn;
     bool m_fade;
@@ -26,6 +28,7 @@ public class EmoteSelector : MonoBehaviour
         SetRaycastActive(false);
         m_fadeIn = false;
         m_fade = false;
+        m_cooldownTime = m_cooldown;
 
         RectTransform childWidthAndHeight = GetComponentInChildren<EmoteSlice>().GetComponent<RectTransform>();
         m_size = childWidthAndHeight.sizeDelta.x;
@@ -35,6 +38,8 @@ public class EmoteSelector : MonoBehaviour
 
     private void Update()
     {
+        m_cooldownTime += Time.deltaTime;
+
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         PlayerMovement playerMove = null;
         if (localPlayer)
@@ -49,14 +54,22 @@ public class EmoteSelector : MonoBehaviour
             playerMove.AddState(PlayerMovement.PlayerState.EMOTE);
             SetWheelPosition();
         }
-        else if (Input.GetButtonUp("Emote") && m_fadeIn)
+        else if (Input.GetButtonUp("Emote") && m_fadeIn && m_cooldownTime >= m_cooldown)
         {
+            m_cooldownTime = 0.0f;
             SetRaycastActive(false);
             m_fadeIn = false;
             SendEmote();
             m_fade = true;
             
             playerMove.RemoveState(PlayerMovement.PlayerState.EMOTE);
+        }
+        else if (Input.GetButtonUp("Emote") && m_fadeIn)
+        {
+            m_fade = true;
+            m_fadeIn = false;
+            playerMove.RemoveState(PlayerMovement.PlayerState.EMOTE);
+            SetRaycastActive(false);
         }
 
         if (m_fade)

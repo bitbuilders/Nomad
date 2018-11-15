@@ -19,6 +19,18 @@ public class PartyCreationDialog : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (Input.GetButtonDown("Submit"))
+        {
+            CreateParty();
+        }
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Cancel();
+        }
+    }
+
     public void CreateParty()
     {
         List<string> invited = new List<string>() { m_p1Name.text, m_p2Name.text, m_p3Name.text, m_p4Name.text };
@@ -43,13 +55,13 @@ public class PartyCreationDialog : MonoBehaviour
 
         if (invited.Count > 0)
         {
-            Cancel();
             PartyManager.Instance.InvitePlayersToParty(leader, invited);
             PartyManager.Instance.SetupParty(leader);
 
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
             playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
         }
+        Cancel();
     }
 
     public void ShowDialog()

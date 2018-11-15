@@ -527,12 +527,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 10
+    m_Left: 0
+    m_Right: 0
     m_Top: 20
-    m_Bottom: 20
+    m_Bottom: 5
   m_ChildAlignment: 1
-  m_Spacing: 20
+  m_Spacing: 15
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -1025,8 +1025,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 10
+    m_Left: 20
+    m_Right: 5
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 6
@@ -1160,8 +1160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 10
-    m_Right: 5
+    m_Left: 15
+    m_Right: 15
     m_Top: 10
     m_Bottom: 10
   m_ChildAlignment: 7
@@ -1209,6 +1209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_notificationImage: {fileID: 1028037285639534}
+  m_isParent: 0
 --- !u!114 &114349797857015286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1443,8 +1444,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114439247491996852}
   m_HandleRect: {fileID: 224327782059078838}
   m_Direction: 0
-  m_Value: 0.9999523
-  m_Size: 0.9940657
+  m_Value: 1
+  m_Size: 0.93842727
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1545,7 +1546,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9245283, g: 0.92374426, b: 0.3532396, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -2099,7 +2100,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -1.599823, y: 0}
+  m_AnchoredPosition: {x: -16.60019, y: 0}
   m_SizeDelta: {x: 269.59998, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224065119852004434

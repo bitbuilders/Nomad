@@ -19,11 +19,14 @@ public class ChatRoom : MonoBehaviour
     [SerializeField] GameObject m_roomButton = null;
     [SerializeField] GameObject m_inviteDialog = null;
     [SerializeField] GameObject m_deleteDialog = null;
+    [SerializeField] TMP_InputField m_field = null;
 
     public int ID { get; private set; }
     public string Name { get; private set; }
+    public bool Hidden { get; private set; }
 
     Animator m_animator;
+    NotificationImageAlert m_notificationAlert;
     StringBuilder m_text;
     Vector3 m_startSize;
     float m_time;
@@ -31,16 +34,27 @@ public class ChatRoom : MonoBehaviour
     void Start()
     {
         m_animator = GetComponent<Animator>();
+        m_notificationAlert = GetComponent<NotificationImageAlert>();
         m_text = new StringBuilder(m_chatLog.text);
         string welcomeMessage = Colors.ConvertToColor("Welcome to the chat room!", Colors.ColorType.WHITE);
         AddMessage(welcomeMessage);
         if (m_nameChange)
             m_nameChange.GetComponent<Animator>().SetTrigger("Expand");
+
+        if (m_notificationAlert)
+        {
+            m_notificationAlert.Initialize();
+        }
+        Hidden = true;
     }
 
     private void Update()
     {
         m_time += Time.deltaTime;
+        if (Input.GetButtonDown("Cancel"))
+        {
+            HideAllDialog();
+        }
     }
 
     public void Initialize(int roomID, string name = "Chat Room")
@@ -56,6 +70,12 @@ public class ChatRoom : MonoBehaviour
             ID = 0;
         else
             ID = roomID;
+    }
+
+    public void ActivateInputField()
+    {
+        if (m_field)
+            m_field.ActivateInputField();
     }
 
     public void SetRoomName(string roomName)
@@ -141,6 +161,7 @@ public class ChatRoom : MonoBehaviour
         ChatRoomManager.Instance.HideChatRoom();
         m_animator.SetTrigger("ExpandUp");
         m_time = 0.0f;
+        Hidden = true;
     }
 
     public void OpenRoom()
@@ -161,6 +182,8 @@ public class ChatRoom : MonoBehaviour
             ChatRoomManager.Instance.OpenChatRoom();
             m_animator.SetTrigger("ExpandDown");
             m_time = 0.0f;
+            m_notificationAlert.RemoveNotifications();
+            Hidden = false;
         }
     }
 
@@ -184,10 +207,16 @@ public class ChatRoom : MonoBehaviour
         float padding = m_chatLog.margin.x * 2.0f;
         Vector2 size = m_chatLog.GetPreferredValues(m_chatLog.text, bounds.x - padding, bounds.y - padding);
         m_containerBounds.sizeDelta = new Vector2(m_containerBounds.sizeDelta.x, size.y);
+
+        if (Hidden && m_notificationAlert)
+            m_notificationAlert.AddNewNotification();
     }
 
     public void DestroyChatRoom()
     {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        string joinMessage = Colors.ConvertToColor(localPlayer.UserName + " left the room", Colors.ColorType.WHITE);
+        localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(joinMessage, ID);
         ChatRoomManager.Instance.RemoveChatRoom(gameObject);
         ChatRoomManager.Instance.HideChatRoom();
     }

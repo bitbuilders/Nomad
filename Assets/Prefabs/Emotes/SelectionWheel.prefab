@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_emoteFadeInTime: 0.2
   m_emoteFadeOutTime: 0.1
+  m_cooldown: 3.2
   ColorTransitionInTime: 0.2
   ColorTransitionOutTime: 0.2
   m_canvas: {fileID: 0}

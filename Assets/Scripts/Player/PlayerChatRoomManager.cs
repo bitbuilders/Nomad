@@ -24,9 +24,9 @@ public class PlayerChatRoomManager : NetworkBehaviour
         if (isLocalPlayer)
         {
             ChatRoomManager.Instance.CreateChatRoom(room, false);
-            Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-            string creationMessage = Colors.ConvertToColor(localPlayer.UserName + " created the room", Colors.ColorType.WHITE);
-            localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(creationMessage, room);
+            //Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+            //string creationMessage = Colors.ConvertToColor(localPlayer.UserName + " created the room", Colors.ColorType.WHITE);
+            //localPlayer.GetComponent<ChatRoomMessenger>().SendMessageToRoom(creationMessage, room);
         }
     }
 }
