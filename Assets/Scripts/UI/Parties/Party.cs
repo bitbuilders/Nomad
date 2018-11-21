@@ -50,6 +50,7 @@ public class Party : MonoBehaviour
         m_lastTime = 0.0f;
         m_notificationAlert = GetComponent<NotificationImageAlert>();
         m_notificationAlert.Initialize();
+        Hidden = false;
     }
 
     public void ChangeParty(string leader)
@@ -79,8 +80,13 @@ public class Party : MonoBehaviour
             else
                 m_leader = "";
         }
-        
-        PartyManager.Instance.DisableParty();
+
+        Hide(true);
+        //HideAllDialog();
+        //if (m_chatRoom.gameObject.activeInHierarchy)
+        //    HideChatRoom();
+        //PartyManager.Instance.DisableParty();
+        PartyManager.Instance.ShowPartyButton();
         
         PartyMessenger pm = localPlayer.GetComponent<PartyMessenger>();
         foreach (string player in m_members)
@@ -182,17 +188,14 @@ public class Party : MonoBehaviour
         }
     }
 
-    public void Hide()
+    public void Hide(bool permanently = false)
     {
         float time = Time.time - m_lastTime;
         if (time >= 0.51f && !Hidden)
         {
-            if (m_inviteDialog.activeInHierarchy)
-                HideDialog(m_inviteDialog);
-            if (m_leaveDialog.activeInHierarchy)
-                HideDialog(m_leaveDialog);
-
-            PartyManager.Instance.HidePartyWindow();
+            HideAllDialog();
+            if (!permanently)
+                PartyManager.Instance.HidePartyWindow();
             if (m_chatOpen)
                 StartCoroutine(MinimizeWithChat());
             else
@@ -201,6 +204,14 @@ public class Party : MonoBehaviour
             m_lastTime = Time.time;
             Hidden = true;
         }
+    }
+
+    public void HideAllDialog()
+    {
+        if (m_inviteDialog.activeInHierarchy)
+            HideDialog(m_inviteDialog);
+        if (m_leaveDialog.activeInHierarchy)
+            HideDialog(m_leaveDialog);
     }
 
     IEnumerator MinimizeWithChat()
