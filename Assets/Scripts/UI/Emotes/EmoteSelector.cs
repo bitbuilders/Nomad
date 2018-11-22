@@ -33,7 +33,7 @@ public class EmoteSelector : MonoBehaviour
         RectTransform childWidthAndHeight = GetComponentInChildren<EmoteSlice>().GetComponent<RectTransform>();
         m_size = childWidthAndHeight.sizeDelta.x;
 
-        m_cannotEmoteState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_cannotEmoteState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.PARTY_MESSAGE | PlayerMovement.PlayerState.DIALOG);
     }
 
     private void Update()

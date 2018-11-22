@@ -1619,6 +1619,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a012de7c2d1890644a00b9755ccd6b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_showOnStart: 0
 --- !u!114 &114099976040368758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2060,7 +2061,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114839996499479866}
   m_HandleRect: {fileID: 224014487556629928}
   m_Direction: 0
-  m_Value: 0.5
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2275,7 +2276,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114609404548388026}
   m_HandleRect: {fileID: 224575188876292642}
   m_Direction: 2
-  m_Value: 0.00000035372238
+  m_Value: 0.00000041267612
   m_Size: 0.006995977
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2641,6 +2642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a012de7c2d1890644a00b9755ccd6b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_showOnStart: 1
 --- !u!114 &114302008836692740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4017,6 +4019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a012de7c2d1890644a00b9755ccd6b9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_showOnStart: 0
 --- !u!114 &114722352938242522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4365,6 +4368,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 114620855428123206}
         m_MethodName: ChangeRoomName
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114285313177195618}
+        m_MethodName: Show
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

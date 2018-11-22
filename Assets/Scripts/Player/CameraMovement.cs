@@ -26,7 +26,7 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        m_cannotRotateState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.EMOTE | PlayerMovement.PlayerState.PARTY_MESSAGE);
+        m_cannotRotateState = (PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.DIRECT_MESSAGE | PlayerMovement.PlayerState.EMOTE | PlayerMovement.PlayerState.PARTY_MESSAGE | PlayerMovement.PlayerState.DIALOG);
         m_playerMovement = GetComponentInParent<PlayerMovement>();
 
         Vector3 dir = transform.position - m_target.transform.position;

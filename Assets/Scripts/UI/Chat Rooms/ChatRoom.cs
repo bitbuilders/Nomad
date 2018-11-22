@@ -108,8 +108,8 @@ public class ChatRoom : MonoBehaviour
     public void ShowDialog(GameObject dialog)
     {
         Animator animator = dialog.GetComponent<Animator>();
-        if (!animator.runtimeAnimatorController)
-            return;
+        //if (!animator.runtimeAnimatorController)
+        //    return;
         dialog.SetActive(true);
         animator.SetTrigger("Expand");
     }
