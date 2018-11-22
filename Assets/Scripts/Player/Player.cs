@@ -17,6 +17,8 @@ public class Player : NetworkBehaviour
     [SerializeField] Nametag m_nametag = null;
 
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
+    [SyncVar(hook = "OnChangeColor")] string pColor;
+    public string Color { get { return Colors.ColorPrefix + pColor + ">"; } }
 
     GameObject m_mainCamera;
     
@@ -31,11 +33,13 @@ public class Player : NetworkBehaviour
             LocalPlayerData.Instance.Initialize(this);
             GameLobby.Instance.LocalPlayerMovement = GetComponent<PlayerMovement>();
             CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
+            CmdChangeColor(LocalPlayerData.Instance.TempColor);
             //CmdSendUsername(UserName);
         }
 
         string name = (string.IsNullOrEmpty(UserName)) ? "Lost Nomad" : UserName;
         m_nametag.UpdateName(name);
+        m_nametag.UpdateColor(Colors.StringToColor(pColor));
     }
 
     [Command]
@@ -48,6 +52,18 @@ public class Player : NetworkBehaviour
     void OnChangeUsername(string username)
     {
         m_nametag.UpdateName(username);
+    }
+
+    [Command]
+    void CmdChangeColor(string color)
+    {
+        pColor = color;
+        CmdSendColor(pColor);
+    }
+
+    void OnChangeColor(string color)
+    {
+        m_nametag.UpdateColor(Colors.StringToColor(color));
     }
     
     void DisablePlayer()
@@ -111,5 +127,17 @@ public class Player : NetworkBehaviour
     {
         UserName = username;
         gameObject.name = UserName;
+    }
+
+    [Command]
+    void CmdSendColor(string color)
+    {
+        RpcReceiveColor(color);
+    }
+
+    [ClientRpc]
+    void RpcReceiveColor(string color)
+    {
+        pColor = color;
     }
 }

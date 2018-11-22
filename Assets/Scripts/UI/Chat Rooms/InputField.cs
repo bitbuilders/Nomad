@@ -34,7 +34,9 @@ public class InputField : MonoBehaviour
         }
 
         string message = m_inputField.text;
-        string fullMessage = LocalPlayerData.Instance.LocalPlayer.UserName + ": " + message;
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        string username = localPlayer.Color + localPlayer.UserName + ": " + Colors.ColorSuffix;
+        string fullMessage = username + message;
         
         switch (m_outputType)
         {

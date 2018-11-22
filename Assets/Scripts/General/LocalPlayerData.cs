@@ -6,6 +6,7 @@ public class LocalPlayerData : MonoBehaviour
 {
     public Player LocalPlayer { get; set; }
     public string TempUsername { get; set; }
+    public string TempColor { get; set; }
 
     public static LocalPlayerData Instance;
 

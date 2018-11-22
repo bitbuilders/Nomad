@@ -118,7 +118,8 @@ public class DirectMessageInterface : MonoBehaviour
             return;
         }
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
-        string message = localPlayer.UserName + ": " + m_messageContentInput.text;
+        string username = localPlayer.Color + localPlayer.UserName + ": " + Colors.ColorSuffix;
+        string message = username + m_messageContentInput.text;
         LocalPlayerData.Instance.LocalPlayer.GetComponent<DirectMessenger>().SendDirectMessage(message, room.Name);
         m_messageContentInput.text = "";
         InitializeInputField();

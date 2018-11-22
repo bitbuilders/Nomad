@@ -32,4 +32,12 @@ public static class Colors
 
         return newColorString;
     }
+
+    public static Color StringToColor(string color)
+    {
+        Color c;
+        ColorUtility.TryParseHtmlString(color, out c);
+
+        return c;
+    }
 }

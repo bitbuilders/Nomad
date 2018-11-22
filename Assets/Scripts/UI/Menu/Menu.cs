@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     [SerializeField] TMP_InputField m_username = null;
     [SerializeField] TMP_InputField m_ipAddress = null;
     [SerializeField] LANToggle m_lanToggle = null;
+    [SerializeField] PlayerColorPicker m_colorPicker = null;
 
     private void Start()
     {
@@ -49,5 +50,7 @@ public class Menu : MonoBehaviour
             LocalPlayerData.Instance.TempUsername = username;
         else
             LocalPlayerData.Instance.TempUsername = "Lost Nomad";
+
+        LocalPlayerData.Instance.TempColor = m_colorPicker.Color;
     }
 }
