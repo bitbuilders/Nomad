@@ -34,12 +34,14 @@ public class PlayerMovement : NetworkBehaviour
     [Header("Ground")]
     [SerializeField] Transform m_groundTouch = null;
     [SerializeField] LayerMask m_groundMask = 0;
+    [SerializeField] LayerMask m_playerMask = 0;
     [Header("Camera")]
     [SerializeField] Camera m_camera;
     [Header("Network")]
     [SerializeField] [Range(0.0f, 20.0f)] float m_movementUpdateRate = 0.1f;
     
     public bool OnGround { get; private set; }
+    public bool TouchingPlayer { get; private set; }
     public PlayerState State { get; private set; }
 
     Animator m_animator;
@@ -70,6 +72,8 @@ public class PlayerMovement : NetworkBehaviour
         Collider[] points = Physics.OverlapSphere(m_groundTouch.position, 0.231f, m_groundMask);
         OnGround = points.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
+        Collider[] points2 = Physics.OverlapSphere(m_groundTouch.position, 0.231f, m_playerMask);
+        TouchingPlayer = points2.Length > 0;
 
         if (!isLocalPlayer)
             return;
@@ -123,7 +127,7 @@ public class PlayerMovement : NetworkBehaviour
             m_idleTime = 0.0f;
         }
 
-        if (OnGround && !HasState(PlayerState.IN_AIR))
+        if ((OnGround || TouchingPlayer) && !HasState(PlayerState.IN_AIR))
         {
             float speed = m_acceleration * Time.deltaTime;
             m_velocity.z += inZ * speed;
