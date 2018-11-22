@@ -124,15 +124,15 @@ public class ChatRoom : MonoBehaviour
 
     public void HideAllDialog()
     {
-        if (m_nameChange.activeInHierarchy)
+        if (m_nameChange && m_nameChange.activeInHierarchy)
         {
             m_nameChange.GetComponent<Animator>().SetTrigger("Shrink");
         }
-        if (m_inviteDialog.activeInHierarchy)
+        if (m_inviteDialog && m_inviteDialog.activeInHierarchy)
         {
             m_inviteDialog.GetComponent<Animator>().SetTrigger("Shrink");
         }
-        if (m_deleteDialog.activeInHierarchy)
+        if (m_deleteDialog && m_deleteDialog.activeInHierarchy)
         {
             m_deleteDialog.GetComponent<Animator>().SetTrigger("Shrink");
         }

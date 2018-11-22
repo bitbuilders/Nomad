@@ -1444,8 +1444,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114439247491996852}
   m_HandleRect: {fileID: 224327782059078838}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.98828125
+  m_Value: 0.000007353685
+  m_Size: 0.9384277
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1893,6 +1893,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: Show
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &222006927927653094
@@ -2100,7 +2111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.0000609977}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 269.59998, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224065119852004434
