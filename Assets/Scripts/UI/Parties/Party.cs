@@ -67,6 +67,7 @@ public class Party : MonoBehaviour
     {
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         string localName = localPlayer.UserName;
+        SendChatMessage(Colors.ConvertToColor(localName + " left the party", Colors.ColorType.WHITE));
 
         m_members.Remove(localName);
 
@@ -82,11 +83,8 @@ public class Party : MonoBehaviour
         }
 
         Hide(true);
-        //HideAllDialog();
-        //if (m_chatRoom.gameObject.activeInHierarchy)
-        //    HideChatRoom();
-        //PartyManager.Instance.DisableParty();
         PartyManager.Instance.ShowPartyButton();
+        m_chatRoom.ResetMessages();
         
         PartyMessenger pm = localPlayer.GetComponent<PartyMessenger>();
         foreach (string player in m_members)
@@ -138,6 +136,8 @@ public class Party : MonoBehaviour
             pm.AddPlayerToParty(m_leader, localName);
             AddToParty(m_leader);
         }
+
+        SendChatMessage(Colors.ConvertToColor(localName + " joined the party!", Colors.ColorType.WHITE));
     }
 
     public void SendJoinNotification(string player)
