@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class PartyCreationDialog : MonoBehaviour
 {
@@ -28,6 +28,19 @@ public class PartyCreationDialog : MonoBehaviour
         if (Input.GetButtonDown("Cancel"))
         {
             Cancel();
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            if (m_p1Name.isFocused)
+                m_p2Name.ActivateInputField();
+            else if (m_p2Name.isFocused)
+                m_p3Name.ActivateInputField();
+            else if (m_p3Name.isFocused)
+                m_p4Name.ActivateInputField();
+            else if (m_p4Name.isFocused)
+                m_p1Name.ActivateInputField();
+            else
+                m_p1Name.ActivateInputField();
         }
     }
 
