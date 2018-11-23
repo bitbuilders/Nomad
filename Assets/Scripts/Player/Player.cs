@@ -28,6 +28,7 @@ public class Player : NetworkBehaviour
         EnablePlayer();
 
         m_nametag.Initialize();
+
         if (isLocalPlayer)
         {
             LocalPlayerData.Instance.Initialize(this);
@@ -39,6 +40,9 @@ public class Player : NetworkBehaviour
 
         string name = (string.IsNullOrEmpty(UserName)) ? "Lost Nomad" : UserName;
         m_nametag.UpdateName(name);
+
+        if (string.IsNullOrEmpty(pColor))
+            pColor = "#C58D4D";
         m_nametag.UpdateColor(Colors.StringToColor(pColor));
     }
 

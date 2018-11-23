@@ -16,6 +16,7 @@ public class Party : MonoBehaviour
     [SerializeField] GameObject m_leaveDialog = null;
 
     public bool Hidden { get; private set; }
+    public bool InParty { get { return m_members.Count > 0; } }
 
     Animator m_animator;
     NotificationImageAlert m_notificationAlert;
@@ -136,7 +137,7 @@ public class Party : MonoBehaviour
             pm.AddPlayerToParty(m_leader, localName);
             AddToParty(m_leader);
         }
-
+        
         SendChatMessage(Colors.ConvertToColor(localName + " joined the party!", Colors.ColorType.WHITE));
     }
 
@@ -256,7 +257,8 @@ public class Party : MonoBehaviour
 
     public void ReceiveMessage(string message)
     {
-        m_chatRoom.AddMessage(message);
+        if (InParty)
+            m_chatRoom.AddMessage(message);
 
         if (!m_chatOpen)
         {

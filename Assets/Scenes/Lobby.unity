@@ -2097,7 +2097,7 @@ TerrainCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 794009509}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cf4521b63e1879449b0cfec3e7a248c7, type: 2}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 6058dce3e9cca6042b842c4ee623838f, type: 2}
   m_EnableTreeColliders: 1
@@ -5792,7 +5792,7 @@ Prefab:
     - target: {fileID: 224357315512551794, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000048420163
+      value: 0.000106132844
       objectReference: {fileID: 0}
     - target: {fileID: 224476800498815720, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
@@ -6084,12 +6084,12 @@ Prefab:
     - target: {fileID: 224126650707376448, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000046257314
+      value: 0.0000030575725
       objectReference: {fileID: 0}
     - target: {fileID: 224213134676700584, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000011018464
+      value: 0.00000065788316
       objectReference: {fileID: 0}
     - target: {fileID: 224696701645207638, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}

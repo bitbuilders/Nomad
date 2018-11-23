@@ -72,8 +72,16 @@ public class PlayerMovement : NetworkBehaviour
         Collider[] points = Physics.OverlapSphere(m_groundTouch.position, 0.231f, m_groundMask);
         OnGround = points.Length > 0;
         m_animator.SetBool("OnGround", OnGround);
-        Collider[] points2 = Physics.OverlapSphere(m_groundTouch.position, 0.231f, m_playerMask);
-        TouchingPlayer = points2.Length > 0;
+        Collider[] points2 = Physics.OverlapSphere(m_groundTouch.position, 0.233f, m_playerMask);
+        TouchingPlayer = true;
+        foreach (Collider c in points2)
+        {
+            if (c.gameObject == gameObject && points2.Length == 1)
+            {
+                TouchingPlayer = false;
+                break;
+            }
+        }
 
         if (!isLocalPlayer)
             return;
@@ -127,7 +135,7 @@ public class PlayerMovement : NetworkBehaviour
             m_idleTime = 0.0f;
         }
 
-        if ((OnGround || TouchingPlayer) && !HasState(PlayerState.IN_AIR))
+        if (OnGround && !HasState(PlayerState.IN_AIR))
         {
             float speed = m_acceleration * Time.deltaTime;
             m_velocity.z += inZ * speed;
@@ -135,16 +143,22 @@ public class PlayerMovement : NetworkBehaviour
             {
                 m_velocity = m_velocity.normalized * m_maxSpeed;
             }
+        }
 
-            if (inZ == 0.0f && Mathf.Abs(m_velocity.z) > 0.05f)
-            {
-                float opp = m_velocity.z >= 0.0f ? -1.0f : 1.0f;
-                m_velocity.z += opp * m_idleFriction * Time.deltaTime;
-            }
-            else if (inZ == 0.0f && Mathf.Abs(m_velocity.z) < 0.05f)
-            {
-                m_velocity.z = 0.0f;
-            }
+        if (inZ == 0.0f && Mathf.Abs(m_velocity.z) > 0.05f)
+        {
+            float opp = m_velocity.z >= 0.0f ? -1.0f : 1.0f;
+            m_velocity.z += opp * m_idleFriction * Time.deltaTime;
+        }
+        else if (inZ == 0.0f && Mathf.Abs(m_velocity.z) < 0.05f)
+        {
+            m_velocity.z = 0.0f;
+        }
+
+        if (TouchingPlayer)
+        {
+            m_velocity = new Vector3(0.0f, m_rigidbody.velocity.y, 0.0f);
+            m_rigidbody.velocity = m_velocity;
         }
 
         float forward = m_velocity.z >= 0.0f ? 1.0f : -1.0f;
