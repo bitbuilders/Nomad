@@ -53,7 +53,7 @@ LightmapSettings:
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
-    m_EnableRealtimeLightmaps: 1
+    m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 10
     m_Resolution: 2
@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 112000080, guid: 0138a77cd0ddd3344b41c97e61efa91a,
+  m_LightingDataAsset: {fileID: 112000002, guid: 0138a77cd0ddd3344b41c97e61efa91a,
     type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -156,18 +156,6 @@ Prefab:
     - target: {fileID: 1966337268724040, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
       propertyPath: m_Name
       value: Medieva_fantasy_house (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.71999997
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
@@ -802,22 +790,6 @@ Prefab:
       propertyPath: m_Name
       value: Medieva_fantasy_house (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
   m_IsPrefabAsset: 0
@@ -1210,12 +1182,12 @@ Light:
   serializedVersion: 8
   m_Type: 1
   m_Color: {r: 0.40939838, g: 0.5357344, b: 0.754717, a: 1}
-  m_Intensity: 0.2
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1345,7 +1317,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &521960401
 Transform:
@@ -1795,7 +1767,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &621301109
 Transform:
@@ -2620,22 +2592,6 @@ Prefab:
       propertyPath: m_Name
       value: Medieva_fantasy_house (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 0.7200002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 0.71999997
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalScale.z
-      value: 0.7200002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997625944798602, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90.00001
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daed73fc9509e1c468a5fde31ec88576, type: 2}
   m_IsPrefabAsset: 0
@@ -3179,11 +3135,6 @@ Prefab:
     - target: {fileID: 1739482901999988, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
       propertyPath: m_Name
       value: market (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 23491160685624342, guid: 2ea245cf7db4c804bb9e46e8af1f8708,
-        type: 2}
-      propertyPath: m_LightProbeUsage
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
@@ -5205,7 +5156,12 @@ Prefab:
     - target: {fileID: 224049178460723466, guid: 970bce106b178af40b777504ad2ca9d0,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000060496783
+      value: -0.0000036445513
+      objectReference: {fileID: 0}
+    - target: {fileID: 224756093516327514, guid: 970bce106b178af40b777504ad2ca9d0,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970bce106b178af40b777504ad2ca9d0, type: 2}
@@ -5797,7 +5753,7 @@ Prefab:
     - target: {fileID: 224357315512551794, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00014464422
+      value: -0.000050644154
       objectReference: {fileID: 0}
     - target: {fileID: 224476800498815720, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
@@ -6089,12 +6045,12 @@ Prefab:
     - target: {fileID: 224126650707376448, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00013815549
+      value: -0.000051890496
       objectReference: {fileID: 0}
     - target: {fileID: 224213134676700584, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00006768388
+      value: 0.000013128824
       objectReference: {fileID: 0}
     - target: {fileID: 224696701645207638, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
@@ -6522,21 +6478,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 4607320569866206, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 100.00012
-      objectReference: {fileID: 0}
-    - target: {fileID: 4607320569866206, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 100.00012
-      objectReference: {fileID: 0}
     - target: {fileID: 1739482901999988, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
       propertyPath: m_Name
       value: market (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 4607320569866206, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 104.87501
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ea245cf7db4c804bb9e46e8af1f8708, type: 2}
