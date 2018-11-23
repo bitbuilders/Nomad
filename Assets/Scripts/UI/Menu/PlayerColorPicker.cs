@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using TMPro;
 
 public class PlayerColorPicker : Singleton<PlayerColorPicker>
 {
@@ -15,15 +14,19 @@ public class PlayerColorPicker : Singleton<PlayerColorPicker>
     [SerializeField] TMP_InputField m_inputFieldImage = null;
 
     public string Color { get; private set; }
-    
-    TextMeshProUGUI m_text;
+
+    //TextMeshProUGUI m_text;
+    UIButton m_uiButton;
     bool m_colorsHidden;
+    
 
     private void Start()
     {
-        m_text = GetComponentInChildren<TextMeshProUGUI>();
+        m_uiButton = GetComponent<UIButton>();
+        //m_text = GetComponentInChildren<TextMeshProUGUI>();
         InitalizeColors();
         UpdateColor(m_currentColorImage.color);
+        m_colorsHidden = true;
     }
 
     void InitalizeColors()
@@ -38,17 +41,21 @@ public class PlayerColorPicker : Singleton<PlayerColorPicker>
 
     public void OpenColors()
     {
-        m_colorMenu.SetActive(true);
+        if (m_colorsHidden)
+        {
+            m_colorsHidden = false;
+            m_uiButton.Swell();
+            m_colorMenu.GetComponent<Animator>().SetTrigger("Expand");
+        }
     }
 
     public void CloseColors()
     {
-
-    }
-
-    public void HideColors()
-    {
-        m_colorMenu.SetActive(false);
+        if (!m_colorsHidden)
+        {
+            m_colorsHidden = true;
+            m_colorMenu.GetComponent<Animator>().SetTrigger("Shrink");
+        }
     }
 
     public void UpdateColor(Color color)

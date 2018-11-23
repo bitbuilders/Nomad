@@ -2100,27 +2100,22 @@ Prefab:
       propertyPath: m_inputFieldImage
       value: 
       objectReference: {fileID: 1266608389}
-    - target: {fileID: 224571640075647092, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+    - target: {fileID: 224682468117546646, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224571640075647092, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+    - target: {fileID: 224682468117546646, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224682468117546646, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224682468117546646, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+    - target: {fileID: 224571640075647092, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 224682468117546646, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+    - target: {fileID: 224571640075647092, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2135,11 +2130,6 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 224897785538443538, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.00006493874
-      objectReference: {fileID: 0}
     - target: {fileID: 224556076031708726, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_AnchorMax.x
@@ -2180,40 +2170,18 @@ Prefab:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114084352966026690, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+    - target: {fileID: 1067385344874816, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1528000121266356, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114130742764780250, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114578398973913588, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_ShowMaskGraphic
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114084352966026690, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_RaycastTarget
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727330754724516, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_fontColor.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727330754724516, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_fontColor.g
-      value: 0.98039216
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727330754724516, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_fontColor.b
-      value: 0.7882353
-      objectReference: {fileID: 0}
-    - target: {fileID: 114727330754724516, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
-        type: 2}
-      propertyPath: m_fontColor32.rgba
-      value: 4291427071
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a, type: 2}
@@ -3363,8 +3331,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.078431375}
-  m_RaycastTarget: 0
+  m_Color: {r: 0, g: 0, b: 0, a: 0.11764706}
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
