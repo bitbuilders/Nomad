@@ -59,4 +59,9 @@ public class HUBMenu : MonoBehaviour
             Hide();
         }
     }
+
+    public void ReturnToMenu()
+    {
+        GameLobby.Instance.ReturnToMainMenu();
+    }
 }

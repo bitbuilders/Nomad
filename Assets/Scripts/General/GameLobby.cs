@@ -15,9 +15,11 @@ public class GameLobby : Singleton<GameLobby>
     HUBMenu m_HUB;
     DirectMessageInterface m_DM;
     PlayerMovement.PlayerState m_noInputState;
+    NomadNetworkManager m_networkManager;
 
     private void Start()
     {
+        m_networkManager = FindObjectOfType<NomadNetworkManager>();
         m_HUB = m_hubMenu.GetComponent<HUBMenu>();
         m_DM = m_dmMenu.GetComponent<DirectMessageInterface>();
         m_noInputState = PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.PARTY_MESSAGE;
@@ -64,6 +66,23 @@ public class GameLobby : Singleton<GameLobby>
     public void QuitGame()
     {
         Quit();
+    }
+
+    public void ReturnToMainMenu()
+    {
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.isClient && localPlayer.isServer)
+            m_networkManager.StopHost();
+        else if (localPlayer.isServer)
+            m_networkManager.StopServer();
+        else
+            m_networkManager.StopClient();
+
+        if (m_networkDiscovery.running)
+        {
+            m_networkDiscovery.StopBroadcast();
+            Destroy(m_networkDiscovery.gameObject);
+        }
     }
 
     void Quit()
