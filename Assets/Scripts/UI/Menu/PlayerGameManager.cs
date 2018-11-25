@@ -45,13 +45,13 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
 
     public void RefreshList()
     {
-        m_playerGames.Clear();
-
-        PlayerGame[] games = m_playerGameLocation.GetComponentsInChildren<PlayerGame>();
+        PlayerGame[] games = m_playerGames.ToArray();
         for (int i = 0; i < games.Length; i++)
         {
             Destroy(games[i].gameObject);
         }
+
+        m_playerGames.Clear();
     }
 
     public void FadePlayerGames(bool fadeIn)

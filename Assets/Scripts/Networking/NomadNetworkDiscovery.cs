@@ -14,14 +14,13 @@ public class NomadNetworkDiscovery : NetworkDiscovery
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
         base.OnReceivedBroadcast(fromAddress, data);
-
-        print("Received broadcast from: " + fromAddress + " with the data: " + data);
         
+        PlayerGameManager.Instance.RefreshList();
         foreach (var key in broadcastsReceived.Keys)
         {
             string hostName = System.Text.Encoding.Unicode.GetString(broadcastsReceived[key].broadcastData);
             string address = broadcastsReceived[key].serverAddress.Replace("::ffff:", "");
-            print("Host: " + hostName + ", IP: " + address);
+            print("Broadcast from Host: " + hostName + ", IP: " + address);
             PlayerGameManager.Instance.CreatePlayerGame(address, hostName);
         }
     }
