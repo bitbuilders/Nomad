@@ -29,6 +29,7 @@ public class GameLobby : Singleton<GameLobby>
     {
         yield return new WaitForSeconds(1.0f);
 
+        m_networkDiscovery.Initialize();
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
         if (localPlayer.isServer)
         {

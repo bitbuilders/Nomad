@@ -31,6 +31,7 @@ public class LANToggle : MonoBehaviour
     IEnumerator DelayedStart()
     {
         yield return new WaitForSeconds(1.0f);
+        m_networkDiscovery.Initialize();
         m_networkDiscovery.StartAsClient();
     }
 

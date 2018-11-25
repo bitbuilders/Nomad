@@ -8,7 +8,7 @@ public class NomadNetworkDiscovery : NetworkDiscovery
 {
     private void Awake()
     {
-        Initialize();
+        //Initialize();
     }
 
     public override void OnReceivedBroadcast(string fromAddress, string data)
