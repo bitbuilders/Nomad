@@ -6,6 +6,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
 {
     [SerializeField] GameObject m_playerGameTemplate = null;
     [SerializeField] Transform m_playerGameLocation = null;
+    [SerializeField] GameObject m_playerGameView = null;
 
     List<PlayerGame> m_playerGames;
 
@@ -21,7 +22,8 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
 
         GameObject go = Instantiate(m_playerGameTemplate, Vector3.zero, Quaternion.identity, m_playerGameLocation);
         PlayerGame pg = go.GetComponent<PlayerGame>();
-        pg.Initialize(ip, hostName);
+        bool startHidden = m_playerGameView.activeInHierarchy ? false : true;
+        pg.Initialize(ip, hostName, startHidden);
         m_playerGames.Add(pg);
     }
 

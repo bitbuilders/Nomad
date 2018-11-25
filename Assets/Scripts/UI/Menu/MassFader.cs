@@ -8,6 +8,16 @@ public class MassFader : MonoBehaviour
 {
     [SerializeField] List<TextMeshProUGUI> m_textToFade = null;
     [SerializeField] List<Image> m_imagesToFade = null;
+    [SerializeField] bool m_startFadedOut = false;
+
+    private void Start()
+    {
+        if (m_startFadedOut)
+        {
+            UIJuice.Instance.SetImageAlpha(m_imagesToFade, 0.0f);
+            UIJuice.Instance.SetTextAlpha(m_textToFade, 0.0f);
+        }
+    }
 
     public void FadeIn()
     {

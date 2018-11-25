@@ -13,12 +13,18 @@ public class PlayerGame : MonoBehaviour
     public string IP { get; set; }
     public string HostName { get; set; }
 
-    public void Initialize(string ip, string hostName)
+    public void Initialize(string ip, string hostName, bool startFadeOut)
     {
         IP = ip;
         HostName = hostName;
 
         UpdateText();
+
+        if (startFadeOut)
+        {
+            UIJuice.Instance.SetImageAlpha(m_imagesToFade, 0.0f);
+            UIJuice.Instance.SetTextAlpha(m_textToFade, 0.0f);
+        }
     }
 
     public void Join()
