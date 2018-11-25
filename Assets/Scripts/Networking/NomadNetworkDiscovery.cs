@@ -19,7 +19,7 @@ public class NomadNetworkDiscovery : NetworkDiscovery
         
         foreach (var key in broadcastsReceived.Keys)
         {
-            string hostName = Convert.ToBase64String(broadcastsReceived[key].broadcastData);
+            string hostName = Convert.ToString(broadcastsReceived[key].broadcastData);
             string address = broadcastsReceived[key].serverAddress;
             print("Host: " + hostName + ", IP: " + address);
             //PlayerGameManager.Instance.CreatePlayerGame(address, hostName);
