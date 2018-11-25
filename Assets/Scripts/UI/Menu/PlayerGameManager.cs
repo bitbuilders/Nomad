@@ -61,12 +61,17 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
 
     public void RefreshList(List<PlayerGame> newGames)
     {
-        for (int i = 0; i < m_playerGames.Count; i++)
+        PlayerGame[] games = m_playerGames.ToArray();
+        for (int i = 0; i < games.Length; i++)
         {
-            Destroy(m_playerGames[i].gameObject);
+            Destroy(games[i].gameObject);
         }
 
         m_playerGames = newGames;
+        foreach (PlayerGame pg in m_playerGames)
+        {
+            pg.transform.SetParent(m_playerGameLocation);
+        }
     }
 
     public void FadePlayerGames(bool fadeIn)
