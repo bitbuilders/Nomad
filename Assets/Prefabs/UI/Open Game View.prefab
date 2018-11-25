@@ -190,6 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224328416282960318}
+  - component: {fileID: 114458976300329674}
   - component: {fileID: 114930745242410606}
   m_Layer: 5
   m_Name: Open Game View
@@ -428,7 +429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49483803, g: 0.6514318, b: 0.754717, a: 0.78431374}
+  m_Color: {r: 0.40245637, g: 0.54733706, b: 0.6415094, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -443,6 +444,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114458976300329674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1849004733477802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922211bfb2e140043a8b52ffb583676b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_textToFade:
+  - {fileID: 114056002117025930}
+  m_imagesToFade:
+  - {fileID: 114282300116224998}
+  - {fileID: 114214529998004196}
 --- !u!114 &114459984223865724
 MonoBehaviour:
   m_ObjectHideFlags: 1

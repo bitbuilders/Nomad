@@ -82,6 +82,7 @@ public class EmoteCreator : MonoBehaviour
 
     void Fade(bool fadeIn, float time)
     {
-        UIJuice.Instance.FadeAlpha(m_image, fadeIn, time, false);
+        float a = (fadeIn) ? 1.0f : 0.0f;
+        UIJuice.Instance.FadeAlpha(m_image, a, fadeIn, time, false);
     }
 }

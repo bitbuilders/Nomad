@@ -51,4 +51,12 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
             Destroy(games[i].gameObject);
         }
     }
+
+    public void FadePlayerGames(bool fadeIn)
+    {
+        foreach (PlayerGame pg in m_playerGames)
+        {
+            pg.Fade(fadeIn);
+        }
+    }
 }

@@ -6,14 +6,14 @@ using TMPro;
 
 public class UIJuice : Singleton<UIJuice>
 {
-    public void FadeAlpha(Image image, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
+    public void FadeAlpha(Image image, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
     {
-        StartCoroutine(FadeImage(image, fadeIn, time, deactivateAfter, delay));
+        StartCoroutine(FadeImage(image, alpha, fadeIn, time, deactivateAfter, delay));
     }
 
-    public void FadeAlpha(List<Image> images, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
+    public void FadeAlpha(List<Image> images, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
     {
-        StartCoroutine(FadeImage(images, fadeIn, time, deactivateAfter, delay));
+        StartCoroutine(FadeImage(images, alpha, fadeIn, time, deactivateAfter, delay));
     }
 
     public void FadeImageColor(Image image, Color startColor, Color endColor, float time, bool deactivateAfter, float delay = 0.0f)
@@ -26,9 +26,14 @@ public class UIJuice : Singleton<UIJuice>
         StartCoroutine(FadeIColor(images, startColor, endColor, time, deactivateAfter, delay));
     }
 
-    public void FadeText(TextMeshProUGUI text, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
+    public void FadeText(TextMeshProUGUI text, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
     {
-        StartCoroutine(FadeTextAlpha(text, fadeIn, time, deactivateAfter, delay));
+        StartCoroutine(FadeTextAlpha(text, alpha, fadeIn, time, deactivateAfter, delay));
+    }
+
+    public void FadeText(List<TextMeshProUGUI> text, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay = 0.0f)
+    {
+        StartCoroutine(FadeTextAlpha(text, alpha, fadeIn, time, deactivateAfter, delay));
     }
 
     public void Blink(TextMeshProUGUI text, float fadeInTime, float fadeOutTime, bool deactivateAfter, float linger= 0.0f)
@@ -44,7 +49,7 @@ public class UIJuice : Singleton<UIJuice>
         image.color = c;
     }
 
-    IEnumerator FadeImage(Image image, bool fadeIn, float time, bool deactivateAfter, float delay)
+    IEnumerator FadeImage(Image image, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (fadeIn)
@@ -52,7 +57,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(image, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(image, i / time);
+                SetImageAlpha(image, i / alpha);
                 yield return null;
             }
             SetImageAlpha(image, 1.0f);
@@ -62,7 +67,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(image, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(image, 1.0f - (i / time));
+                SetImageAlpha(image, 1.0f - (i / alpha));
                 yield return null;
             }
             SetImageAlpha(image, 0.0f);
@@ -82,7 +87,7 @@ public class UIJuice : Singleton<UIJuice>
         }
     }
 
-    IEnumerator FadeImage(List<Image> images, bool fadeIn, float time, bool deactivateAfter, float delay)
+    IEnumerator FadeImage(List<Image> images, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (fadeIn)
@@ -90,7 +95,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(images, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(images, i / time);
+                SetImageAlpha(images, i / alpha);
                 yield return null;
             }
             SetImageAlpha(images, 1.0f);
@@ -100,7 +105,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(images, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(images, 1.0f - (i / time));
+                SetImageAlpha(images, 1.0f - (i / alpha));
                 yield return null;
             }
             SetImageAlpha(images, 0.0f);
@@ -160,7 +165,7 @@ public class UIJuice : Singleton<UIJuice>
         text.color = c;
     }
 
-    IEnumerator FadeTextAlpha(TextMeshProUGUI text, bool fadeIn, float time, bool deactivateAfter, float delay)
+    IEnumerator FadeTextAlpha(TextMeshProUGUI text, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (fadeIn)
@@ -168,7 +173,7 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, i / time);
+                SetTextAlpha(text, i / alpha);
                 yield return null;
             }
             SetTextAlpha(text, 1.0f);
@@ -178,7 +183,7 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, 1.0f - (i / time));
+                SetTextAlpha(text, 1.0f - (i / alpha));
                 yield return null;
             }
             SetTextAlpha(text, 0.0f);
@@ -188,10 +193,48 @@ public class UIJuice : Singleton<UIJuice>
             text.gameObject.SetActive(false);
     }
 
+    public void SetTextAlpha(List<TextMeshProUGUI> text, float alpha)
+    {
+        foreach (var t in text)
+        {
+            Color c = t.color;
+            c.a = alpha;
+            t.color = c;
+        }
+    }
+
+    IEnumerator FadeTextAlpha(List<TextMeshProUGUI> text, float alpha, bool fadeIn, float time, bool deactivateAfter, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (fadeIn)
+        {
+            SetTextAlpha(text, 0.0f);
+            for (float i = 0.0f; i <= time; i += Time.deltaTime)
+            {
+                SetTextAlpha(text, i / alpha);
+                yield return null;
+            }
+            SetTextAlpha(text, 1.0f);
+        }
+        else
+        {
+            SetTextAlpha(text, 1.0f);
+            for (float i = 0.0f; i <= time; i += Time.deltaTime)
+            {
+                SetTextAlpha(text, 1.0f - (i / alpha));
+                yield return null;
+            }
+            SetTextAlpha(text, 0.0f);
+        }
+
+        if (deactivateAfter)
+            foreach (var t in text) { t.gameObject.SetActive(false); }
+    }
+
     IEnumerator BlinkText(TextMeshProUGUI text, float fadeInTime, float fadeOutTime, bool deactivateAfter, float linger)
     {
-        FadeText(text, true, fadeInTime, false);
+        FadeText(text, 1.0f, true, fadeInTime, false);
         yield return new WaitForSeconds(fadeInTime + 0.001f + linger);
-        FadeText(text, false, fadeOutTime, deactivateAfter);
+        FadeText(text, 0.0f, false, fadeOutTime, deactivateAfter);
     }
 }
