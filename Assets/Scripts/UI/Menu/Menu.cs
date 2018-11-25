@@ -12,6 +12,7 @@ public class Menu : Singleton<Menu>
     [SerializeField] TMP_InputField m_ipAddress = null;
     [SerializeField] LANToggle m_lanToggle = null;
     [SerializeField] PlayerColorPicker m_colorPicker = null;
+    [SerializeField] QuitDialog m_quitDialog = null;
 
     GraphicRaycaster m_raycaster;
     PointerEventData m_pointerEventData;
@@ -29,6 +30,10 @@ public class Menu : Singleton<Menu>
         if (Input.GetMouseButtonDown(0))
         {
             RaycastUIHit();
+        }
+        if (Input.GetButtonDown("Cancel"))
+        {
+            m_quitDialog.Show();
         }
     }
 
@@ -91,5 +96,14 @@ public class Menu : Singleton<Menu>
             LocalPlayerData.Instance.TempUsername = "Lost Nomad";
 
         LocalPlayerData.Instance.TempColor = m_colorPicker.Color;
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

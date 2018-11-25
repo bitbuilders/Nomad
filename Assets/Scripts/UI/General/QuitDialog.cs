@@ -38,9 +38,9 @@ public class QuitDialog : MonoBehaviour
 
     public void Show()
     {
-        if (!Hidden)
+        if (!Hidden && gameObject.activeInHierarchy)
             return;
-
+        
         Hidden = false;
         gameObject.SetActive(true);
         m_animator.SetTrigger("Swell");

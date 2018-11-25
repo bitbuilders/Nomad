@@ -229,7 +229,6 @@ public class UIJuice : Singleton<UIJuice>
             {
                 float t = (1.0f - (i / time));
                 float a = Mathf.Lerp(alpha, 1.0f, t);
-                print(a);
                 SetTextAlpha(text, a);
                 yield return null;
             }
