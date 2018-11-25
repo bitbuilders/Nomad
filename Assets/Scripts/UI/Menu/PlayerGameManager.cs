@@ -25,7 +25,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
         if (m_refreshTime >= m_automaticRefreshRate)
         {
             m_refreshTime = 0.0f;
-            RefreshList(new List<PlayerGame>());
+            RefreshList();
         }
     }
 
@@ -39,6 +39,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
         PlayerGame pg = go.GetComponent<PlayerGame>();
         bool startHidden = m_playerGameView.activeInHierarchy ? false : true;
         pg.Initialize(ip, hostName, startHidden);
+        m_playerGames.Add(pg);
 
         return pg;
     }
@@ -59,7 +60,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
         return game;
     }
 
-    public void RefreshList(List<PlayerGame> newGames)
+    public void RefreshList()
     {
         PlayerGame[] games = m_playerGames.ToArray();
         for (int i = 0; i < games.Length; i++)
@@ -67,11 +68,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
             Destroy(games[i].gameObject);
         }
 
-        m_playerGames = newGames;
-        foreach (PlayerGame pg in m_playerGames)
-        {
-            pg.transform.SetParent(m_playerGameLocation);
-        }
+        m_playerGames.Clear();
     }
 
     public void FadePlayerGames(bool fadeIn)
