@@ -24,11 +24,11 @@ public class LANToggle : MonoBehaviour
     private void Awake()
     {
         m_networkDiscovery.Initialize();
+        m_playerGameManager = PlayerGameManager.Instance;
     }
 
     private void Start()
     {
-        m_playerGameManager = PlayerGameManager.Instance;
         m_button = GetComponent<UIButton>();
         m_enabled = false;
         m_time = -m_cooldown;

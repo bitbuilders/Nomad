@@ -16,6 +16,7 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
     {
         m_playerGames = new List<PlayerGame>();
         m_refreshTime = 0.0f;
+        gameObject.SetActive(false);
     }
 
     private void Update()
