@@ -6,6 +6,7 @@ public class GameLobby : Singleton<GameLobby>
 {
     [SerializeField] GameObject m_hubMenu = null;
     [SerializeField] GameObject m_dmMenu = null;
+    [SerializeField] NomadNetworkDiscovery m_networkDiscovery = null;
 
     public bool HUBOpen { get { return !m_HUB.Hidden; } }
     public bool DMOpen { get { return !m_DM.Hidden; } }
@@ -20,6 +21,21 @@ public class GameLobby : Singleton<GameLobby>
         m_HUB = m_hubMenu.GetComponent<HUBMenu>();
         m_DM = m_dmMenu.GetComponent<DirectMessageInterface>();
         m_noInputState = PlayerMovement.PlayerState.CHAT_ROOM | PlayerMovement.PlayerState.PARTY_MESSAGE;
+
+        StartCoroutine(DelayedStart());
+    }
+
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        if (localPlayer.isServer)
+        {
+            m_networkDiscovery.StartAsServer();
+            string name = LocalPlayerData.Instance.TempUsername;
+            m_networkDiscovery.broadcastData = (string.IsNullOrEmpty(name)) ? "Lost Nomad" : name;
+        }
     }
 
     void Update()

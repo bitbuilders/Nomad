@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Menu : MonoBehaviour
+public class Menu : Singleton<Menu>
 {
     [SerializeField] TMP_InputField m_username = null;
     [SerializeField] TMP_InputField m_ipAddress = null;
@@ -59,17 +59,17 @@ public class Menu : MonoBehaviour
         NomadNetworkManager.Instance.StartServer();
     }
 
-    public void StartClient()
+    public void StartClient(string ip = "")
     {
         SetPlayerData();
-
-        if (m_lanToggle.LAN)
+        
+        if (m_lanToggle.LAN && string.IsNullOrEmpty(ip))
         {
             NomadNetworkManager.Instance.networkAddress = m_ipAddress.text.Trim();
         }
         else
         {
-
+            NomadNetworkManager.Instance.networkAddress = ip.Trim();
         }
 
         NomadNetworkManager.Instance.StartClient();

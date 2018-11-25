@@ -10,6 +10,7 @@ public class LANToggle : MonoBehaviour
 {
     [SerializeField] MenuToggle m_lanModeToggle = null;
     [SerializeField] MenuOptions m_menuOptions = null;
+    [SerializeField] NomadNetworkDiscovery m_networkDiscovery = null;
     [SerializeField] [Range(0.0f, 3.0f)] float m_cooldown = 0.3f;
 
     public bool LAN { get { return m_enabled; } }
@@ -23,6 +24,14 @@ public class LANToggle : MonoBehaviour
         m_button = GetComponent<UIButton>();
         m_enabled = false;
         m_time = -m_cooldown;
+
+        StartCoroutine(DelayedStart());
+    }
+
+    IEnumerator DelayedStart()
+    {
+        yield return new WaitForSeconds(1.0f);
+        m_networkDiscovery.StartAsClient();
     }
 
     public void Toggle()
