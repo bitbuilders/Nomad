@@ -72,6 +72,7 @@ public class Menu : Singleton<Menu>
             NomadNetworkManager.Instance.networkAddress = ip.Trim();
         }
 
+        print("Connecting to IP: " + NomadNetworkManager.Instance.networkAddress);
         NomadNetworkManager.Instance.StartClient();
     }
 
