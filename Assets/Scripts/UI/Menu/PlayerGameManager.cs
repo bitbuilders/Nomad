@@ -25,47 +25,48 @@ public class PlayerGameManager : Singleton<PlayerGameManager>
         if (m_refreshTime >= m_automaticRefreshRate)
         {
             m_refreshTime = 0.0f;
-            RefreshList();
+            RefreshList(new List<PlayerGame>());
         }
     }
 
-    public void CreatePlayerGame(string ip, string hostName)
+    public PlayerGame CreatePlayerGame(string ip, string hostName)
     {
-        if (GameExists(ip, hostName))
-            return;
+        PlayerGame existingGame = GetGame(ip, hostName);
+        if (existingGame != null)
+            return existingGame;
 
         GameObject go = Instantiate(m_playerGameTemplate, Vector3.zero, Quaternion.identity, m_playerGameLocation);
         PlayerGame pg = go.GetComponent<PlayerGame>();
         bool startHidden = m_playerGameView.activeInHierarchy ? false : true;
         pg.Initialize(ip, hostName, startHidden);
-        m_playerGames.Add(pg);
+
+        return pg;
     }
 
-    public bool GameExists(string ip, string hostName)
+    public PlayerGame GetGame(string ip, string hostName)
     {
-        bool exists = false;
+        PlayerGame game = null;
 
         foreach (PlayerGame pg in m_playerGames)
         {
             if (pg.IP == ip && pg.HostName == hostName)
             {
-                exists = true;
+                game = pg;
                 break;
             }
         }
 
-        return exists;
+        return game;
     }
 
-    public void RefreshList()
+    public void RefreshList(List<PlayerGame> newGames)
     {
-        PlayerGame[] games = m_playerGames.ToArray();
-        for (int i = 0; i < games.Length; i++)
+        for (int i = 0; i < m_playerGames.Count; i++)
         {
-            Destroy(games[i].gameObject);
+            Destroy(m_playerGames[i].gameObject);
         }
 
-        m_playerGames.Clear();
+        m_playerGames = newGames;
     }
 
     public void FadePlayerGames(bool fadeIn)
