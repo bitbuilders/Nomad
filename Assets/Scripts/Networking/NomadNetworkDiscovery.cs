@@ -22,7 +22,7 @@ public class NomadNetworkDiscovery : NetworkDiscovery
             string hostName = System.Text.Encoding.Unicode.GetString(broadcastsReceived[key].broadcastData);
             string address = broadcastsReceived[key].serverAddress;
             print("Host: " + hostName + ", IP: " + address);
-            //PlayerGameManager.Instance.CreatePlayerGame(address, hostName);
+            PlayerGameManager.Instance.CreatePlayerGame(address, hostName);
         }
     }
 }
