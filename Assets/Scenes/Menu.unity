@@ -307,11 +307,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 92103292}
   m_CullTransparentMesh: 0
---- !u!224 &105953734 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 2062096718}
 --- !u!1 &211746875
 GameObject:
   m_ObjectHideFlags: 0
@@ -3753,11 +3748,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1634155225}
   m_CullTransparentMesh: 0
---- !u!1 &1636279258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1849004733477802, guid: 30318eb5da96bf04e9460c4c0a010d29,
-    type: 2}
-  m_PrefabInternal: {fileID: 2062096718}
 --- !u!114 &1636279260 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114458976300329674, guid: 30318eb5da96bf04e9460c4c0a010d29,
@@ -3769,50 +3759,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224328416282960318, guid: 30318eb5da96bf04e9460c4c0a010d29,
     type: 2}
   m_PrefabInternal: {fileID: 2062096718}
---- !u!1 &1718346644
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1718346645}
-  - component: {fileID: 1718346646}
-  m_Layer: 0
-  m_Name: PlayerGameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1718346645
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1718346644}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9874207, y: 0.8833355, z: 17.621155}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1718346646
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1718346644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 555e0b641dc1fff4189bb801aeb956c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_playerGameTemplate: {fileID: 1998262108050198, guid: 9b52ed7243181574c9b4bbea200fc9d7,
-    type: 2}
-  m_playerGameLocation: {fileID: 105953734}
-  m_playerGameView: {fileID: 1636279258}
 --- !u!224 &1727090791 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224152878452385080, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
@@ -5198,21 +5144,6 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114056002117025930, guid: 30318eb5da96bf04e9460c4c0a010d29,
-        type: 2}
-      propertyPath: m_text
-      value: LAN Games
-      objectReference: {fileID: 0}
-    - target: {fileID: 114056002117025930, guid: 30318eb5da96bf04e9460c4c0a010d29,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114056002117025930, guid: 30318eb5da96bf04e9460c4c0a010d29,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30318eb5da96bf04e9460c4c0a010d29, type: 2}
