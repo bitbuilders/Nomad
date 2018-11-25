@@ -57,7 +57,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(image, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(image, i / alpha);
+                SetImageAlpha(image, i / time / alpha);
                 yield return null;
             }
             SetImageAlpha(image, 1.0f);
@@ -67,7 +67,9 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(image, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(image, 1.0f - (i / alpha));
+                float t = (1.0f - (i / time));
+                float a = Mathf.Lerp(alpha, 1.0f, t);
+                SetImageAlpha(image, a);
                 yield return null;
             }
             SetImageAlpha(image, 0.0f);
@@ -95,7 +97,7 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(images, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(images, i / alpha);
+                SetImageAlpha(images, i / time / alpha);
                 yield return null;
             }
             SetImageAlpha(images, 1.0f);
@@ -105,7 +107,9 @@ public class UIJuice : Singleton<UIJuice>
             SetImageAlpha(images, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetImageAlpha(images, 1.0f - (i / alpha));
+                float t = (1.0f - (i / time));
+                float a = Mathf.Lerp(alpha, 1.0f, t);
+                SetImageAlpha(images, a);
                 yield return null;
             }
             SetImageAlpha(images, 0.0f);
@@ -173,7 +177,7 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, i / alpha);
+                SetTextAlpha(text, i / time / alpha);
                 yield return null;
             }
             SetTextAlpha(text, 1.0f);
@@ -183,7 +187,9 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, 1.0f - (i / alpha));
+                float t = (1.0f - (i / time));
+                float a = Mathf.Lerp(alpha, 1.0f, t);
+                SetTextAlpha(text, a);
                 yield return null;
             }
             SetTextAlpha(text, 0.0f);
@@ -211,7 +217,7 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 0.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, i / alpha);
+                SetTextAlpha(text, i / time / alpha);
                 yield return null;
             }
             SetTextAlpha(text, 1.0f);
@@ -221,7 +227,10 @@ public class UIJuice : Singleton<UIJuice>
             SetTextAlpha(text, 1.0f);
             for (float i = 0.0f; i <= time; i += Time.deltaTime)
             {
-                SetTextAlpha(text, 1.0f - (i / alpha));
+                float t = (1.0f - (i / time));
+                float a = Mathf.Lerp(alpha, 1.0f, t);
+                print(a);
+                SetTextAlpha(text, a);
                 yield return null;
             }
             SetTextAlpha(text, 0.0f);
