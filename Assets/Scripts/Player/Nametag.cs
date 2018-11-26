@@ -38,6 +38,7 @@ public class Nametag : MonoBehaviour
 
     public void UpdateColor(Color color)
     {
-        m_nameText.color = color;
+        if (m_nameText)
+            m_nameText.color = color;
     }
 }
