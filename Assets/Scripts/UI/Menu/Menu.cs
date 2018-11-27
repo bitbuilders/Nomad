@@ -13,16 +13,19 @@ public class Menu : Singleton<Menu>
     [SerializeField] LANToggle m_lanToggle = null;
     [SerializeField] PlayerColorPicker m_colorPicker = null;
     [SerializeField] QuitDialog m_quitDialog = null;
+    [SerializeField] [Range(0.0f, 5.0f)] float m_connectCooldown = 1.0f;
 
     GraphicRaycaster m_raycaster;
     PointerEventData m_pointerEventData;
     EventSystem m_eventSystem;
+    float m_connectTime;
 
     private void Start()
     {
         m_ipAddress.text = NomadNetworkManager.Instance.networkAddress;
         m_raycaster = GetComponent<GraphicRaycaster>();
         m_eventSystem = FindObjectOfType<EventSystem>();
+        m_connectTime = -m_connectCooldown;
     }
 
     private void Update()
@@ -61,11 +64,21 @@ public class Menu : Singleton<Menu>
 
     public void StartServer()
     {
+        float delta = Time.time - m_connectTime;
+        if (delta < m_connectCooldown)
+            return;
+        m_connectTime = Time.time;
+
         NomadNetworkManager.Instance.StartServer();
     }
 
     public void StartClient(string ip = "")
     {
+        float delta = Time.time - m_connectTime;
+        if (delta < m_connectCooldown)
+            return;
+        m_connectTime = Time.time;
+
         SetPlayerData();
         
         if (m_lanToggle.LAN && string.IsNullOrEmpty(ip))
@@ -85,6 +98,11 @@ public class Menu : Singleton<Menu>
 
     public void StartHost()
     {
+        float delta = Time.time - m_connectTime;
+        if (delta < m_connectCooldown)
+            return;
+        m_connectTime = Time.time;
+
         SetPlayerData();
         NomadNetworkManager.Instance.StartHost();
         ConnectionManager.Instance.ShowHostMessage();

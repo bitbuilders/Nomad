@@ -104,4 +104,9 @@ public class ConnectionManager : Singleton<ConnectionManager>
         m_dotTime = m_dotRate;
         m_currentDot = 0;
     }
+
+    public void Cancel()
+    {
+        NomadNetworkManager.Instance.StopClient();
+    }
 }
