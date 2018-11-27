@@ -7,54 +7,33 @@ using System.Text;
 public class ConnectionManager : Singleton<ConnectionManager>
 {
     [SerializeField] TextMeshProUGUI m_message = null;
-    [SerializeField] TextMeshProUGUI m_dotText = null;
-    [SerializeField] [Range(1, 50)] int m_dotCount = 5;
-    [SerializeField] [Range(0.0f, 5.0f)] float m_dotSpeed = 0.5f;
+    [SerializeField] [Range(0.0f, 10.0f)] float m_dotRate = 1.0f;
+    [SerializeField] List<Dot> m_dots = null;
 
     public bool Hidden { get; private set; }
 
     Animator m_animator;
     float m_dotTime;
-    int m_dots;
-    bool m_expanding;
+    int m_currentDot;
 
-    private void Start()
+    private void Awake()
     {
-        m_dots = 0;
         m_animator = GetComponent<Animator>();
         Hidden = true;
-        m_dotText.text = "";
-        m_expanding = true;
+        ResetDots();
     }
 
     private void Update()
     {
-        m_dotTime += Time.deltaTime;
-        if (m_dotTime >= m_dotSpeed)
+        if (!Hidden)
         {
-            m_dotTime = 0.0f;
-
-            if (m_dots >= m_dotCount)
-                m_expanding = false;
-            else if (m_dots <= 0)
-                m_expanding = true;
-
-            if (m_expanding)
-                m_dots++;
-            else
-                m_dots--;
-            
-            if (m_dots > 0)
+            m_dotTime += Time.deltaTime;
+            if (m_dotTime >= m_dotRate)
             {
-                m_dotText.text = ".";
-                for (int i = 1; i < m_dots; i++)
-                {
-                    m_dotText.text += ".";
-                }
-            }
-            else
-            {
-                m_dotText.text = "";
+                m_dotTime = 0.0f;
+                m_dots[m_currentDot].FlyIn();
+                m_currentDot++;
+                m_currentDot %= m_dots.Count;
             }
         }
     }
@@ -78,6 +57,7 @@ public class ConnectionManager : Singleton<ConnectionManager>
 
         Hidden = false;
         m_animator.SetTrigger("Show");
+        ResetDots();
     }
 
     public void Hide()
@@ -89,8 +69,39 @@ public class ConnectionManager : Singleton<ConnectionManager>
         m_animator.SetTrigger("Hide");
     }
 
-    public void ShowConnectionMessage(string message, string hostName)
+    public void ShowConnectionMessage(string hostName)
     {
         m_message.text = "Connecting To " + hostName + "'s Game";
+        Show();
+    }
+
+    public void ShowHostMessage()
+    {
+        m_message.text = "Creating Game";
+        Show();
+    }
+
+    public void ShowServerMessage()
+    {
+        m_message.text = "Creating Server";
+        Show();
+    }
+
+    public void ShowFailMessage()
+    {
+        m_message.text = "Connection Failed";
+        StartCoroutine(HideDelay(1.0f));
+    }
+
+    IEnumerator HideDelay(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Hide();
+    }
+
+    void ResetDots()
+    {
+        m_dotTime = m_dotRate;
+        m_currentDot = 0;
     }
 }

@@ -77,14 +77,17 @@ public class Menu : Singleton<Menu>
             NomadNetworkManager.Instance.networkAddress = ip.Trim();
         }
 
-        print("Connecting to IP: " + NomadNetworkManager.Instance.networkAddress);
+        string address = NomadNetworkManager.Instance.networkAddress;
+        print("Connecting to IP: " + address);
         NomadNetworkManager.Instance.StartClient();
+        ConnectionManager.Instance.ShowConnectionMessage(address);
     }
 
     public void StartHost()
     {
         SetPlayerData();
         NomadNetworkManager.Instance.StartHost();
+        ConnectionManager.Instance.ShowHostMessage();
     }
 
     void SetPlayerData()

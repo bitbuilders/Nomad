@@ -30,6 +30,7 @@ public class PlayerGame : MonoBehaviour
     public void Join()
     {
         Menu.Instance.StartClient(IP);
+        ConnectionManager.Instance.ShowConnectionMessage(HostName);
     }
 
     void UpdateText()

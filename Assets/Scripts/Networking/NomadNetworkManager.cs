@@ -19,6 +19,13 @@ public class NomadNetworkManager : NetworkManager
     {
         base.OnClientDisconnect(conn);
 
-        print("Client Disconnected");
+        ConnectionManager.Instance.ShowFailMessage();
+    }
+
+    public override void OnClientConnect(NetworkConnection conn)
+    {
+        base.OnClientConnect(conn);
+
+        ConnectionManager.Instance.Hide();
     }
 }
