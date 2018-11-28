@@ -485,6 +485,21 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751d65e5951da6743839f1d79de597bc, type: 2}
   m_IsPrefabAsset: 0
@@ -2368,12 +2383,12 @@ Prefab:
     - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
         type: 2}
       propertyPath: InitialModule.startSize.scalar
-      value: 8
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
         type: 2}
       propertyPath: InitialModule.startSize.minScalar
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751d65e5951da6743839f1d79de597bc, type: 2}
@@ -2419,12 +2434,12 @@ Terrain:
   m_Enabled: 1
   serializedVersion: 3
   m_TerrainData: {fileID: 15600000, guid: 6058dce3e9cca6042b842c4ee623838f, type: 2}
-  m_TreeDistance: 2000
+  m_TreeDistance: 800
   m_TreeBillboardDistance: 50
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 80
-  m_DetailObjectDensity: 1
+  m_DetailObjectDensity: 0.537
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
   m_HeightmapMaximumLOD: 0
@@ -4458,6 +4473,21 @@ Prefab:
     - target: {fileID: 1312935283488060, guid: 751d65e5951da6743839f1d79de597bc, type: 2}
       propertyPath: m_Name
       value: FairySmoke (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: InitialModule.startSize.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198225349631194562, guid: 751d65e5951da6743839f1d79de597bc,
+        type: 2}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 751d65e5951da6743839f1d79de597bc, type: 2}
@@ -7021,7 +7051,7 @@ Prefab:
     - target: {fileID: 224357315512551794, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000011185806
+      value: 0.00007907188
       objectReference: {fileID: 0}
     - target: {fileID: 224476800498815720, guid: a85bf16d097db114cb26f373f23a1f6a,
         type: 2}
@@ -7318,12 +7348,12 @@ Prefab:
     - target: {fileID: 224126650707376448, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00004519741
+      value: -0.000000007735939
       objectReference: {fileID: 0}
     - target: {fileID: 224213134676700584, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000025899843
+      value: -0.000030513711
       objectReference: {fileID: 0}
     - target: {fileID: 224696701645207638, guid: 91c83bdd106bfc64f970376ea1c583fb,
         type: 2}
