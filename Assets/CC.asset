@@ -184,13 +184,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.9315516, y: 0.95744354, z: 1, w: 0}
+    value: {x: 0.7970639, y: 0.90986806, z: 1, w: -0.07586207}
   gamma:
     overrideState: 0
     value: {x: 1, y: 1, z: 1, w: 0}
   gain:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 1, y: 0.9234499, z: 0.8460095, w: 0.28965518}
   masterCurve:
     overrideState: 0
     value:
@@ -1429,7 +1429,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 9
+    value: 6
   threshold:
     overrideState: 1
     value: 0.9
@@ -1449,8 +1449,8 @@ MonoBehaviour:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 1
   dirtTexture:
     overrideState: 0
     value: {fileID: 0}
@@ -1495,8 +1495,8 @@ MonoBehaviour:
     overrideState: 0
     value: -12
   thicknessModifier:
-    overrideState: 0
-    value: 1
+    overrideState: 1
+    value: 2
   directLightingStrength:
     overrideState: 0
     value: 0
