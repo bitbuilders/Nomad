@@ -18,6 +18,8 @@ public class CameraMovement : MonoBehaviour
     [Header("Input")]
     [SerializeField] GameObject m_target = null;
 
+    public Transform TargetPoint { get; set; }
+
     PlayerMovement m_playerMovement;
     PlayerMovement.PlayerState m_cannotRotateState;
     Vector3 m_targetPosition;
@@ -36,6 +38,27 @@ public class CameraMovement : MonoBehaviour
     }
 
     private void LateUpdate()
+    {
+        if (m_playerMovement.ContainsStates(PlayerMovement.PlayerState.GAME))
+        {
+            GameUpdate();
+        }
+        else
+        {
+            RegularUpdate();
+        }
+    }
+
+    void GameUpdate()
+    {
+        float lerpSpeed = 2.0f;
+        
+            transform.position = Vector3.Lerp(transform.position, TargetPoint.position, Time.deltaTime * lerpSpeed);
+        
+            transform.forward = Vector3.Lerp(transform.forward, TargetPoint.forward, Time.deltaTime * lerpSpeed);
+    }
+
+    void RegularUpdate()
     {
         m_targetPosition = m_target.transform.position + Vector3.up;
 
@@ -65,10 +88,13 @@ public class CameraMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CanRotate() || Input.GetMouseButton(1))
-            Rotate();
-        else
-            m_speed = Vector3.zero;
+        if (!m_playerMovement.ContainsStates(PlayerMovement.PlayerState.GAME))
+        {
+            if (CanRotate() || Input.GetMouseButton(1))
+                Rotate();
+            else
+                m_speed = Vector3.zero;
+        }
     }
 
     public void Rotate()

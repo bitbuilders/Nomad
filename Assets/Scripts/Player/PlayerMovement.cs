@@ -14,7 +14,8 @@ public class PlayerMovement : NetworkBehaviour
         DIRECT_MESSAGE = 8,
         PARTY_MESSAGE = 16,
         IN_AIR = 32,
-        DIALOG = 64
+        DIALOG = 64,
+        GAME = 128
     }
 
     [Header("Movement")]
@@ -64,7 +65,7 @@ public class PlayerMovement : NetworkBehaviour
         
         m_idle = true;
 
-        m_cannotMoveState = (PlayerState.CHAT_ROOM | PlayerState.DIRECT_MESSAGE | PlayerState.PARTY_MESSAGE | PlayerState.DIALOG);
+        m_cannotMoveState = (PlayerState.CHAT_ROOM | PlayerState.DIRECT_MESSAGE | PlayerState.PARTY_MESSAGE | PlayerState.DIALOG | PlayerState.GAME);
     }
 
     private void Update()

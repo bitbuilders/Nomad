@@ -15,10 +15,12 @@ public class Player : NetworkBehaviour
     [SerializeField] ToggleEvent m_onToggleRemote = null;
     [SerializeField] float m_respawnTime = 5.0f;
     [SerializeField] Nametag m_nametag = null;
+    [SerializeField] Camera m_camera = null;
 
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
     [SyncVar(hook = "OnChangeColor")] string pColor;
     public string Color { get { return Colors.ColorPrefix + pColor + ">"; } }
+    public Camera Camera { get { return m_camera; } }
 
     GameObject m_mainCamera;
     

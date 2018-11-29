@@ -2043,7 +2043,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578856476574356}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.25, y: 0, z: 12.89}
+  m_LocalPosition: {x: -3.496, y: 0, z: 11.235}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4130721284256770}
@@ -2765,6 +2765,7 @@ MonoBehaviour:
     m_TypeName: ToggleEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   m_respawnTime: 5
   m_nametag: {fileID: 114273947524757052}
+  m_camera: {fileID: 20060712495617430}
   UserName: 
 --- !u!114 &114468448443154566
 MonoBehaviour:
@@ -2957,6 +2958,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1584
   stopNaNPropagation: 1
+  finalBlitToCameraTarget: 1
   antialiasingMode: 0
   temporalAntialiasing:
     jitterSpread: 0.75
