@@ -7,8 +7,9 @@ public class SpaceBattlePlayer : MonoBehaviour
     [SerializeField] [Range(0.0f, 10.0f)] float m_maxSpeed = 1.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_acceleration = 0.5f;
     [SerializeField] [Range(0.0f, 1.0f)] float m_drag = 0.999f;
+    [SerializeField] [Range(0.0f, 5.0f)] public float m_fireRate = 0.5f;
 
-    public Vector2 Velocity { get { return m_velocity; } }
+    public Vector2 Velocity { get { return m_velocity; } set { m_velocity = value; } }
 
     GameObject m_playerSprite;
     SpaceBattle sb;

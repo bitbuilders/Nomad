@@ -15,6 +15,7 @@ public class GameLobby : Singleton<GameLobby>
     HUBMenu m_HUB;
     DirectMessageInterface m_DM;
     PlayerMovement.PlayerState m_noInputState;
+    PlayerMovement m_playerMovement;
     NomadNetworkManager m_networkManager;
 
     private void Start()
@@ -35,6 +36,7 @@ public class GameLobby : Singleton<GameLobby>
         m_networkDiscovery.broadcastData = (string.IsNullOrEmpty(name)) ? "Lost Nomad" : name;
         m_networkDiscovery.Initialize();
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
+        m_playerMovement = localPlayer.GetComponent<PlayerMovement>();
         if (localPlayer && localPlayer.isServer)
         {
             m_networkDiscovery.StartAsServer();
@@ -45,7 +47,8 @@ public class GameLobby : Singleton<GameLobby>
     {
         if (Input.GetButtonDown("Pause"))
         {
-            ToggleMenu();
+            if (!m_playerMovement.ContainsStates(PlayerMovement.PlayerState.GAME))
+                ToggleMenu();
         }
         if (Input.GetButtonDown("DM") && !LocalPlayerMovement.ContainsStates(m_noInputState))
         {

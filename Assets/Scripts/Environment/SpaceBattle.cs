@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class SpaceBattle : BillboardGame
 {
-    [SerializeField] GameObject m_playerSprite = null;
+    [SerializeField] GameObject m_battleShip = null;
+    [SerializeField] Sprite m_player1Sprite = null;
+    [SerializeField] Sprite m_player2Sprite = null;
 
-    RectTransform m_p1Sprite;
-    RectTransform m_p2Sprite;
+    SpriteRenderer m_p1Sprite;
+    SpriteRenderer m_p2Sprite;
+    SpaceBattleShip m_p1Ship;
+    SpaceBattleShip m_p2Ship;
     SpaceBattlePlayer m_player;
+    RectTransform m_canvasRect;
+    Vector2 m_canvasSize;
+    BillboardMessenger m_billboardMessenger;
+    float m_lastFireTime;
 
     public override void Start()
     {
@@ -16,19 +24,45 @@ public class SpaceBattle : BillboardGame
         MaxPlayers = 2;
         Playing = false;
 
-        m_p1Sprite = Instantiate(m_playerSprite, Billboard.Canvas.transform).GetComponent<RectTransform>();
-        m_p2Sprite = Instantiate(m_playerSprite, Billboard.Canvas.transform).GetComponent<RectTransform>();
+        m_p1Sprite = Instantiate(m_battleShip, Billboard.CanvasGame.transform).GetComponent<SpriteRenderer>();
+        m_p2Sprite = Instantiate(m_battleShip, Billboard.CanvasGame.transform).GetComponent<SpriteRenderer>();
+        m_p1Sprite.GetComponent<SpaceBattleShip>().Initialize(this, PlayerType.P1);
+        m_p2Sprite.GetComponent<SpaceBattleShip>().Initialize(this, PlayerType.P2);
+        m_p1Sprite.sprite = m_player1Sprite;
+        m_p2Sprite.sprite = m_player2Sprite;
+        m_p1Ship = m_p1Sprite.GetComponent<SpaceBattleShip>();
+        m_p2Ship = m_p2Sprite.GetComponent<SpaceBattleShip>();
         ResetPlayerShips();
+        m_canvasRect = Billboard.Canvas.GetComponent<RectTransform>();
+        m_canvasSize = m_canvasRect.sizeDelta / 2.0f;
+        m_lastFireTime = -m_player.m_fireRate;
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+        bool fire = Input.GetButton("Jump");
+
         switch (PlayerNumber)
         {
             case PlayerType.P1:
-                m_p1Sprite.anchoredPosition += m_player.Velocity * Time.deltaTime;
+                m_p1Sprite.transform.localPosition += (Vector3) (m_player.Velocity * Time.deltaTime);
+                CheckOutsideBounds(m_p1Sprite);
+                if (fire)
+                {
+                    var fp =  Fire(PlayerType.P1);
+                    m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
+                }
+
                 break;
             case PlayerType.P2:
+                m_p2Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
+                CheckOutsideBounds(m_p2Sprite);
+                if (fire)
+                {
+                    var fp = Fire(PlayerType.P2);
+                    m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
+                }
 
                 break;
         }
@@ -38,7 +72,7 @@ public class SpaceBattle : BillboardGame
     {
         base.StartGame(pt);
 
-
+        m_billboardMessenger = LocalPlayerData.Instance.LocalPlayer.GetComponent<BillboardMessenger>();
     }
 
     public override void StopGame()
@@ -48,7 +82,91 @@ public class SpaceBattle : BillboardGame
 
     void ResetPlayerShips()
     {
-        m_p1Sprite.anchoredPosition = new Vector2(-1.5f, 0.0f);
-        m_p2Sprite.anchoredPosition = new Vector2(1.5f, 0.0f);
+        m_p1Sprite.transform.localPosition = new Vector2(-1.5f, 0.0f);
+        m_p2Sprite.transform.localPosition = new Vector2(1.5f, 0.0f);
+        m_p2Sprite.transform.localEulerAngles = new Vector3(0.0f, 0.0f, 180.0f);
+    }
+
+    void CheckOutsideBounds(SpriteRenderer player)
+    {
+        float bbHeight = m_canvasSize.y;
+        //float bbWidth = m_canvasSize.x;
+        float heightLimit = bbHeight - (player.size.y / 2.0f);
+        if (player.transform.localPosition.y > heightLimit)
+        {
+            m_player.Velocity = new Vector2(m_player.Velocity.x, -m_player.Velocity.y);
+            player.transform.localPosition = new Vector2(player.transform.localPosition.x, heightLimit - 0.01f);
+        }
+        else if (player.transform.localPosition.y < -heightLimit)
+        {
+            m_player.Velocity = new Vector2(m_player.Velocity.x, -m_player.Velocity.y);
+            player.transform.localPosition = new Vector2(player.transform.localPosition.x, -heightLimit + 0.01f);
+        }
+    }
+
+    public void TakeDamage(PlayerType pt)
+    {
+        PlayerType shooter = PlayerType.P1;
+        if (pt == PlayerType.P1)
+            shooter = PlayerType.P2;
+        else
+            shooter = PlayerType.P1;
+
+        if (m_billboardMessenger)
+            m_billboardMessenger.DamagePlayer(shooter);
+    }
+
+    public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE)
+    {
+        SpaceBattleShip ship = null;
+        switch (pt)
+        {
+            case PlayerType.P1:
+                ship = m_p1Ship;
+                break;
+            case PlayerType.P2:
+                ship = m_p2Ship;
+                break;
+        }
+
+        float delta = Time.time - m_lastFireTime;
+        SpaceBattleShip.FirePosition point = SpaceBattleShip.FirePosition.NONE;
+        if (delta >= m_player.m_fireRate)
+        {
+            point = ship.Fire(fp);
+            m_lastFireTime = Time.time;
+        }
+        return point;
+    }
+
+    public override void SetPlayerPosition(PlayerType pt, Vector3 position)
+    {
+        switch (pt)
+        {
+            case PlayerType.P1:
+                m_p1Sprite.transform.position = position;
+                break;
+            case PlayerType.P2:
+                m_p2Sprite.transform.position = position;
+                break;
+        }
+    }
+
+    public override void NetworkUpdate()
+    {
+        switch (PlayerNumber)
+        {
+            case PlayerType.P1:
+                m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P1, m_p1Sprite.transform.position);
+                break;
+            case PlayerType.P2:
+                m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P2, m_p2Sprite.transform.position);
+                break;
+        }
+    }
+
+    void ShowScore()
+    {
+        Billboard.ShowScoreText();
     }
 }

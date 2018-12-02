@@ -52,8 +52,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbbdaabe481ade0458471876027f8bc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerSprite: {fileID: 1101088073427582, guid: 3bd450e3693ad03489319755e42c1eca,
+  m_networkSendRate: 0.031
+  m_battleShip: {fileID: 1924319062804364, guid: 29a302fdace4f954899e4df43ea60102,
     type: 2}
+  m_player1Sprite: {fileID: 21300000, guid: ec9e744d64ab40a4ba2b573edbf8a724, type: 3}
+  m_player2Sprite: {fileID: 21300002, guid: ec9e744d64ab40a4ba2b573edbf8a724, type: 3}
 --- !u!114 &114827113865889604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -68,3 +71,4 @@ MonoBehaviour:
   m_maxSpeed: 1
   m_acceleration: 2
   m_drag: 0.98
+  m_fireRate: 0.5
