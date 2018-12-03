@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 222328560933979760}
   - component: {fileID: 114959628649078456}
   - component: {fileID: 114673753282677720}
+  - component: {fileID: 114185288464396928}
   m_Layer: 5
   m_Name: Cancel
   m_TagString: Untagged
@@ -90,6 +91,7 @@ GameObject:
   - component: {fileID: 222030574421318792}
   - component: {fileID: 114837281181134162}
   - component: {fileID: 114603710569798836}
+  - component: {fileID: 114195191726521168}
   m_Layer: 5
   m_Name: Confirm
   m_TagString: Untagged
@@ -152,6 +154,28 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114185288464396928
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1267588922879312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55518ea5093ef1a43a5f52264d411716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114195191726521168
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1345069551620774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55518ea5093ef1a43a5f52264d411716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114232234992009414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -365,6 +389,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114195191726521168}
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114673753282677720
@@ -408,6 +443,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114476385370921192}
         m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114195191726521168}
+        m_MethodName: Click
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

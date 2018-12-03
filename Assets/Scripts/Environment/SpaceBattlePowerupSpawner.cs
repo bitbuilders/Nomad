@@ -11,6 +11,7 @@ public class SpaceBattlePowerupSpawner : NetworkBehaviour
     [SerializeField] [Range(0.0f, 20.0f)] float m_powerupLocX = 2.0f;
     [SerializeField] [Range(0.0f, 20.0f)] float m_powerupLocY = 1.5f;
 
+    [SyncVar] public int m_powerupID;
     BillboardMessenger m_bbm;
     float m_nextPowerupSpawn;
     float m_powerupTime;
@@ -43,7 +44,7 @@ public class SpaceBattlePowerupSpawner : NetworkBehaviour
         var powerup = GetRandomPowerup();
         if (m_bbm == null)
             m_bbm = LocalPlayerData.Instance.LocalPlayer.GetComponent<BillboardMessenger>();
-        m_bbm.SpawnPowerup(BillboardGame.GameName.SPACE_BATTLE, powerup, position);
+        m_bbm.SpawnPowerup(BillboardGame.GameName.SPACE_BATTLE, powerup, position, m_powerupID);
     }
 
     public SpaceBattleShipPowerup.PowerupType GetRandomPowerup()

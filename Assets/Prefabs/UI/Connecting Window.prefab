@@ -165,6 +165,7 @@ GameObject:
   - component: {fileID: 114970091488893414}
   - component: {fileID: 114700118750388060}
   - component: {fileID: 114530062618103626}
+  - component: {fileID: 114924707266195444}
   m_Layer: 5
   m_Name: Cancel
   m_TagString: Untagged
@@ -919,6 +920,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114924707266195444}
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114707389180471556
@@ -1202,6 +1214,17 @@ MonoBehaviour:
   - {fileID: 114583816688879064}
   - {fileID: 114707389180471556}
   - {fileID: 114080431617314894}
+--- !u!114 &114924707266195444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1910364694548538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55518ea5093ef1a43a5f52264d411716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114939071131911474
 MonoBehaviour:
   m_ObjectHideFlags: 1

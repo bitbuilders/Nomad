@@ -8,13 +8,15 @@ public class SpaceBattlePowerup : MonoBehaviour
     [SerializeField] [Range(0.0f, 20.0f)] float m_lifetime = 6.0f;
 
     public SpaceBattleShipPowerup.PowerupType Type { get; private set; }
+    public int ID { get; private set; }
 
     SpaceBattle m_spaceBattle;
     float m_time;
 
-    public void Initialize(SpaceBattle sb, SpaceBattleShipPowerup.PowerupType powerup, Sprite sprite)
+    public void Initialize(SpaceBattle sb, int id, SpaceBattleShipPowerup.PowerupType powerup, Sprite sprite)
     {
         GetComponent<SpriteRenderer>().sprite = sprite;
+        ID = id;
         m_spaceBattle = sb;
         Type = powerup;
         StartCoroutine(SpawnIn());
@@ -59,7 +61,7 @@ public class SpaceBattlePowerup : MonoBehaviour
         {
             if (sbb.Sender != m_spaceBattle.PlayerNumber)
                 return;
-            m_spaceBattle.ObtainPowerup(sbb.Sender, Type);
+            m_spaceBattle.ObtainPowerup(sbb.Sender, Type, ID);
             switch (Type)
             {
                 case SpaceBattleShipPowerup.PowerupType.BOUNCE:

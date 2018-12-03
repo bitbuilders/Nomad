@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class SpaceBattle : BillboardGame
 {
@@ -141,7 +142,7 @@ public class SpaceBattle : BillboardGame
         Destroy(go, 2.0f);
     }
 
-    public void SpawnPowerup(Vector3 position, SpaceBattleShipPowerup.PowerupType powerup)
+    public void SpawnPowerup(Vector3 position, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
         GameObject go = Instantiate(m_powerup, transform);
         Sprite s = null;
@@ -154,16 +155,16 @@ public class SpaceBattle : BillboardGame
                 s = m_shotgunSprite;
                 break;
         }
-        go.GetComponent<SpaceBattlePowerup>().Initialize(this, powerup, s);
+        go.GetComponent<SpaceBattlePowerup>().Initialize(this, id, powerup, s);
         go.transform.localPosition += position;
     }
     
-    public void ObtainPowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup)
+    public void ObtainPowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
-        m_billboardMessenger.GivePowerup(GameName.SPACE_BATTLE, pt, powerup);
+        m_billboardMessenger.GivePowerup(GameName.SPACE_BATTLE, pt, powerup, id);
     }
 
-    public void GivePowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup)
+    public void GivePowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
         SpaceBattleShip sbs = null;
         switch (pt)
@@ -174,6 +175,16 @@ public class SpaceBattle : BillboardGame
             case PlayerType.P2:
                 sbs = m_p2Ship;
                 break;
+        }
+
+        SpaceBattlePowerup[] powerups = GetComponentsInChildren<SpaceBattlePowerup>();
+        for (int i = 0; i < powerups.Length; i++)
+        {
+            if (powerups[i].ID == id)
+            {
+                Destroy(powerups[i].gameObject);
+                break;
+            }
         }
 
         sbs.GetComponent<SpaceBattleShipPowerup>().ObtainPowerup(powerup);

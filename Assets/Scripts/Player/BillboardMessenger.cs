@@ -7,6 +7,13 @@ public class BillboardMessenger : NetworkBehaviour
 {
     public BillboardGame.GameName CurrentGame { get; private set; }
     public Billboard CurrentBillboard;
+    SpaceBattlePowerupSpawner m_powerupSpawner;
+
+    private void Start()
+    {
+        if (isServer)
+            m_powerupSpawner = GameObject.Find("SpaceBattlePowerupSpawner").GetComponent<SpaceBattlePowerupSpawner>();
+    }
 
     public void PlayBillboard(BillboardGame.GameName game, BillboardGame.PlayerType pt, int playerID)
     {
@@ -137,46 +144,52 @@ public class BillboardMessenger : NetworkBehaviour
         }
     }
 
-    public void GivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    public void GivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
-        CmdGivePowerup(game, player, powerup);
+        CmdGivePowerup(game, player, powerup, id);
     }
 
     [Command]
-    void CmdGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    void CmdGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
-        RpcGivePowerup(game, player, powerup);
+        RpcGivePowerup(game, player, powerup, id);
     }
 
     [ClientRpc]
-    void RpcGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    void RpcGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup, int id)
     {
         switch (game)
         {
             case BillboardGame.GameName.SPACE_BATTLE:
-                ((SpaceBattle)GetBillboardFromName().m_bbg).GivePowerup(player, powerup);
+                ((SpaceBattle)GetBillboardFromName().m_bbg).GivePowerup(player, powerup, id);
                 break;
         }
     }
 
-    public void SpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
+    public void SpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position, int id)
     {
-        CmdSpawnPowerup(game, powerup, position);
+        CmdSpawnPowerup(game, powerup, position, id);
     }
 
     [Command]
-    void CmdSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
-    {
-        RpcSpawnPowerup(game, powerup, position);
-    }
-
-    [ClientRpc]
-    void RpcSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
+    void CmdSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position, int id)
     {
         switch (game)
         {
             case BillboardGame.GameName.SPACE_BATTLE:
-                ((SpaceBattle)GetBillboardFromName().m_bbg).SpawnPowerup(position, powerup);
+                m_powerupSpawner.m_powerupID++;
+                break;
+        }
+        RpcSpawnPowerup(game, powerup, position, id);
+    }
+
+    [ClientRpc]
+    void RpcSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position, int id)
+    {
+        switch (game)
+        {
+            case BillboardGame.GameName.SPACE_BATTLE:
+                ((SpaceBattle)GetBillboardFromName().m_bbg).SpawnPowerup(position, powerup, id);
                 break;
         }
     }

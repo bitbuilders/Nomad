@@ -45,6 +45,7 @@ public class PlayerColorPicker : Singleton<PlayerColorPicker>
         {
             m_colorsHidden = false;
             m_uiButton.Swell();
+            m_uiButton.Click();
             m_colorMenu.GetComponent<Animator>().SetTrigger("Expand");
         }
     }

@@ -12,10 +12,12 @@ public class PartyCreationDialog : MonoBehaviour
     [SerializeField] TMP_InputField m_p4Name = null;
 
     Animator m_animator;
+    UIButton m_uiButton;
 
     private void Start()
     {
         m_animator = GetComponent<Animator>();
+        m_uiButton = GetComponent<UIButton>();
         gameObject.SetActive(false);
     }
 
@@ -73,6 +75,7 @@ public class PartyCreationDialog : MonoBehaviour
 
             PlayerMovement playerMove = LocalPlayerData.Instance.LocalPlayer.GetComponent<PlayerMovement>();
             playerMove.RemoveState(PlayerMovement.PlayerState.PARTY_MESSAGE);
+            m_uiButton.Click();
         }
         Cancel();
     }

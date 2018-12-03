@@ -11,6 +11,11 @@ public class UIButton : MonoBehaviour
         m_animator = GetComponent<Animator>();
     }
 
+    public void Click()
+    {
+        AudioManager.Instance.PlaySoundClip("Button Click", "Button Click");
+    }
+
     public void Swell()
     {
         m_animator.SetTrigger("Swell");
