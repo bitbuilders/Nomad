@@ -60,7 +60,7 @@ public abstract class BillboardGame : MonoBehaviour
         Playing = false;
     }
 
-    public virtual SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp, bool ignoreLastFireTime = false)
+    public virtual SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp)
     {
         return SpaceBattleShip.FirePosition.NONE;
     }

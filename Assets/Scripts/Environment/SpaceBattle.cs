@@ -49,12 +49,14 @@ public class SpaceBattle : BillboardGame
         base.Update();
         bool fire = Input.GetButton("Jump");
 
+        float delta = Time.time - m_lastFireTime;
+
         switch (PlayerNumber)
         {
             case PlayerType.P1:
                 m_p1Sprite.transform.localPosition += (Vector3) (m_player.Velocity * Time.deltaTime);
                 CheckOutsideBounds(m_p1Sprite);
-                if (fire && Playing)
+                if (fire && Playing && delta >= m_player.m_fireRate)
                 {
                     var fp =  Fire(PlayerType.P1);
                     m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
@@ -64,7 +66,7 @@ public class SpaceBattle : BillboardGame
             case PlayerType.P2:
                 m_p2Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
                 CheckOutsideBounds(m_p2Sprite);
-                if (fire && Playing)
+                if (fire && Playing && delta >= m_player.m_fireRate)
                 {
                     var fp = Fire(PlayerType.P2);
                     m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
@@ -190,7 +192,7 @@ public class SpaceBattle : BillboardGame
         sbs.GetComponent<SpaceBattleShipPowerup>().ObtainPowerup(powerup);
     }
 
-    public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE, bool ignoreLastFireTime = false)
+    public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE)
     {
         SpaceBattleShip ship = null;
         switch (pt)
@@ -203,13 +205,9 @@ public class SpaceBattle : BillboardGame
                 break;
         }
 
-        float delta = Time.time - m_lastFireTime;
         SpaceBattleShip.FirePosition point = SpaceBattleShip.FirePosition.NONE;
-        if (delta >= m_player.m_fireRate || ignoreLastFireTime)
-        {
-            point = ship.Fire(fp);
-            m_lastFireTime = Time.time;
-        }
+        point = ship.Fire(fp);
+        m_lastFireTime = Time.time;
         return point;
     }
 
