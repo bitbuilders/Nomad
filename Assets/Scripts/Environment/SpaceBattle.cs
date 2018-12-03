@@ -51,28 +51,31 @@ public class SpaceBattle : BillboardGame
 
         float delta = Time.time - m_lastFireTime;
 
-        switch (PlayerNumber)
+        if (Playing)
         {
-            case PlayerType.P1:
-                m_p1Sprite.transform.localPosition += (Vector3) (m_player.Velocity * Time.deltaTime);
-                CheckOutsideBounds(m_p1Sprite);
-                if (fire && Playing && delta >= m_player.m_fireRate)
-                {
-                    var fp =  Fire(PlayerType.P1);
-                    m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
-                }
+            switch (PlayerNumber)
+            {
+                case PlayerType.P1:
+                    m_p1Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
+                    CheckOutsideBounds(m_p1Sprite);
+                    if (fire && Playing && delta >= m_player.m_fireRate)
+                    {
+                        var fp = Fire(PlayerType.P1);
+                        m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
+                    }
 
-                break;
-            case PlayerType.P2:
-                m_p2Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
-                CheckOutsideBounds(m_p2Sprite);
-                if (fire && Playing && delta >= m_player.m_fireRate)
-                {
-                    var fp = Fire(PlayerType.P2);
-                    m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
-                }
+                    break;
+                case PlayerType.P2:
+                    m_p2Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
+                    CheckOutsideBounds(m_p2Sprite);
+                    if (fire && Playing && delta >= m_player.m_fireRate)
+                    {
+                        var fp = Fire(PlayerType.P2);
+                        m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
+                    }
 
-                break;
+                    break;
+            }
         }
     }
 
@@ -226,7 +229,7 @@ public class SpaceBattle : BillboardGame
 
     public override void NetworkUpdate()
     {
-        if (m_billboardMessenger)
+        if (Playing)
         {
             switch (PlayerNumber)
             {
