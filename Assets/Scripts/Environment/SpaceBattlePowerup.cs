@@ -57,6 +57,8 @@ public class SpaceBattlePowerup : MonoBehaviour
         SpaceBattleBullet sbb = other.GetComponent<SpaceBattleBullet>();
         if (sbb)
         {
+            if (sbb.Sender != m_spaceBattle.PlayerNumber)
+                return;
             m_spaceBattle.ObtainPowerup(sbb.Sender, Type);
             switch (Type)
             {

@@ -47,7 +47,7 @@ public class SpaceBattleShipPowerup : MonoBehaviour
     public void ObtainPowerup(PowerupType type)
     {
         int index = (int)type;
-        m_cooldownTimes[index] = (m_cooldownTimes[index] < 0.0f) ? m_durations[index - 1] : (m_cooldownTimes[index] + m_durations[index - 1]);
+        m_cooldownTimes[index] = m_durations[index - 1];
         AddPowerup(type);
     }
 
