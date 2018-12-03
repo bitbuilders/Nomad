@@ -6,12 +6,14 @@ using UnityEngine.Networking;
 public class BillboardMessenger : NetworkBehaviour
 {
     public BillboardGame.GameName CurrentGame { get; private set; }
+    public Billboard CurrentBillboard;
 
-    public void PlayBillboard(BillboardGame.GameName game)
+    public void PlayBillboard(BillboardGame.GameName game, BillboardGame.PlayerType pt, int playerID)
     {
         CurrentGame = game;
-        CmdAddPlayer();
+        CurrentBillboard = GetBillboardFromName();
         CmdInitializeScores();
+        CmdAddPlayer(pt, playerID);
     }
 
     [Command]
@@ -31,10 +33,11 @@ public class BillboardMessenger : NetworkBehaviour
     }
 
     [Command]
-    void CmdAddPlayer()
+    void CmdAddPlayer(BillboardGame.PlayerType pt, int playerID)
     {
-        GetBillboardFromName().m_players++;
-        GetBillboardFromName().m_nextPlayer++;
+        Billboard bb = GetBillboardFromName();
+        bb.AddPlayer(pt, playerID);
+        bb.SetNextPlayer();
     }
 
     public void LeaveBillboard(BillboardGame.PlayerType pt)
@@ -46,10 +49,8 @@ public class BillboardMessenger : NetworkBehaviour
     void CmdRmovePlayer(BillboardGame.PlayerType pt)
     {
         Billboard bb = GetBillboardFromName();
-        bb.m_players--;
-        int left = (int)pt;
-        if (bb.m_nextPlayer > left)
-            bb.m_nextPlayer = left;
+        bb.RemovePlayer(pt);
+        bb.SetNextPlayer();
     }
 
     public void Fire(BillboardGame.GameName game, BillboardGame.PlayerType pt, SpaceBattleShip.FirePosition fp)
@@ -112,6 +113,72 @@ public class BillboardMessenger : NetworkBehaviour
     void RpcShowScore()
     {
         GetBillboardFromName().ShowScoreText();
+    }
+
+    public void SpawnExplosion(BillboardGame.GameName game, BillboardGame.PlayerType pt, Vector3 point)
+    {
+        CmdSpawnExplosion(game, pt, point);
+    }
+
+    [Command]
+    void CmdSpawnExplosion(BillboardGame.GameName game, BillboardGame.PlayerType pt, Vector3 point)
+    {
+        RpcSpawnExplosion(game, pt, point);
+    }
+
+    [ClientRpc]
+    void RpcSpawnExplosion(BillboardGame.GameName game, BillboardGame.PlayerType pt, Vector3 point)
+    {
+        switch (game)
+        {
+            case BillboardGame.GameName.SPACE_BATTLE:
+                ((SpaceBattle)GetBillboardFromName().m_bbg).SpawnExplosion(pt, point);
+                break;
+        }
+    }
+
+    public void GivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        CmdGivePowerup(game, player, powerup);
+    }
+
+    [Command]
+    void CmdGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        RpcGivePowerup(game, player, powerup);
+    }
+
+    [ClientRpc]
+    void RpcGivePowerup(BillboardGame.GameName game, BillboardGame.PlayerType player, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        switch (game)
+        {
+            case BillboardGame.GameName.SPACE_BATTLE:
+                ((SpaceBattle)GetBillboardFromName().m_bbg).GivePowerup(player, powerup);
+                break;
+        }
+    }
+
+    public void SpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
+    {
+        CmdSpawnPowerup(game, powerup, position);
+    }
+
+    [Command]
+    void CmdSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
+    {
+        RpcSpawnPowerup(game, powerup, position);
+    }
+
+    [ClientRpc]
+    void RpcSpawnPowerup(BillboardGame.GameName game, SpaceBattleShipPowerup.PowerupType powerup, Vector3 position)
+    {
+        switch (game)
+        {
+            case BillboardGame.GameName.SPACE_BATTLE:
+                ((SpaceBattle)GetBillboardFromName().m_bbg).SpawnPowerup(position, powerup);
+                break;
+        }
     }
 
     Billboard GetBillboardFromName()

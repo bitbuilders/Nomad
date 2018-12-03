@@ -47,9 +47,9 @@ public class SpaceBattleShip : MonoBehaviour
             return;
 
         SpaceBattleBullet sbb = other.GetComponent<SpaceBattleBullet>();
-        if (sbb && sbb.Sender != PlayerNumber)
+        if (sbb && sbb.Sender != PlayerNumber && SpaceBattle.Playing)
         {
-            SpaceBattle.TakeDamage(PlayerNumber);
+            SpaceBattle.TakeDamage(PlayerNumber, other.transform.position);
         }
     }
 

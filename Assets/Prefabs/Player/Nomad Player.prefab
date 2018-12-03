@@ -2708,6 +2708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6a5f471b6103042920a7bb337eb88c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentBillboard: {fileID: 0}
 --- !u!114 &114464336041134372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2778,6 +2779,7 @@ MonoBehaviour:
   m_respawnTime: 5
   m_nametag: {fileID: 114273947524757052}
   m_camera: {fileID: 20060712495617430}
+  ID: 0
   UserName: 
 --- !u!114 &114468448443154566
 MonoBehaviour:
@@ -3078,6 +3080,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_emotes:
   - {fileID: 11400000, guid: f464d00b8a8af934a9276a9a5df15fc4, type: 2}
+  - {fileID: 11400000, guid: 7f1ae6057b2a3ca43a6d5ddf846a18b3, type: 2}
+  - {fileID: 11400000, guid: f180e41ca734f474c8fa2ef6f5eed17b, type: 2}
+  - {fileID: 11400000, guid: 44ce1819a8716714cb72fbb90039d33f, type: 2}
   m_emoteCreator: {fileID: 114585672649412410}
 --- !u!136 &136316960062043182
 CapsuleCollider:

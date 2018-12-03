@@ -6,12 +6,19 @@ using UnityEngine.Networking;
 public class NetworkData : NetworkBehaviour
 {
     [SyncVar] public int CurrentRoomID;
+    [SyncVar] public int CurrentPlayerID;
     //[SyncVar] public List<Player> OnlinePlayers;
 
-    [Command]
-    public void CmdIncrementRoomID()
+    [Server]
+    public void IncrementRoomID()
     {
         ++CurrentRoomID;
+    }
+
+    [Server]
+    public void IncrementPlayerID()
+    {
+        ++CurrentPlayerID;
     }
 
     //[Command]

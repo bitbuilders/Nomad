@@ -17,6 +17,7 @@ public class Player : NetworkBehaviour
     [SerializeField] Nametag m_nametag = null;
     [SerializeField] Camera m_camera = null;
 
+    [SyncVar] public int ID;
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
     [SyncVar(hook = "OnChangeColor")] string pColor;
     public string Color { get { return Colors.ColorPrefix + pColor + ">"; } }
@@ -38,6 +39,7 @@ public class Player : NetworkBehaviour
             CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
             CmdChangeColor(LocalPlayerData.Instance.TempColor);
             //CmdSendUsername(UserName);
+            CmdGetID();
         }
 
         string name = (string.IsNullOrEmpty(UserName)) ? "Lost Nomad" : UserName;
@@ -46,6 +48,14 @@ public class Player : NetworkBehaviour
         if (string.IsNullOrEmpty(pColor))
             pColor = "#C58D4D";
         m_nametag.UpdateColor(Colors.StringToColor(pColor));
+    }
+
+    [Command]
+    void CmdGetID()
+    {
+        NetworkData nd = FindObjectOfType<NetworkData>();
+        nd.IncrementPlayerID();
+        ID = nd.CurrentPlayerID;
     }
 
     [Command]
@@ -145,5 +155,16 @@ public class Player : NetworkBehaviour
     void RpcReceiveColor(string color)
     {
         pColor = color;
+    }
+
+    private void OnApplicationQuit()
+    {
+        PartyManager pm = PartyManager.Instance;
+        BillboardMessenger bbm = GetComponent<BillboardMessenger>();
+        if (pm.LocalParty && pm.LocalParty.InParty)
+            pm.LocalParty.LeaveParty();
+        if (bbm.CurrentBillboard != null && bbm.CurrentBillboard.m_bbg.Playing)
+            bbm.CurrentBillboard.LeaveBillboard();
+        ChatRoomManager.Instance.LeaveAllRooms();
     }
 }

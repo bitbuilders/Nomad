@@ -188,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_normalColor: {r: 0.10980392, g: 0.30980393, b: 0.5019608, a: 1}
   m_highlightColor: {r: 0.8117647, g: 0.6039216, b: 0.3647059, a: 1}
-  Emote: {fileID: 11400000, guid: f464d00b8a8af934a9276a9a5df15fc4, type: 2}
+  Emote: {fileID: 11400000, guid: 44ce1819a8716714cb72fbb90039d33f, type: 2}
 --- !u!114 &114072915981782512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,7 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_normalColor: {r: 0.10980392, g: 0.30980393, b: 0.5019608, a: 1}
   m_highlightColor: {r: 0.8117647, g: 0.6039216, b: 0.3647059, a: 1}
-  Emote: {fileID: 11400000, guid: f464d00b8a8af934a9276a9a5df15fc4, type: 2}
+  Emote: {fileID: 11400000, guid: f180e41ca734f474c8fa2ef6f5eed17b, type: 2}
 --- !u!114 &114329675364590788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -529,7 +529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_normalColor: {r: 0.10980392, g: 0.30980393, b: 0.5019608, a: 1}
   m_highlightColor: {r: 0.8117647, g: 0.6039216, b: 0.3647059, a: 1}
-  Emote: {fileID: 11400000, guid: f464d00b8a8af934a9276a9a5df15fc4, type: 2}
+  Emote: {fileID: 11400000, guid: 7f1ae6057b2a3ca43a6d5ddf846a18b3, type: 2}
 --- !u!114 &114878782765719088
 MonoBehaviour:
   m_ObjectHideFlags: 1

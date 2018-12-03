@@ -12,8 +12,8 @@ public class SpaceBattleBullet : MonoBehaviour
     [SerializeField] List<Transform> m_bulletSpawns = null;
 
     public BillboardGame.PlayerType Sender { get; private set; }
-    public bool Bounce { get; private set; }
-    public int Shotgun { get; private set; }
+    public bool Bounce { get; set; }
+    public int Shotgun { get; set; }
 
     SpriteRenderer m_spriteRenderer;
     Vector3 m_direction;
@@ -109,13 +109,16 @@ public class SpaceBattleBullet : MonoBehaviour
         if (ship && ship.PlayerNumber == Sender)
             return;
 
+        SpaceBattlePowerup sbp = other.GetComponent<SpaceBattlePowerup>();
+        if (sbp)
+            return;
+
         if (Bounce && ship == null)
         {
             SpaceBattleNormal sbn = other.GetComponent<SpaceBattleNormal>();
             if (sbn == null)
                 return;
-
-            Vector3 contactPoint = other.ClosestPoint(transform.position);
+            
             Vector3 normal = sbn.Normal;
             m_direction =  Vector3.Reflect(m_direction, normal.normalized);
             m_velocity = m_direction * m_velocity.magnitude;

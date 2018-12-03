@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -43,6 +44,15 @@ public class ChatRoomManager : Singleton<ChatRoomManager>
         m_createdRooms--;
         if (m_createdRooms == 0)
             m_hideRoomsButton.SetActive(false);
+    }
+
+    public void LeaveAllRooms()
+    {
+        ChatRoom[] rooms = m_chatRooms.ToArray();
+        for (int i = 0; i < rooms.Length; i++)
+        {
+            rooms[i].DestroyChatRoom();
+        }
     }
 
     public void AddMessageToChatRoom(int roomID, string message)

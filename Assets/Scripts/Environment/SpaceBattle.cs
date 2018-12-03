@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceBattle : BillboardGame
 {
     [SerializeField] GameObject m_battleShip = null;
+    [SerializeField] GameObject m_explosion = null;
+    [SerializeField] GameObject m_powerup = null;
     [SerializeField] Sprite m_player1Sprite = null;
     [SerializeField] Sprite m_player2Sprite = null;
+    [SerializeField] Sprite m_shotgunSprite = null;
+    [SerializeField] Sprite m_bounceSprite = null;
 
     SpriteRenderer m_p1Sprite;
     SpriteRenderer m_p2Sprite;
@@ -15,7 +20,7 @@ public class SpaceBattle : BillboardGame
     SpaceBattlePlayer m_player;
     RectTransform m_canvasRect;
     Vector2 m_canvasSize;
-    BillboardMessenger m_billboardMessenger;
+    public BillboardMessenger m_billboardMessenger;
     float m_lastFireTime;
 
     public override void Start()
@@ -48,7 +53,7 @@ public class SpaceBattle : BillboardGame
             case PlayerType.P1:
                 m_p1Sprite.transform.localPosition += (Vector3) (m_player.Velocity * Time.deltaTime);
                 CheckOutsideBounds(m_p1Sprite);
-                if (fire)
+                if (fire && Playing)
                 {
                     var fp =  Fire(PlayerType.P1);
                     m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
@@ -58,7 +63,7 @@ public class SpaceBattle : BillboardGame
             case PlayerType.P2:
                 m_p2Sprite.transform.localPosition += (Vector3)(m_player.Velocity * Time.deltaTime);
                 CheckOutsideBounds(m_p2Sprite);
-                if (fire)
+                if (fire && Playing)
                 {
                     var fp = Fire(PlayerType.P2);
                     m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
@@ -104,7 +109,7 @@ public class SpaceBattle : BillboardGame
         }
     }
 
-    public void TakeDamage(PlayerType pt)
+    public void TakeDamage(PlayerType pt, Vector3 position)
     {
         PlayerType shooter = PlayerType.P1;
         if (pt == PlayerType.P1)
@@ -113,7 +118,65 @@ public class SpaceBattle : BillboardGame
             shooter = PlayerType.P1;
 
         if (m_billboardMessenger)
+        {
             m_billboardMessenger.DamagePlayer(shooter);
+            m_billboardMessenger.SpawnExplosion(GameName.SPACE_BATTLE, pt, position);
+        }
+    }
+
+    public void SpawnExplosion(PlayerType pt, Vector3 point)
+    {
+        Vector3 v = Vector3.zero;
+        switch (pt)
+        {
+            case PlayerType.P1:
+                v = m_p1Sprite.transform.position;
+                break;
+            case PlayerType.P2:
+                v = m_p2Sprite.transform.position;
+                break;
+        }
+
+        GameObject go = Instantiate(m_explosion, point, Quaternion.identity, Billboard.CanvasGame.transform);
+        Destroy(go, 2.0f);
+    }
+
+    public void SpawnPowerup(Vector3 position, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        GameObject go = Instantiate(m_powerup, transform);
+        Sprite s = null;
+        switch (powerup)
+        {
+            case SpaceBattleShipPowerup.PowerupType.BOUNCE:
+                s = m_bounceSprite;
+                break;
+            case SpaceBattleShipPowerup.PowerupType.SHOTGUN:
+                s = m_shotgunSprite;
+                break;
+        }
+        go.GetComponent<SpaceBattlePowerup>().Initialize(this, powerup, s);
+        go.transform.localPosition += position;
+    }
+    
+    public void ObtainPowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        m_billboardMessenger.GivePowerup(GameName.SPACE_BATTLE, pt, powerup);
+    }
+
+    public void GivePowerup(PlayerType pt, SpaceBattleShipPowerup.PowerupType powerup)
+    {
+        SpaceBattleShip sbs = null;
+        switch (pt)
+        {
+            case PlayerType.P1:
+                sbs = m_p1Ship;
+                break;
+            case PlayerType.P2:
+                sbs = m_p2Ship;
+                break;
+        }
+
+        sbs.GetComponent<SpaceBattleShipPowerup>().ObtainPowerup(powerup);
     }
 
     public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE)

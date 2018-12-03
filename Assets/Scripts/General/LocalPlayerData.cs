@@ -64,4 +64,21 @@ public class LocalPlayerData : MonoBehaviour
 
         return multiple;
     }
+
+    public Player FindPlayerWithID(int id)
+    {
+        Player player = null;
+
+        Player[] players = FindObjectsOfType<Player>();
+        foreach (Player p in players)
+        {
+            if (p.ID == id)
+            {
+                player = p;
+                break;
+            }
+        }
+
+        return player;
+    }
 }

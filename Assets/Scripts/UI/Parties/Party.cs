@@ -46,6 +46,7 @@ public class Party : MonoBehaviour
 
     public void Initialize()
     {
+        m_members = new List<string>();
         m_animator = GetComponent<Animator>();
         m_lastChatClick = 0.0f;
         m_lastTime = 0.0f;

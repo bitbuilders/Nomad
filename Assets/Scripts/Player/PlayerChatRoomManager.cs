@@ -13,7 +13,7 @@ public class PlayerChatRoomManager : NetworkBehaviour
         if (m_networkData == null)
             m_networkData = GameObject.Find("Network Data").GetComponent<NetworkData>();
 
-        m_networkData.CmdIncrementRoomID();
+        m_networkData.IncrementRoomID();
         int room = m_networkData.CurrentRoomID;
         RpcCreate(room);
     }

@@ -10,6 +10,8 @@ public class PartyManager : Singleton<PartyManager>
     [SerializeField] GameObject m_partyWindow = null;
     [SerializeField] GameObject m_inviteButton = null;
     [SerializeField] GameObject m_partyIcon = null;
+
+    public Party LocalParty { get { return m_localParty; } }
     
     public void InvitePlayersToParty(string leader, List<string> invited)
     {
