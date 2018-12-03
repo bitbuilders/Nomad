@@ -62,16 +62,20 @@ public class SpaceBattlePowerup : MonoBehaviour
             if (sbb.Sender != m_spaceBattle.PlayerNumber)
                 return;
             m_spaceBattle.ObtainPowerup(sbb.Sender, Type, ID);
-            switch (Type)
-            {
-                case SpaceBattleShipPowerup.PowerupType.BOUNCE:
-                    sbb.Bounce = true;
-                    break;
-                case SpaceBattleShipPowerup.PowerupType.SHOTGUN:
-                    sbb.Shotgun++;
-                    sbb.Shotgun = Mathf.Clamp(sbb.Shotgun, 0, 2);
-                    break;
-            }
+            // Boohoo :( I can't do this because I don't keep track of all bullets
+            // on each client, meaning I can't give them the recently obtained powerup
+            // Will still work normally tho
+
+            //switch (Type)
+            //{
+            //    case SpaceBattleShipPowerup.PowerupType.BOUNCE:
+            //        sbb.Bounce = true;
+            //        break;
+            //    case SpaceBattleShipPowerup.PowerupType.SHOTGUN:
+            //        sbb.Shotgun++;
+            //        sbb.Shotgun = Mathf.Clamp(sbb.Shotgun, 0, 2);
+            //        break;
+            //}
             Destroy(gameObject);
         }
     }
