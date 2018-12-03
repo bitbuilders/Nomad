@@ -78,7 +78,7 @@ public class BillboardMessenger : NetworkBehaviour
         {
             Billboard bb = GetBillboardFromName(game);
             if (bb)
-                bb.m_bbg.Fire(pt, fp);
+                bb.m_bbg.Fire(pt, fp, true);
         }
     }
 

@@ -190,7 +190,7 @@ public class SpaceBattle : BillboardGame
         sbs.GetComponent<SpaceBattleShipPowerup>().ObtainPowerup(powerup);
     }
 
-    public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE)
+    public override SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp = SpaceBattleShip.FirePosition.NONE, bool ignoreLastFireTime = false)
     {
         SpaceBattleShip ship = null;
         switch (pt)
@@ -205,7 +205,7 @@ public class SpaceBattle : BillboardGame
 
         float delta = Time.time - m_lastFireTime;
         SpaceBattleShip.FirePosition point = SpaceBattleShip.FirePosition.NONE;
-        if (delta >= m_player.m_fireRate)
+        if (delta >= m_player.m_fireRate || ignoreLastFireTime)
         {
             point = ship.Fire(fp);
             m_lastFireTime = Time.time;
@@ -228,14 +228,17 @@ public class SpaceBattle : BillboardGame
 
     public override void NetworkUpdate()
     {
-        switch (PlayerNumber)
+        if (m_billboardMessenger)
         {
-            case PlayerType.P1:
-                m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P1, m_p1Sprite.transform.position);
-                break;
-            case PlayerType.P2:
-                m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P2, m_p2Sprite.transform.position);
-                break;
+            switch (PlayerNumber)
+            {
+                case PlayerType.P1:
+                    m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P1, m_p1Sprite.transform.position);
+                    break;
+                case PlayerType.P2:
+                    m_billboardMessenger.SetPlayerPosition(GameName.SPACE_BATTLE, PlayerType.P2, m_p2Sprite.transform.position);
+                    break;
+            }
         }
     }
 

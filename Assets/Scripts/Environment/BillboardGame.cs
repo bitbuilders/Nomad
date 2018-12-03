@@ -33,9 +33,6 @@ public abstract class BillboardGame : MonoBehaviour
 
     public virtual void Update()
     {
-        if (!Playing)
-            return;
-
         m_networkTime += Time.deltaTime;
 
         if (m_networkTime >= m_networkSendRate)
@@ -63,7 +60,7 @@ public abstract class BillboardGame : MonoBehaviour
         Playing = false;
     }
 
-    public virtual SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp)
+    public virtual SpaceBattleShip.FirePosition Fire(PlayerType pt, SpaceBattleShip.FirePosition fp, bool ignoreLastFireTime = false)
     {
         return SpaceBattleShip.FirePosition.NONE;
     }
