@@ -16,8 +16,8 @@ MonoBehaviour:
   ClipName: Jump
   Position: {x: 0, y: 0, z: 0}
   SetLocalPosition: 1
-  Range: 8
-  Volume: 0.3
+  Range: 10
+  Volume: 0.2
   Pitch: 1
   Loop: 0
   PlayOnAwake: 0

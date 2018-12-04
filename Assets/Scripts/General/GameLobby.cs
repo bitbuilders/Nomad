@@ -20,6 +20,8 @@ public class GameLobby : Singleton<GameLobby>
 
     private void Start()
     {
+        AudioManager.Instance.StopClipFromID("Menu Music", false);
+        AudioManager.Instance.StartClipFromID("Lobby Music", Vector3.zero, false);
         m_networkManager = FindObjectOfType<NomadNetworkManager>();
         m_HUB = m_hubMenu.GetComponent<HUBMenu>();
         m_DM = m_dmMenu.GetComponent<DirectMessageInterface>();

@@ -11,13 +11,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd4dab0a0eccd8439d767548a3e3d7a, type: 3}
   m_Name: Space Battle Music
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: c670cb1814522b64d96dfd98610ba1f3, type: 3}
+  Clip: {fileID: 8300000, guid: 2b7162081670a934f83b1e5a920a3fa4, type: 3}
   Output: {fileID: 243082409660322352, guid: 4e24f737887f5cd48a5c72d6f956261e, type: 2}
   ClipName: Space Battle Music
   Position: {x: 0, y: 0, z: 0}
-  SetLocalPosition: 0
+  SetLocalPosition: 1
   Range: 10
-  Volume: 0.5
+  Volume: 0.15
   Pitch: 1
   Loop: 1
   PlayOnAwake: 0

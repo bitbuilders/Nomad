@@ -632,7 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_acceleration: 4.5
   m_maxSpeed: 3
-  m_lifetime: 4
+  m_lifetime: 4.1
   m_shotgunDelay: 0.55
   m_shotgunAngleCoverage: 50
   m_bulletSpawns:

@@ -55,6 +55,8 @@ public class AudioManager : Singleton<AudioManager>
     public GameObject PlaySoundClip(string clipName, string clipID, Vector3 position, bool setLocalPosition, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global, Transform parent = null)
     {
         AudioData data = GetSoundClipFromName(clipName);
+        if (data == null)
+            return null;
 
         return PlayClip(data.Clip, data.Output, clipID, position, setLocalPosition, loop, volume, pitch, range, destroyAfter, global, parent);
     }
@@ -62,6 +64,8 @@ public class AudioManager : Singleton<AudioManager>
     public GameObject PlaySoundClip(string clipName, string clipID, Transform parent = null)
     {
         AudioData data = GetSoundClipFromName(clipName);
+        if (data == null)
+            return null;
 
         return PlayClip(data.Clip, data.Output, clipID, data.Position, data.SetLocalPosition, data.Loop, data.Volume, data.Pitch, data.Range, data.DestroyAfter, data.Global, parent);
     }
@@ -69,6 +73,8 @@ public class AudioManager : Singleton<AudioManager>
     public GameObject AddSoundClip(string clipName, string clipID, Transform parent = null)
     {
         AudioData data = GetSoundClipFromName(clipName);
+        if (data == null)
+            return null;
 
         return PlayClip(data.Clip, data.Output, clipID, data.Position, data.SetLocalPosition, data.Loop, data.Volume, data.Pitch, data.Range, data.DestroyAfter, data.Global, parent, false);
     }

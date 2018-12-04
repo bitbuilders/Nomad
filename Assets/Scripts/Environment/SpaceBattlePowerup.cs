@@ -61,6 +61,8 @@ public class SpaceBattlePowerup : MonoBehaviour
         {
             if (sbb.Sender != m_spaceBattle.PlayerNumber)
                 return;
+
+            AudioManager.Instance.PlaySoundClip("Powerup", "Powerup", transform.parent);
             m_spaceBattle.ObtainPowerup(sbb.Sender, Type, ID);
             // Boohoo :( I can't do this because I don't keep track of all bullets
             // on each client, meaning I can't give them the recently obtained powerup

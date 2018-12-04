@@ -88,6 +88,7 @@ public class SpaceBattleBullet : MonoBehaviour
 
     void Split(int shotgun)
     {
+        AudioManager.Instance.PlaySoundClip("Shoot", "Shoot", Vector3.zero, true, false, 0.15f, 0.8f, 10.0f, true, false, transform.parent);
         foreach (Transform t in m_bulletSpawns)
         {
             GameObject go = Instantiate(gameObject, transform.parent);
@@ -124,6 +125,8 @@ public class SpaceBattleBullet : MonoBehaviour
             m_velocity = m_direction * m_velocity.magnitude;
             float angle = Mathf.Atan2(m_direction.y, m_direction.x);
             transform.localEulerAngles = Vector3.forward * (angle * Mathf.Rad2Deg);
+
+            AudioManager.Instance.PlaySoundClip("Bounce", "Bounce", transform.parent);
         }
         else
         {

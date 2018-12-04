@@ -78,6 +78,7 @@ public class SpaceBattleShip : MonoBehaviour
         if (prevFire < 0)
             prevFire = m_bulletSpawns.Count - 1;
 
+        AudioManager.Instance.PlaySoundClip("Shoot", "Shoot", transform);
         return (FirePosition)prevFire;
     }
 }

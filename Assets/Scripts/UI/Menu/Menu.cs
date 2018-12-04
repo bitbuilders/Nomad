@@ -22,6 +22,8 @@ public class Menu : Singleton<Menu>
 
     private void Start()
     {
+        AudioManager.Instance.StartClipFromID("Menu Music", Vector3.zero, false);
+        AudioManager.Instance.StopClipFromID("Lobby Music", false);
         m_ipAddress.text = NomadNetworkManager.Instance.networkAddress;
         m_raycaster = GetComponent<GraphicRaycaster>();
         m_eventSystem = FindObjectOfType<EventSystem>();
@@ -68,7 +70,7 @@ public class Menu : Singleton<Menu>
         if (delta < m_connectCooldown)
             return;
         m_connectTime = Time.time;
-
+        
         NomadNetworkManager.Instance.StartServer();
     }
 

@@ -4125,6 +4125,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 60035e8776fadf146853b41cdf30cddb, type: 2}
   - {fileID: 11400000, guid: 5698fac3a0ad0a44fae892a4ead0a28d, type: 2}
   - {fileID: 11400000, guid: 770f603aaad100248a39c855a5f5e075, type: 2}
+  - {fileID: 11400000, guid: 98c81e65d055ec24a9645a95ee40ec51, type: 2}
+  - {fileID: 11400000, guid: 344f6b5cabdaee3438bce12069edb52e, type: 2}
+  - {fileID: 11400000, guid: faa14445f4dfdd746bb51d9a5f254e0b, type: 2}
+  - {fileID: 11400000, guid: 1b2b62277ab70724aa501efa02f46c5a, type: 2}
+  - {fileID: 11400000, guid: 712e507ed60b5e346a18640caa0186c5, type: 2}
+  - {fileID: 11400000, guid: d9d6f8150f697214daa55b7afb3dfcbb, type: 2}
 --- !u!224 &1727090791 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224152878452385080, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
@@ -5695,7 +5701,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00004593473
+      value: 0.000024143397
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}

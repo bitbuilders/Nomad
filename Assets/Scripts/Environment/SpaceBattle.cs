@@ -42,6 +42,8 @@ public class SpaceBattle : BillboardGame
         m_canvasRect = Billboard.Canvas.GetComponent<RectTransform>();
         m_canvasSize = m_canvasRect.sizeDelta / 2.0f;
         m_lastFireTime = -m_player.m_fireRate;
+        
+        AudioManager.Instance.StartClipFromID("Space Battle Music", transform.position, false);
     }
 
     public override void Update()
@@ -143,6 +145,7 @@ public class SpaceBattle : BillboardGame
                 break;
         }
 
+        AudioManager.Instance.PlaySoundClip("Explosion", "Explosion", transform);
         GameObject go = Instantiate(m_explosion, point, Quaternion.identity, Billboard.CanvasGame.transform);
         Destroy(go, 2.0f);
     }

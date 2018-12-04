@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bd4dab0a0eccd8439d767548a3e3d7a, type: 3}
+  m_Name: Explosion
+  m_EditorClassIdentifier: 
+  Clip: {fileID: 8300000, guid: d7550df87e06fba479f77c93f02e5a58, type: 3}
+  Output: {fileID: 243410095049819912, guid: 4e24f737887f5cd48a5c72d6f956261e, type: 2}
+  ClipName: Explosion
+  Position: {x: 0, y: 0, z: 0}
+  SetLocalPosition: 1
+  Range: 10
+  Volume: 0.1
+  Pitch: 1.1
+  Loop: 0
+  PlayOnAwake: 0
+  AddOnAwake: 0
+  Global: 0
+  DestroyAfter: 1
