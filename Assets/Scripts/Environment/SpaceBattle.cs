@@ -64,6 +64,7 @@ public class SpaceBattle : BillboardGame
                     {
                         var fp = Fire(PlayerType.P1);
                         m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P1, fp);
+                        m_lastFireTime = Time.time;
                     }
 
                     break;
@@ -74,6 +75,7 @@ public class SpaceBattle : BillboardGame
                     {
                         var fp = Fire(PlayerType.P2);
                         m_billboardMessenger.Fire(GameName.SPACE_BATTLE, PlayerType.P2, fp);
+                        m_lastFireTime = Time.time;
                     }
 
                     break;
@@ -213,7 +215,6 @@ public class SpaceBattle : BillboardGame
 
         SpaceBattleShip.FirePosition point = SpaceBattleShip.FirePosition.NONE;
         point = ship.Fire(fp);
-        m_lastFireTime = Time.time;
         return point;
     }
 
