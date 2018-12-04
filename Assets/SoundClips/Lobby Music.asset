@@ -17,7 +17,7 @@ MonoBehaviour:
   Position: {x: 0, y: 0, z: 0}
   SetLocalPosition: 0
   Range: 0
-  Volume: 0.05
+  Volume: 0.1
   Pitch: 1
   Loop: 1
   PlayOnAwake: 0
