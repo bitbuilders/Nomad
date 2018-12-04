@@ -16,7 +16,7 @@ public class AudioManager : Singleton<AudioManager>
     static AudioManager ms_instance;
     List<LingeringClip> m_lingeringClips;
 
-    private void Start()
+    private void Awake()
     {
         if (ms_instance == null)
         {
