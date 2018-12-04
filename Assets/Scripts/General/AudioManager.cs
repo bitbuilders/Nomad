@@ -18,6 +18,12 @@ public class AudioManager : Singleton<AudioManager>
 
     private void Awake()
     {
+        m_lingeringClips = new List<LingeringClip>();
+        PlayClipsWithAwake();
+    }
+
+    private void Start()
+    {
         if (ms_instance == null)
         {
             ms_instance = this;
@@ -27,9 +33,6 @@ public class AudioManager : Singleton<AudioManager>
         {
             Destroy(gameObject);
         }
-
-        m_lingeringClips = new List<LingeringClip>();
-        PlayClipsWithAwake();
     }
 
     void PlayClipsWithAwake()
