@@ -46,6 +46,7 @@ public class PlayerMovement : NetworkBehaviour
     public PlayerState State { get; private set; }
 
     Animator m_animator;
+    AudioSource m_audioSource;
     Rigidbody m_rigidbody;
     Quaternion m_lastRotation;
     GameObject m_childAvatar;
@@ -59,6 +60,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void OnEnable()
     {
+        m_audioSource = GetComponent<AudioSource>();
         m_animator = GetComponentInChildren<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_childAvatar = m_animator.gameObject;
@@ -100,7 +102,7 @@ public class PlayerMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump") && OnGround && !HasState(PlayerState.IN_AIR))
         {
             CmdSendAnimationTrigger("Jump");
-            //m_animator.SetTrigger("Jump");
+            m_animator.SetTrigger("Jump");
         }
     }
 
@@ -267,7 +269,8 @@ public class PlayerMovement : NetworkBehaviour
     [ClientRpc]
     void RpcRecieveAnimationTrigger(string trigger)
     {
-        m_animator.SetTrigger(trigger);
+        if (!isLocalPlayer)
+            m_animator.SetTrigger(trigger);
     }
 
     public void AddState(PlayerState state)

@@ -2484,6 +2484,11 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 224571640075647092, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a, type: 2}
   m_IsPrefabAsset: 0
@@ -4118,6 +4123,8 @@ MonoBehaviour:
   m_soundClips:
   - {fileID: 11400000, guid: 79ff2b73f065daf4eb7693af40d8e9e9, type: 2}
   - {fileID: 11400000, guid: 60035e8776fadf146853b41cdf30cddb, type: 2}
+  - {fileID: 11400000, guid: 5698fac3a0ad0a44fae892a4ead0a28d, type: 2}
+  - {fileID: 11400000, guid: 770f603aaad100248a39c855a5f5e075, type: 2}
 --- !u!224 &1727090791 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224152878452385080, guid: 6d8f7a88e53d19c4b9d2ffca2ac0182a,
@@ -5688,7 +5695,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00006377
+      value: 0.00004593473
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}

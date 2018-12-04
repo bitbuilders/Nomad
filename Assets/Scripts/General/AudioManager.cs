@@ -5,7 +5,7 @@ using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>
 {
-    public struct LoopingClip
+    public struct LingeringClip
     {
         public AudioSource AudioSource;
         public string ClipID;
@@ -14,7 +14,7 @@ public class AudioManager : Singleton<AudioManager>
     [SerializeField] List<AudioData> m_soundClips = null;
 
     static AudioManager ms_instance;
-    List<LoopingClip> m_loopingClips;
+    List<LingeringClip> m_lingeringClips;
 
     private void Start()
     {
@@ -28,7 +28,7 @@ public class AudioManager : Singleton<AudioManager>
             Destroy(gameObject);
         }
 
-        m_loopingClips = new List<LoopingClip>();
+        m_lingeringClips = new List<LingeringClip>();
         PlayClipsWithAwake();
     }
 
@@ -40,41 +40,58 @@ public class AudioManager : Singleton<AudioManager>
             {
                 PlaySoundClip(soundClip.ClipName, soundClip.ClipName);
             }
+            if (soundClip.AddOnAwake)
+            {
+                AddSoundClip(soundClip.ClipName, soundClip.ClipName, null);
+            }
         }
     }
 
-    public GameObject PlaySoundClip(AudioClip clip, AudioMixerGroup output, string clipID, Vector3 position, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global)
+    public GameObject PlaySoundClip(AudioClip clip, AudioMixerGroup output, string clipID, Vector3 position, bool setLocalPosition, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global, Transform parent = null)
     {
-        return PlayClip(clip, output, clipID, position, loop, volume, pitch, range, destroyAfter, global);
+        return PlayClip(clip, output, clipID, position, setLocalPosition, loop, volume, pitch, range, destroyAfter, global, parent);
     }
 
-    public GameObject PlaySoundClip(string clipName, string clipID, Vector3 position, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global)
-    {
-        AudioData data = GetSoundClipFromName(clipName);
-
-        return PlayClip(data.Clip, data.Output, clipID, position, loop, volume, pitch, range, destroyAfter, global);
-    }
-
-    public GameObject PlaySoundClip(string clipName, string clipID)
+    public GameObject PlaySoundClip(string clipName, string clipID, Vector3 position, bool setLocalPosition, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global, Transform parent = null)
     {
         AudioData data = GetSoundClipFromName(clipName);
 
-        return PlayClip(data.Clip, data.Output, clipID, data.Position, data.Loop, data.Volume, data.Pitch, data.Range, data.DestroyAfter, data.Global);
+        return PlayClip(data.Clip, data.Output, clipID, position, setLocalPosition, loop, volume, pitch, range, destroyAfter, global, parent);
     }
 
-    GameObject PlayClip(AudioClip clip, AudioMixerGroup output, string clipID, Vector3 position, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global)
+    public GameObject PlaySoundClip(string clipName, string clipID, Transform parent = null)
+    {
+        AudioData data = GetSoundClipFromName(clipName);
+
+        return PlayClip(data.Clip, data.Output, clipID, data.Position, data.SetLocalPosition, data.Loop, data.Volume, data.Pitch, data.Range, data.DestroyAfter, data.Global, parent);
+    }
+
+    public GameObject AddSoundClip(string clipName, string clipID, Transform parent = null)
+    {
+        AudioData data = GetSoundClipFromName(clipName);
+
+        return PlayClip(data.Clip, data.Output, clipID, data.Position, data.SetLocalPosition, data.Loop, data.Volume, data.Pitch, data.Range, data.DestroyAfter, data.Global, parent, false);
+    }
+
+    GameObject PlayClip(AudioClip clip, AudioMixerGroup output, string clipID, Vector3 position, bool setLocalPosition, bool loop, float volume, float pitch, float range, bool destroyAfter, bool global, Transform parent, bool play = true)
     {
         GameObject go = new GameObject("Audio Clip: " + clip.name);
-        go.transform.parent = transform;
-        go.transform.position = position;
+        if (parent == null)
+            go.transform.parent = transform;
+        else
+            go.transform.parent = parent;
+        if (setLocalPosition)
+            go.transform.localPosition = position;
+        else
+            go.transform.position = position;
         AudioSource audioSource = go.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = output;
         audioSource.clip = clip;
         audioSource.maxDistance = range;
         audioSource.rolloffMode = AudioRolloffMode.Linear;
         audioSource.loop = loop;
-        if (loop && !destroyAfter)
-            m_loopingClips.Add(new LoopingClip() { AudioSource = audioSource, ClipID =  clipID });
+        if (!destroyAfter)
+            m_lingeringClips.Add(new LingeringClip() { AudioSource = audioSource, ClipID =  clipID });
         audioSource.volume = volume;
         audioSource.pitch = pitch;
         if (global)
@@ -84,14 +101,15 @@ public class AudioManager : Singleton<AudioManager>
         if (destroyAfter)
             Destroy(go, clip.length);
 
-        audioSource.Play();
+        if (play)
+            audioSource.Play();
 
         return go;
     }
 
     public void StopClipFromID(string clipID, bool destroy)
     {
-        foreach (LoopingClip clip in m_loopingClips)
+        foreach (LingeringClip clip in m_lingeringClips)
         {
             if (clip.ClipID == clipID)
             {
@@ -102,12 +120,16 @@ public class AudioManager : Singleton<AudioManager>
         }
     }
 
-    public void StartClipFromID(string clipID)
+    public void StartClipFromID(string clipID, Vector3 position, bool setLocalPosition)
     {
-        foreach (LoopingClip clip in m_loopingClips)
+        foreach (LingeringClip clip in m_lingeringClips)
         {
             if (clip.ClipID == clipID)
             {
+                if (setLocalPosition)
+                    clip.AudioSource.gameObject.transform.localPosition = position;
+                else
+                    clip.AudioSource.gameObject.transform.position = position;
                 clip.AudioSource.Play();
             }
         }

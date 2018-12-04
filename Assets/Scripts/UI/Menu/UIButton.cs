@@ -13,7 +13,7 @@ public class UIButton : MonoBehaviour
 
     public void Click()
     {
-        AudioManager.Instance.PlaySoundClip("Button Click", "Button Click");
+        AudioManager.Instance.StartClipFromID("Button Click", Vector3.zero, false);
     }
 
     public void Swell()

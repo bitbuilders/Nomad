@@ -9,18 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bd4dab0a0eccd8439d767548a3e3d7a, type: 3}
-  m_Name: Button Click
+  m_Name: Menu Music
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: b9cc24cabc06e32418d935a7edf4eefa, type: 3}
-  Output: {fileID: 243410095049819912, guid: 4e24f737887f5cd48a5c72d6f956261e, type: 2}
-  ClipName: Button Click
+  Clip: {fileID: 8300000, guid: c670cb1814522b64d96dfd98610ba1f3, type: 3}
+  Output: {fileID: 243082409660322352, guid: 4e24f737887f5cd48a5c72d6f956261e, type: 2}
+  ClipName: Menu Music
   Position: {x: 0, y: 0, z: 0}
   SetLocalPosition: 0
   Range: 0
-  Volume: 0.5
+  Volume: 1
   Pitch: 1
-  Loop: 0
-  PlayOnAwake: 0
+  Loop: 1
+  PlayOnAwake: 1
   AddOnAwake: 1
   Global: 1
   DestroyAfter: 0

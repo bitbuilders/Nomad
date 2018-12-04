@@ -63,6 +63,7 @@ public class EmoteCreator : MonoBehaviour
     {
         if (!m_active)
         {
+            StartCoroutine(DelayedSound(0.15f));
             m_image.sprite = image;
             m_time = 0.0f;
             m_active = true;
@@ -70,6 +71,12 @@ public class EmoteCreator : MonoBehaviour
             // Do animation
             m_animator.SetTrigger("Spawn");
         }
+    }
+
+    IEnumerator DelayedSound(float time)
+    {
+        yield return new WaitForSeconds(time);
+        AudioManager.Instance.StartClipFromID("Emote", transform.position, false);
     }
 
     void RemoveEmote()

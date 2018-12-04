@@ -9,16 +9,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1bd4dab0a0eccd8439d767548a3e3d7a, type: 3}
-  m_Name: Music
+  m_Name: Emote
   m_EditorClassIdentifier: 
-  Clip: {fileID: 8300000, guid: c670cb1814522b64d96dfd98610ba1f3, type: 3}
+  Clip: {fileID: 8300000, guid: 7d071a036e95409468b821b01c7ea9c4, type: 3}
   Output: {fileID: 243410095049819912, guid: 4e24f737887f5cd48a5c72d6f956261e, type: 2}
-  ClipName: Music
+  ClipName: Emote
   Position: {x: 0, y: 0, z: 0}
-  Range: 0
+  SetLocalPosition: 0
+  Range: 20
   Volume: 1
-  Pitch: 1
-  Loop: 1
-  PlayOnAwake: 1
-  Global: 1
+  Pitch: 1.1
+  Loop: 0
+  PlayOnAwake: 0
+  AddOnAwake: 1
+  Global: 0
   DestroyAfter: 0
