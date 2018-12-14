@@ -4,6 +4,39 @@ using UnityEngine;
 
 public class LocalPlayerData : MonoBehaviour
 {
+    public enum HairType
+    {
+        DEFAULT,
+
+    }
+
+    public enum BodyType
+    {
+        DEFAULT,
+
+    }
+
+    public enum EyeType
+    {
+        DEFAULT,
+
+    }
+
+    public enum GlassesType
+    {
+        DEFAULT,
+
+    }
+
+    public struct PlayerAttributes
+    {
+        public string Username;
+        public string Color;
+        public float HeightMultiplier;
+        public float WidthMultiplier;
+        public Mesh HairMesh;
+    }
+
     public Player LocalPlayer { get; set; }
     public string TempUsername { get; set; }
     public string TempColor { get; set; }
