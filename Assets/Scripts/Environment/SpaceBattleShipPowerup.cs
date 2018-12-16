@@ -13,7 +13,7 @@ public class SpaceBattleShipPowerup : MonoBehaviour
     }
     
     [SerializeField] [Range(0.0f, 20.0f)] float[] m_durations = null;
-    [SerializeField] PowerupType m_activePowerups;
+    //[SerializeField] PowerupType m_activePowerups;
 
     float[] m_cooldownTimes;
     SpaceBattleShip m_ship;
@@ -41,7 +41,7 @@ public class SpaceBattleShipPowerup : MonoBehaviour
             }
         }
         activeUps &= ~PowerupType.NONE;
-        m_activePowerups = activeUps;
+        //m_activePowerups = activeUps;
     }
 
     public void ObtainPowerup(PowerupType type)

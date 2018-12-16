@@ -46,7 +46,6 @@ public class PlayerMovement : NetworkBehaviour
     public PlayerState State { get; private set; }
 
     Animator m_animator;
-    AudioSource m_audioSource;
     Rigidbody m_rigidbody;
     Quaternion m_lastRotation;
     GameObject m_childAvatar;
@@ -60,7 +59,6 @@ public class PlayerMovement : NetworkBehaviour
 
     private void OnEnable()
     {
-        m_audioSource = GetComponent<AudioSource>();
         m_animator = GetComponentInChildren<Animator>();
         m_rigidbody = GetComponent<Rigidbody>();
         m_childAvatar = m_animator.gameObject;
