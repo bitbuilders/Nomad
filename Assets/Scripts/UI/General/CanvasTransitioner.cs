@@ -60,7 +60,11 @@ public class CanvasTransitioner : Singleton<CanvasTransitioner>
     [SerializeField] [Range(0.0f, 50.0f)] float m_transitionSpeed = 5.0f;
     [SerializeField] InterpolationType m_enterInterpolation = InterpolationType.ELASTIC_IN_OUT;
     [SerializeField] InterpolationType m_leaveInterpolation = InterpolationType.BACK_IN;
+    [Space(15)]
+    [Header("Misc.")]
+    [SerializeField] LayerMask m_playerMask = 0;
 
+    Camera m_camera;
     TransitionData m_transition;
     RectTransform m_center;
     RectTransform m_left;
@@ -76,6 +80,8 @@ public class CanvasTransitioner : Singleton<CanvasTransitioner>
         m_right = m_rightRoot;
         m_top = m_topRoot;
         m_bottom = m_bottomRoot;
+        m_camera = Camera.main;
+        SetPlayerVisibility();
     }
 
     public void Transition(TransitionDirection direction, InterpolationType enterType, InterpolationType leaveType)
@@ -149,6 +155,31 @@ public class CanvasTransitioner : Singleton<CanvasTransitioner>
             m_transition.Time = 0.0f;
         else if (m_transition.Time != 0.0f)
             m_transition.Time = 1.0f - m_transition.Time;
+
+        HandlePlayerVisibility(0.09f);
+    }
+
+    void HandlePlayerVisibility(float delay)
+    {
+        StartCoroutine(DelayVisibility(delay));
+    }
+
+    IEnumerator DelayVisibility(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetPlayerVisibility();
+    }
+
+    void SetPlayerVisibility()
+    {
+        if (m_center == m_centerRoot)
+        {
+            m_camera.cullingMask &= ~m_playerMask;
+        }
+        else
+        {
+            m_camera.cullingMask |= m_playerMask;
+        }
     }
 
     private void Update()

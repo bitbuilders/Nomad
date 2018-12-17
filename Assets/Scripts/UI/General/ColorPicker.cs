@@ -14,10 +14,12 @@ public class ColorPicker : MonoBehaviour
     public void Initialize(Color startingColor)
     {
         Color = startingColor;
+        m_hueSelector.UpdateColor(Color.red);
     }
 
     public void OnColorValueChange(Color color)
     {
+        Color = color;
         m_hueSelector.UpdateColor(Color);
     }
 

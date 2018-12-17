@@ -1,6 +1,6 @@
 ﻿Shader "Custom/ColorGradient2" {
 	Properties{
-		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+		_MainTex("Sprite Texture", 2D) = "white" {}
 		_StencilComp("Stencil Comparison", Float) = 8
 		_Stencil("Stencil ID", Float) = 0
 		_StencilOp("Stencil Operation", Float) = 0
@@ -32,7 +32,7 @@
 
 		Cull Off
 		Lighting Off
-		ZWrite Off
+		ZWrite on
 		ZTest[unity_GUIZTestMode]
 		Blend SrcAlpha OneMinusSrcAlpha
 		ColorMask[_ColorMask]
@@ -60,8 +60,20 @@
 			}
 
 			fixed4 frag(v2f i) : COLOR{
-				fixed4 c = fixed4(1, 1.0f, 1.0f, 0.0f);
-				c.a = 1;
+				fixed4 red =		fixed4(1.0f, 0.0f, 0.0f, 0.0f);
+				fixed4 purple =		fixed4(1.0f, 0.0f, 1.0f, 0.0f);
+				fixed4 blue =		fixed4(0.0f, 0.0f, 1.0f, 0.0f);
+				fixed4 turqoise =	fixed4(0.0f, 1.0f, 1.0f, 0.0f);
+				fixed4 green =		fixed4(0.0f, 1.0f, 0.0f, 0.0f);
+				fixed4 yellow =		fixed4(1.0f, 1.0f, 0.0f, 0.0f);
+				float sections = 1.0f / 6.0f;
+				fixed4 c =	lerp(red, purple,		(i.texcoord.x / sections * 1) / (1.0f)) * step(i.texcoord.x, sections);
+				c +=		lerp(purple, blue,		(i.texcoord.x - sections * 1) / (sections)) * step(sections * 1, i.texcoord.x) * step(i.texcoord.x, sections * 2);
+				c +=		lerp(blue, turqoise,	(i.texcoord.x - sections * 2) / (sections)) * step(sections * 2, i.texcoord.x) * step(i.texcoord.x, sections * 3);
+				c +=		lerp(turqoise, green,	(i.texcoord.x - sections * 3) / (sections)) * step(sections * 3, i.texcoord.x) * step(i.texcoord.x, sections * 4);
+				c +=		lerp(green, yellow,		(i.texcoord.x - sections * 4) / (sections)) * step(sections * 4, i.texcoord.x) * step(i.texcoord.x, sections * 5);
+				c +=		lerp(yellow, red,		(i.texcoord.x - sections * 5) / (sections)) * step(sections * 5, i.texcoord.x) * step(i.texcoord.x, sections * 6);
+				c.a = 1.0f;
 				return c;
 			}
 			ENDCG

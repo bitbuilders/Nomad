@@ -2907,6 +2907,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26d5c789d8f272498a48997cfaafca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hairRenderer: {fileID: 137864254344938812}
+  m_glassesRenderer: {fileID: 137191679771791316}
   HairMaterial: {fileID: 2100000, guid: 38bae7a00bb736b49a3d7910538c0840, type: 2}
   GlassesMaterial: {fileID: 2100000, guid: a3aa4aeb5bf705245b24a76cfa82a1ac, type: 2}
 --- !u!137 &137016318789418140

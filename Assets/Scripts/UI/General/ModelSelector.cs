@@ -8,7 +8,7 @@ public class ModelSelector : MonoBehaviour
     {
         public Color HairColor;
         public Color GlassesColor;
-        public float WidthVariation;
+        public float WeightVariation;
         public float HeightVariation;
     }
 
@@ -31,17 +31,19 @@ public class ModelSelector : MonoBehaviour
     [SerializeField] CanvasTransitioner.InterpolationType m_interpolationType = CanvasTransitioner.InterpolationType.EXPO_OUT;
     [SerializeField] ColorPicker m_hairColorSelector = null;
     [SerializeField] ColorPicker m_glassesColorSelector = null;
-    [SerializeField] FloatPicker m_widthSelector = null;
+    [SerializeField] FloatPicker m_weightSelector = null;
     [SerializeField] FloatPicker m_heightSelector = null;
     [Space(15)]
     [Header("Values")]
-    [SerializeField] [Range(0.0f, 5.0f)] float m_widthVariation = 0.25f;
+    [SerializeField] [Range(0.0f, 5.0f)] float m_weightVariation = 0.25f;
     [SerializeField] [Range(0.0f, 5.0f)] float m_heightVariation = 0.5f;
 
     ModelViewData[] m_models = null;
     TargetPoint[] m_targetPoints;
     CharacterAttributes m_currentCharacterAttributes;
-    float m_startingWidth;
+    Vector3 m_rotation;
+    Vector3 m_lastMousePosition;
+    float m_startingWeight;
     float m_startingHeight;
     int m_currentModel = 0;
     float m_time = 0.0f;
@@ -53,17 +55,19 @@ public class ModelSelector : MonoBehaviour
         InitializeCharacterAttributes();
         SetTargetPositions(true);
         SetCallbacks();
+        m_rotation = Vector3.up * 180.0f;
+        m_models[m_currentModel].transform.localEulerAngles = m_rotation;
     }
 
     void InitializeCharacterAttributes()
     {
         ModelViewData curModel = m_models[m_currentModel];
-        m_startingWidth = curModel.transform.localScale.x;
+        m_startingWeight = curModel.transform.localScale.x;
         m_startingHeight = curModel.transform.localScale.y;
 
         m_currentCharacterAttributes = new CharacterAttributes() {
             HairColor = curModel.HairMaterial.color, GlassesColor = curModel.GlassesMaterial.color,
-            WidthVariation = 0.0f, HeightVariation = 0.0f };
+            WeightVariation = 0.0f, HeightVariation = 0.0f };
     }
 
     void CreateModels()
@@ -80,14 +84,14 @@ public class ModelSelector : MonoBehaviour
 
     void SetCallbacks()
     {
-        m_hairColorSelector.Initialize(m_currentCharacterAttributes.HairColor);
-        m_glassesColorSelector.Initialize(m_currentCharacterAttributes.GlassesColor);
         m_hairColorSelector.OnValueChange += SetCharacterHairColor;
         m_glassesColorSelector.OnValueChange += SetCharacterGlassesColor;
-        m_widthSelector.Initialize(m_widthVariation);
-        m_heightSelector.Initialize(m_heightVariation);
-        m_widthSelector.OnValueChange += SetCharacterWidthVariation;
+        m_weightSelector.OnValueChange += SetCharacterWeightVariation;
         m_heightSelector.OnValueChange += SetCharacterHeightVariation;
+        m_hairColorSelector.Initialize(m_currentCharacterAttributes.HairColor);
+        m_glassesColorSelector.Initialize(m_currentCharacterAttributes.GlassesColor);
+        m_weightSelector.Initialize(m_weightVariation);
+        m_heightSelector.Initialize(m_heightVariation);
     }
 
     void SetTargetPositions(bool setModelPositions)
@@ -128,6 +132,16 @@ public class ModelSelector : MonoBehaviour
         ApplyCharacterAttributes();
     }
 
+    public void SwipeRight()
+    {
+        SwipeModel(SwipeDirection.RIGHT);
+    }
+
+    public void SwipeLeft()
+    {
+        SwipeModel(SwipeDirection.LEFT);
+    }
+
     public void SetCharacterHairColor(Color color)
     {
         m_currentCharacterAttributes.HairColor = color;
@@ -140,10 +154,10 @@ public class ModelSelector : MonoBehaviour
         ApplyCharacterAttributes();
     }
 
-    public void SetCharacterWidthVariation(float widthVariation)
+    public void SetCharacterWeightVariation(float weightVariation)
     {
-        float width = Mathf.Clamp(widthVariation, -m_widthVariation, m_widthVariation);
-        m_currentCharacterAttributes.WidthVariation = width;
+        float weight = Mathf.Clamp(weightVariation, -m_weightVariation, m_weightVariation);
+        m_currentCharacterAttributes.WeightVariation = weight;
         ApplyCharacterAttributes();
     }
 
@@ -158,20 +172,29 @@ public class ModelSelector : MonoBehaviour
     {
         ModelViewData curModel = m_models[m_currentModel];
         Vector3 curScale = curModel.transform.localScale;
-        float width = m_startingWidth + m_currentCharacterAttributes.WidthVariation;
+        float weight = m_startingWeight + m_currentCharacterAttributes.WeightVariation;
         float height = m_startingHeight + m_currentCharacterAttributes.HeightVariation;
         curModel.HairMaterial.color = m_currentCharacterAttributes.HairColor;
         curModel.GlassesMaterial.color = m_currentCharacterAttributes.GlassesColor;
-        curModel.transform.localScale = new Vector3(width, height, curScale.z);
+        curModel.transform.localScale = new Vector3(weight, height, weight);
+        m_models[m_currentModel].transform.localEulerAngles = m_rotation;
+    }
+
+    public void SetCharacterRotation()
+    {
+        if (Input.GetMouseButtonDown(0))
+            m_lastMousePosition = Input.mousePosition;
+
+        Vector3 delta = Input.mousePosition - m_lastMousePosition;
+        float x = delta.x * Time.deltaTime * 20.0f;
+        m_rotation += Vector3.up * x;
+        m_models[m_currentModel].transform.localEulerAngles = m_rotation;
+
+        m_lastMousePosition = Input.mousePosition;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-            SwipeModel(SwipeDirection.LEFT);
-        else if (Input.GetKeyDown(KeyCode.RightArrow))
-            SwipeModel(SwipeDirection.RIGHT);
-
         if (m_swiping)
         {
             m_time += Time.deltaTime * m_swipeSpeed;

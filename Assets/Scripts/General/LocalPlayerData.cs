@@ -33,7 +33,7 @@ public class LocalPlayerData : MonoBehaviour
         public string Username;
         public string Color;
         public float HeightMultiplier;
-        public float WidthMultiplier;
+        public float WeightMultiplier;
         public Mesh HairMesh;
     }
 

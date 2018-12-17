@@ -1,6 +1,6 @@
 ﻿Shader "Custom/ColorGradient" {
 	Properties{
-		[PerRendererData] _MainTex("Sprite Texture", 2D) = "white" {}
+		_MainTex("Sprite Texture", 2D) = "white" {}
 		_ColorTopLeft("Top Left Color", Color) = (1,1,1,1)
 		_ColorTopRight("Top Right Color", Color) = (1,1,1,1)
 		_ColorBot("Bot Color", Color) = (1,1,1,1)
@@ -68,8 +68,8 @@
 				//c += lerp(_ColorMid, _ColorTop, (i.texcoord.y - _Middle) / (1 - _Middle)) * step(_Middle, i.texcoord.y);
 				//fixed4 c = lerp(_ColorBot, _ColorTopLeft, i.texcoord.y / 0.5f) * step(i.texcoord.y, 0.5f);
 				//c += lerp(_ColorTopLeft, _ColorTopRight, (i.texcoord.y - 0.5f) / (1 - 0.5f)) * step(0.5f, i.texcoord.y);
-				fixed4 c = lerp(_ColorTopLeft, _ColorTopRight, pow(i.texcoord.x, 0.5f));
-				c = lerp(c, _ColorBot, pow(clamp(1.0f - i.texcoord.y, 0.0f, 1.0f), 0.5f));
+				fixed4 c = lerp(_ColorTopLeft, _ColorTopRight, pow(i.texcoord.x, 1));
+				c = lerp(c, _ColorBot, pow(clamp(1.0f - i.texcoord.y, 0.0f, 1.0f), 1));
 				c.a = 1;
 				return c;
 			}
