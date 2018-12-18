@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelSelector : MonoBehaviour
+public class ModelSelector : Singleton<ModelSelector>
 {
     public struct CharacterAttributes
     {
@@ -26,6 +26,7 @@ public class ModelSelector : MonoBehaviour
 
     [Header("Input")]
     [SerializeField] GameObject[] m_modelTemplates = null;
+    [SerializeField] GameObject[] m_actualPlayerModels = null;
     [SerializeField] [Range(0.0f, 30.0f)] float m_modelSpacing = 15.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_swipeSpeed = 1.0f;
     [SerializeField] CanvasTransitioner.InterpolationType m_interpolationType = CanvasTransitioner.InterpolationType.EXPO_OUT;
@@ -38,14 +39,16 @@ public class ModelSelector : MonoBehaviour
     [SerializeField] [Range(0.0f, 5.0f)] float m_weightVariation = 0.25f;
     [SerializeField] [Range(0.0f, 5.0f)] float m_heightVariation = 0.5f;
 
+    public CharacterAttributes CurrentCharacterAttributes;
+    public GameObject CurrentModel { get { return m_actualPlayerModels[m_currentModel]; } }
+    public int m_currentModel = 0;
+
     ModelViewData[] m_models = null;
     TargetPoint[] m_targetPoints;
-    CharacterAttributes m_currentCharacterAttributes;
     Vector3 m_rotation;
     Vector3 m_lastMousePosition;
     float m_startingWeight;
     float m_startingHeight;
-    int m_currentModel = 0;
     float m_time = 0.0f;
     bool m_swiping = false;
 
@@ -65,7 +68,7 @@ public class ModelSelector : MonoBehaviour
         m_startingWeight = curModel.transform.localScale.x;
         m_startingHeight = curModel.transform.localScale.y;
 
-        m_currentCharacterAttributes = new CharacterAttributes() {
+        CurrentCharacterAttributes = new CharacterAttributes() {
             HairColor = curModel.HairMaterial.color, GlassesColor = curModel.GlassesMaterial.color,
             WeightVariation = 0.0f, HeightVariation = 0.0f };
     }
@@ -88,8 +91,8 @@ public class ModelSelector : MonoBehaviour
         m_glassesColorSelector.OnValueChange += SetCharacterGlassesColor;
         m_weightSelector.OnValueChange += SetCharacterWeightVariation;
         m_heightSelector.OnValueChange += SetCharacterHeightVariation;
-        m_hairColorSelector.Initialize(m_currentCharacterAttributes.HairColor);
-        m_glassesColorSelector.Initialize(m_currentCharacterAttributes.GlassesColor);
+        m_hairColorSelector.Initialize(CurrentCharacterAttributes.HairColor);
+        m_glassesColorSelector.Initialize(CurrentCharacterAttributes.GlassesColor);
         m_weightSelector.Initialize(m_weightVariation);
         m_heightSelector.Initialize(m_heightVariation);
     }
@@ -124,6 +127,8 @@ public class ModelSelector : MonoBehaviour
             m_currentModel = m_models.Length - 1;
         else if (m_currentModel > m_models.Length - 1)
             m_currentModel = 0;
+
+        NomadNetworkManager.m_currentModel = m_currentModel;
         
         SetTargetPositions(false);
         m_swiping = true;
@@ -144,27 +149,27 @@ public class ModelSelector : MonoBehaviour
 
     public void SetCharacterHairColor(Color color)
     {
-        m_currentCharacterAttributes.HairColor = color;
+        CurrentCharacterAttributes.HairColor = color;
         ApplyCharacterAttributes();
     }
 
     public void SetCharacterGlassesColor(Color color)
     {
-        m_currentCharacterAttributes.GlassesColor = color;
+        CurrentCharacterAttributes.GlassesColor = color;
         ApplyCharacterAttributes();
     }
 
     public void SetCharacterWeightVariation(float weightVariation)
     {
         float weight = Mathf.Clamp(weightVariation, -m_weightVariation, m_weightVariation);
-        m_currentCharacterAttributes.WeightVariation = weight;
+        CurrentCharacterAttributes.WeightVariation = weight;
         ApplyCharacterAttributes();
     }
 
     public void SetCharacterHeightVariation(float heightVariation)
     {
         float height = Mathf.Clamp(heightVariation, -m_heightVariation, m_heightVariation);
-        m_currentCharacterAttributes.HeightVariation = height;
+        CurrentCharacterAttributes.HeightVariation = height;
         ApplyCharacterAttributes();
     }
 
@@ -172,10 +177,10 @@ public class ModelSelector : MonoBehaviour
     {
         ModelViewData curModel = m_models[m_currentModel];
         Vector3 curScale = curModel.transform.localScale;
-        float weight = m_startingWeight + m_currentCharacterAttributes.WeightVariation;
-        float height = m_startingHeight + m_currentCharacterAttributes.HeightVariation;
-        curModel.HairMaterial.color = m_currentCharacterAttributes.HairColor;
-        curModel.GlassesMaterial.color = m_currentCharacterAttributes.GlassesColor;
+        float weight = m_startingWeight + CurrentCharacterAttributes.WeightVariation;
+        float height = m_startingHeight + CurrentCharacterAttributes.HeightVariation;
+        curModel.HairMaterial.color = CurrentCharacterAttributes.HairColor;
+        curModel.GlassesMaterial.color = CurrentCharacterAttributes.GlassesColor;
         curModel.transform.localScale = new Vector3(weight, height, weight);
         m_models[m_currentModel].transform.localEulerAngles = m_rotation;
     }

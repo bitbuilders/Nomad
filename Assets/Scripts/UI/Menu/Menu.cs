@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 
 public class Menu : Singleton<Menu>
 {
+    [SerializeField] ModelSelector m_modelSelector = null;
     [SerializeField] TMP_InputField m_username = null;
     [SerializeField] TMP_InputField m_ipAddress = null;
     [SerializeField] LANToggle m_lanToggle = null;
@@ -113,12 +114,10 @@ public class Menu : Singleton<Menu>
     void SetPlayerData()
     {
         string username = m_username.text.Trim();
-        if (!string.IsNullOrEmpty(username))
-            LocalPlayerData.Instance.TempUsername = username;
-        else
-            LocalPlayerData.Instance.TempUsername = "Lost Nomad";
+        if (string.IsNullOrEmpty(username))
+            username = "Lost Nomad";
 
-        LocalPlayerData.Instance.TempColor = m_colorPicker.Color;
+        LocalPlayerData.Instance.SetAttributes(username, m_colorPicker.Color, m_modelSelector.CurrentCharacterAttributes);
     }
 
     public void Quit()

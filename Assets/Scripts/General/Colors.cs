@@ -40,4 +40,10 @@ public static class Colors
 
         return c;
     }
+
+    public static string ColorToString(Color c)
+    {
+        string color = ColorUtility.ToHtmlStringRGBA(c);
+        return "#" + color;
+    }
 }

@@ -20,14 +20,20 @@ public class Player : NetworkBehaviour
     [SyncVar] public int ID;
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
     [SyncVar(hook = "OnChangeColor")] string pColor;
+    [SyncVar(hook = "OnChangeHairColor")] string hColor;
+    //[SyncVar(hook = "OnChangeGlassesColor")] string gColor;
+    //[SyncVar(hook = "OnChangeWeight")] float weight;
+    //[SyncVar(hook = "OnChangeHeight")] float height;
     public string Color { get { return Colors.ColorPrefix + pColor + ">"; } }
     public Camera Camera { get { return m_camera; } }
 
     GameObject m_mainCamera;
+    ModelViewData m_modelViewData;
     
     private void Start()
     {
         m_mainCamera = Camera.main.gameObject;
+        m_modelViewData = GetComponent<ModelViewData>();
         EnablePlayer();
 
         m_nametag.Initialize();
@@ -36,8 +42,9 @@ public class Player : NetworkBehaviour
         {
             LocalPlayerData.Instance.Initialize(this);
             GameLobby.Instance.LocalPlayerMovement = GetComponent<PlayerMovement>();
-            CmdChangeUsername(LocalPlayerData.Instance.TempUsername);
-            CmdChangeColor(LocalPlayerData.Instance.TempColor);
+            CmdChangeUsername(LocalPlayerData.Instance.Attributes.Username);
+            CmdChangeColor(LocalPlayerData.Instance.Attributes.Color);
+            CmdChangeHairColor(Colors.ColorToString(LocalPlayerData.Instance.Attributes.Attributes.HairColor));
             //CmdSendUsername(UserName);
             CmdGetID();
         }
@@ -48,6 +55,14 @@ public class Player : NetworkBehaviour
         if (string.IsNullOrEmpty(pColor))
             pColor = "#C58D4D";
         m_nametag.UpdateColor(Colors.StringToColor(pColor));
+
+        SetHairColor();
+    }
+
+    void SetHairColor()
+    {
+        string color = (string.IsNullOrEmpty(hColor)) ? "#000000FF" : hColor;
+        m_modelViewData.HairMaterial.color = Colors.StringToColor(hColor);
     }
 
     [Command]
@@ -56,6 +71,18 @@ public class Player : NetworkBehaviour
         NetworkData nd = FindObjectOfType<NetworkData>();
         nd.IncrementPlayerID();
         ID = nd.CurrentPlayerID;
+    }
+
+    [Command]
+    void CmdChangeHairColor(string color)
+    {
+        hColor = color;
+        CmdSendHairColor(hColor);
+    }
+
+    void OnChangeHairColor(string color)
+    {
+        // Change hair color
     }
 
     [Command]
@@ -130,6 +157,19 @@ public class Player : NetworkBehaviour
     public void EnableMovement(bool enable)
     {
 
+    }
+
+    [Command]
+    void CmdSendHairColor(string color)
+    {
+        RpcReceiveHairColor(color);
+    }
+
+    [ClientRpc]
+    void RpcReceiveHairColor(string color)
+    {
+        hColor = color;
+        SetHairColor();
     }
 
     [Command]

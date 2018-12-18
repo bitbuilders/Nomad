@@ -6,6 +6,12 @@ using UnityEngine.Networking;
 public class NomadNetworkManager : NetworkManager
 {
     public static NomadNetworkManager Instance;
+    public static int m_currentModel;
+
+    public class NetworkMessage : MessageBase
+    {
+        public int chosenModel;
+    }
 
     private void Awake()
     {
@@ -26,6 +32,11 @@ public class NomadNetworkManager : NetworkManager
     {
         ConnectionManager.Instance.Hide();
 
+        NetworkMessage test = new NetworkMessage();
+        test.chosenModel = m_currentModel;
+        print(test.chosenModel);
+        ClientScene.AddPlayer(conn, 0, test);
+
         base.OnClientConnect(conn);
     }
 
@@ -34,5 +45,24 @@ public class NomadNetworkManager : NetworkManager
         ConnectionManager.Instance.Hide();
 
         base.OnStopClient();
+    }
+
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId, NetworkReader extraMessageReader)
+    {
+        NetworkMessage message = extraMessageReader.ReadMessage<NetworkMessage>();
+        int chosenModel = message.chosenModel;
+        GameObject player = null;
+
+        if (chosenModel == 0)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 01", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 1)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 02", typeof(GameObject))) as GameObject;
+        }
+
+        player.transform.position = GetStartPosition().position;
+        NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);
     }
 }

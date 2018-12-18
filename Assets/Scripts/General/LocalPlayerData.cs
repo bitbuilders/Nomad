@@ -32,14 +32,13 @@ public class LocalPlayerData : MonoBehaviour
     {
         public string Username;
         public string Color;
-        public float HeightMultiplier;
-        public float WeightMultiplier;
-        public Mesh HairMesh;
+        public ModelSelector.CharacterAttributes Attributes;
     }
 
+    public PlayerAttributes Attributes;
     public Player LocalPlayer { get; set; }
-    public string TempUsername { get; set; }
-    public string TempColor { get; set; }
+    //public string TempUsername { get; set; }
+    //public string TempColor { get; set; }
 
     public static LocalPlayerData Instance;
 
@@ -56,10 +55,15 @@ public class LocalPlayerData : MonoBehaviour
         }
     }
 
+    public void SetAttributes(string username, string color, ModelSelector.CharacterAttributes attributes)
+    {
+        Attributes = new PlayerAttributes() { Username = username, Color = color, Attributes = attributes };
+    }
+
     public void Initialize(Player localPlayer)
     {
         LocalPlayer = localPlayer;
-        LocalPlayer.UserName = TempUsername;
+        LocalPlayer.UserName = Attributes.Username;
     }
 
     public bool PlayerExists(string playerName)

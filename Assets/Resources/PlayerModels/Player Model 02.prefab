@@ -623,6 +623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4026472147743504}
   - component: {fileID: 114515488057533904}
+  - component: {fileID: 114114212993851412}
   - component: {fileID: 114413908410268024}
   - component: {fileID: 114923900149669330}
   - component: {fileID: 114699585409396548}
@@ -2851,6 +2852,21 @@ MonoBehaviour:
   m_MovementThreshold: 5
   m_InterpolateRotation: 0.2
   m_InterpolateMovement: 0
+--- !u!114 &114114212993851412
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1535204917281962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26d5c789d8f272498a48997cfaafca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hairRenderer: {fileID: 137173660575403062}
+  m_glassesRenderer: {fileID: 137783012416621594}
+  HairMaterial: {fileID: 0}
+  GlassesMaterial: {fileID: 0}
 --- !u!114 &114179573914947040
 MonoBehaviour:
   m_ObjectHideFlags: 1

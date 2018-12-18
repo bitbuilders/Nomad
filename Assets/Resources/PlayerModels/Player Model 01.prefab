@@ -1232,6 +1232,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4968535112416908}
   - component: {fileID: 114853805610761962}
+  - component: {fileID: 114849181424212908}
   - component: {fileID: 114172629443964708}
   - component: {fileID: 114775959442768450}
   - component: {fileID: 114119905334893822}
@@ -2395,15 +2396,15 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1971112345168844}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: -4, z: 0}
+  m_LocalRotation: {x: -0, y: -0.25881857, z: -0, w: 0.965926}
+  m_LocalPosition: {x: 3.18, y: 0, z: -18.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4775932367539514}
   - {fileID: 4429454792053636}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -30.000002, z: 0}
 --- !u!20 &20612855809241074
 Camera:
   m_ObjectHideFlags: 1
@@ -2747,7 +2748,7 @@ MonoBehaviour:
   m_Script: {fileID: -1267208747, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
+  m_Target: {fileID: 4775932367539514}
   m_ChildIndex: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 2
@@ -3145,6 +3146,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_maxHealth: 3
+--- !u!114 &114849181424212908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1971112345168844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f26d5c789d8f272498a48997cfaafca4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_hairRenderer: {fileID: 137652114837841776}
+  m_glassesRenderer: {fileID: 137016202053489028}
+  HairMaterial: {fileID: 0}
+  GlassesMaterial: {fileID: 0}
 --- !u!114 &114853805610761962
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -34,7 +34,7 @@ public class GameLobby : Singleton<GameLobby>
     {
         yield return new WaitForSeconds(1.0f);
 
-        string name = LocalPlayerData.Instance.TempUsername;
+        string name = LocalPlayerData.Instance.Attributes.Username;
         m_networkDiscovery.broadcastData = (string.IsNullOrEmpty(name)) ? "Lost Nomad" : name;
         m_networkDiscovery.Initialize();
         Player localPlayer = LocalPlayerData.Instance.LocalPlayer;
