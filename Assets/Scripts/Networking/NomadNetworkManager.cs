@@ -37,7 +37,7 @@ public class NomadNetworkManager : NetworkManager
         print(test.chosenModel);
         ClientScene.AddPlayer(conn, 0, test);
 
-        base.OnClientConnect(conn);
+        //base.OnClientConnect(conn);
     }
 
     public override void OnStopClient()

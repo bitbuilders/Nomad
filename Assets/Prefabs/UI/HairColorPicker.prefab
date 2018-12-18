@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 222800054183630298}
   - component: {fileID: 114473561712493832}
   m_Layer: 5
-  m_Name: ColorHue
+  m_Name: ColorValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ GameObject:
   - component: {fileID: 114443476119477022}
   - component: {fileID: 114560157284148578}
   m_Layer: 5
-  m_Name: ColorValue
+  m_Name: ColorHue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -822,7 +822,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b22280cee41f940458caf858bbc9c498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_hueSelector: {fileID: 114033438766686468}
+  m_valueSelector: {fileID: 114033438766686468}
+  m_hueSelector: {fileID: 114443476119477022}
+  m_randomStart: 1
 --- !u!114 &114985261708198486
 MonoBehaviour:
   m_ObjectHideFlags: 1

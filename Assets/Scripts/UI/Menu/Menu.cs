@@ -116,7 +116,7 @@ public class Menu : Singleton<Menu>
         string username = m_username.text.Trim();
         if (string.IsNullOrEmpty(username))
             username = "Lost Nomad";
-
+        
         LocalPlayerData.Instance.SetAttributes(username, m_colorPicker.Color, m_modelSelector.CurrentCharacterAttributes);
     }
 

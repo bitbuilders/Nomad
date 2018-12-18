@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class FloatPicker : MonoBehaviour
 {
     [SerializeField] bool m_variation = true;
+    [SerializeField] bool m_randomStart = true;
 
     public delegate void OnFloatChange(float value);
     public OnFloatChange OnValueChange;
@@ -21,10 +22,17 @@ public class FloatPicker : MonoBehaviour
     public void Initialize(float totalValue)
     {
         m_totalValue = totalValue;
-        if (m_variation)
-            m_slider.value = 0.5f;
+        if (m_randomStart)
+        {
+            m_slider.value = Random.Range(0.0f, 1.0f);
+        }
         else
-            m_slider.value = 0.0f;
+        {
+            if (m_variation)
+                m_slider.value = 0.5f;
+            else
+                m_slider.value = 0.0f;
+        }
     }
 
     public void OnChange()

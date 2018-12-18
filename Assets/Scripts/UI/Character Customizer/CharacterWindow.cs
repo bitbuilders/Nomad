@@ -8,8 +8,8 @@ public class CharacterWindow : MonoBehaviour
 {
     [SerializeField] ModelSelector m_modelSelector = null;
     [SerializeField] GameObject m_modelView = null;
-    [SerializeField] ColorHueSelector m_hairHue = null;
-    [SerializeField] ColorHueSelector m_glassesHue = null;
+    [SerializeField] ColorValueSelector m_hairValue = null;
+    [SerializeField] ColorValueSelector m_glassesValue = null;
 
     GraphicRaycaster m_raycaster;
     PointerEventData m_pointerEventData;
@@ -38,17 +38,17 @@ public class CharacterWindow : MonoBehaviour
         m_raycaster.Raycast(m_pointerEventData, rayResults);
         foreach (RaycastResult result in rayResults)
         {
-            if (result.gameObject == m_hairHue.gameObject)
+            if (result.gameObject == m_hairValue.gameObject)
             {
                 Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 offset = Input.mousePosition - m_hairHue.transform.position;
-                m_hairHue.GetLocalPointFromMousePosition(offset);
+                Vector3 offset = Input.mousePosition - m_hairValue.transform.position;
+                m_hairValue.GetLocalPointFromMousePosition(offset);
             }
-            else if (result.gameObject == m_glassesHue.gameObject)
+            else if (result.gameObject == m_glassesValue.gameObject)
             {
                 Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector3 offset = Input.mousePosition - m_glassesHue.transform.position;
-                m_glassesHue.GetLocalPointFromMousePosition(offset);
+                Vector3 offset = Input.mousePosition - m_glassesValue.transform.position;
+                m_glassesValue.GetLocalPointFromMousePosition(offset);
             }
             else if (result.gameObject == m_modelView || result.gameObject.transform.IsChildOf(m_modelView.transform))
             {

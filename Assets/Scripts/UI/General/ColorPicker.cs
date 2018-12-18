@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class ColorPicker : MonoBehaviour
 {
+    [SerializeField] ColorValueSelector m_valueSelector = null;
     [SerializeField] ColorHueSelector m_hueSelector = null;
+    [SerializeField] bool m_randomStart = true;
 
     public delegate void OnColorChange(Color color);
     public OnColorChange OnValueChange;
@@ -13,17 +15,29 @@ public class ColorPicker : MonoBehaviour
 
     public void Initialize(Color startingColor)
     {
-        Color = startingColor;
-        m_hueSelector.UpdateColor(Color.red);
-    }
-
-    public void OnColorValueChange(Color color)
-    {
-        Color = color;
-        m_hueSelector.UpdateColor(Color);
+        if (m_randomStart)
+        {
+            float hue = Random.Range(0.0f, 1.0f);
+            Vector2 point = new Vector2();
+            point.x = Random.Range(0.35f, 1.0f);
+            point.y = Random.Range(0.35f, 1.0f);
+            m_hueSelector.SetValue(hue);
+            m_valueSelector.UpdateColor(m_hueSelector.GetColor());
+            m_valueSelector.SetPoint(point);
+        }
+        else
+        {
+            Color = startingColor;
+            m_valueSelector.UpdateColor(Color);
+        }
     }
 
     public void OnColorHueChange(Color color)
+    {
+        m_valueSelector.UpdateColor(color);
+    }
+
+    public void OnColorValueChange(Color color)
     {
         Color = color;
         OnValueChange.Invoke(Color);

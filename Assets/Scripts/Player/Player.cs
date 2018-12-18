@@ -21,9 +21,9 @@ public class Player : NetworkBehaviour
     [SyncVar(hook = "OnChangeUsername")] public string UserName;
     [SyncVar(hook = "OnChangeColor")] string pColor;
     [SyncVar(hook = "OnChangeHairColor")] string hColor;
-    //[SyncVar(hook = "OnChangeGlassesColor")] string gColor;
-    //[SyncVar(hook = "OnChangeWeight")] float weight;
-    //[SyncVar(hook = "OnChangeHeight")] float height;
+    [SyncVar(hook = "OnChangeGlassesColor")] string gColor;
+    [SyncVar(hook = "OnChangeWeight")] float weight;
+    [SyncVar(hook = "OnChangeHeight")] float height;
     public string Color { get { return Colors.ColorPrefix + pColor + ">"; } }
     public Camera Camera { get { return m_camera; } }
 
@@ -45,6 +45,9 @@ public class Player : NetworkBehaviour
             CmdChangeUsername(LocalPlayerData.Instance.Attributes.Username);
             CmdChangeColor(LocalPlayerData.Instance.Attributes.Color);
             CmdChangeHairColor(Colors.ColorToString(LocalPlayerData.Instance.Attributes.Attributes.HairColor));
+            CmdChangeGlassesColor(Colors.ColorToString(LocalPlayerData.Instance.Attributes.Attributes.GlassesColor));
+            CmdChangeWeight(LocalPlayerData.Instance.Attributes.Attributes.WeightVariation);
+            CmdChangeHeight(LocalPlayerData.Instance.Attributes.Attributes.HeightVariation);
             //CmdSendUsername(UserName);
             CmdGetID();
         }
@@ -57,12 +60,33 @@ public class Player : NetworkBehaviour
         m_nametag.UpdateColor(Colors.StringToColor(pColor));
 
         SetHairColor();
+        SetGlassesColor();
+        SetWeight();
+        SetHeight();
     }
 
     void SetHairColor()
     {
         string color = (string.IsNullOrEmpty(hColor)) ? "#000000FF" : hColor;
-        m_modelViewData.HairMaterial.color = Colors.StringToColor(hColor);
+        m_modelViewData.HairMaterial.color = Colors.StringToColor(color);
+    }
+
+    void SetGlassesColor()
+    {
+        string color = (string.IsNullOrEmpty(hColor)) ? "#000000FF" : gColor;
+        m_modelViewData.GlassesMaterial.color = Colors.StringToColor(color);
+    }
+
+    void SetWeight()
+    {
+        float w = 1.0f + weight / 4.0f;
+        transform.localScale = new Vector3(w, 1.0f, w);
+    }
+
+    void SetHeight()
+    {
+        float h = 1.0f + height / 4.0f;
+        transform.localScale = new Vector3(1.0f, h, 1.0f);
     }
 
     [Command]
@@ -82,7 +106,47 @@ public class Player : NetworkBehaviour
 
     void OnChangeHairColor(string color)
     {
-        // Change hair color
+        hColor = color;
+        SetHairColor();
+    }
+
+    [Command]
+    void CmdChangeGlassesColor(string color)
+    {
+        gColor = color;
+        CmdSendGlassesColor(gColor);
+    }
+
+    void OnChangeGlassesColor(string color)
+    {
+        gColor = color;
+        SetGlassesColor();
+    }
+
+    [Command]
+    void CmdChangeWeight(float value)
+    {
+        weight = value;
+        CmdSendWeight(weight);
+    }
+
+    void OnChangeWeight(float value)
+    {
+        weight = value;
+        SetWeight();
+    }
+
+    [Command]
+    void CmdChangeHeight(float value)
+    {
+        height = value;
+        CmdSendHeight(height);
+    }
+
+    void OnChangeHeight(float value)
+    {
+        height = value;
+        SetHeight();
     }
 
     [Command]
@@ -170,6 +234,45 @@ public class Player : NetworkBehaviour
     {
         hColor = color;
         SetHairColor();
+    }
+
+    [Command]
+    void CmdSendGlassesColor(string color)
+    {
+        RpcReceiveGlassesColor(color);
+    }
+
+    [ClientRpc]
+    void RpcReceiveGlassesColor(string color)
+    {
+        gColor = color;
+        SetGlassesColor();
+    }
+
+    [Command]
+    void CmdSendWeight(float value)
+    {
+        RpcReceiveWeight(value);
+    }
+
+    [ClientRpc]
+    void RpcReceiveWeight(float value)
+    {
+        weight = value;
+        SetWeight();
+    }
+
+    [Command]
+    void CmdSendHeight(float value)
+    {
+        RpcReceiveHeight(value);
+    }
+
+    [ClientRpc]
+    void RpcReceiveHeight(float value)
+    {
+        height = value;
+        SetHeight();
     }
 
     [Command]

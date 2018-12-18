@@ -6,53 +6,39 @@ using UnityEngine.UI;
 public class ColorHueSelector : MonoBehaviour
 {
     [SerializeField] ColorPicker m_colorPicker = null;
-    [SerializeField] GameObject m_pointer = null;
 
-    RectTransform m_rectTransform;
-    Vector3[] m_corners;
-    Color m_topRightColor;
-    Vector2 m_point;
-    Material m_material;
+    Vector3Int[] sections;
+    float section;
+    Slider m_slider;
 
     private void Start()
     {
-        m_rectTransform = GetComponent<RectTransform>();
-        m_corners = new Vector3[4];
-        m_rectTransform.GetLocalCorners(m_corners);
-        m_material = Instantiate(GetComponent<Image>().material);
-        GetComponent<Image>().material = m_material;
-        m_point = new Vector2(0.5f, 0.5f);
+        m_slider = GetComponent<Slider>();
+        sections = new Vector3Int[7] { new Vector3Int(1, 0, 0),
+            new Vector3Int(1, 0, 1),    new Vector3Int(0, 0, 1),
+            new Vector3Int(0, 1, 1),    new Vector3Int(0, 1, 0),
+            new Vector3Int(1, 1, 0),    new Vector3Int(1, 0, 0) };
+        section = 1.0f / 6.0f;
     }
 
-    public void UpdateColor(Color topRightColor)
+    public void SetValue(float value)
     {
-        m_topRightColor = topRightColor;
-        m_material.SetColor("_ColorTopRight", topRightColor);
-        SelectHue(false);
+        m_slider.value = value;
     }
 
-    public void GetLocalPointFromMousePosition(Vector3 offset)
+    public Color GetColor()
     {
-        //print(offset);
+        float a = m_slider.value;
+        int lowerindex = (int)(a / section);
+        Color c1 = new Color(sections[lowerindex].x, sections[lowerindex].y, sections[lowerindex].z, 255);
+        Color c2 = new Color(sections[lowerindex + 1].x, sections[lowerindex + 1].y, sections[lowerindex + 1].z, 255);
+        Color c = Color.Lerp(c1, c2, (a - section * lowerindex) / (section));
 
-        m_rectTransform.GetLocalCorners(m_corners);
-        m_point.x = (offset.x + (m_corners[2].x / 2.0f)) / m_corners[2].x;
-        m_point.y = (offset.y + (m_corners[2].y / 2.0f)) / m_corners[2].y;
-        m_point.x = Mathf.Clamp01(m_point.x);
-        m_point.y = Mathf.Clamp01(m_point.y);
-
-        SelectHue(true);
+        return c;
     }
 
-    public void SelectHue(bool setPosition)
+    public void OnValueChange()
     {
-        if (setPosition)
-            m_pointer.transform.position = Input.mousePosition;
-
-        Color c = Color.Lerp(Color.white, m_topRightColor, m_point.x);
-        c = Color.Lerp(c, Color.black, 1.0f - m_point.y);
-        c.a = 1.0f;
-
-        m_colorPicker.OnColorHueChange(c);
+        m_colorPicker.OnColorHueChange(GetColor());
     }
 }
