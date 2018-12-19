@@ -1388,6 +1388,34 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fb99cdf65f84664ca04a975f1fb784e, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1 &304276909
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 304276910}
+  m_Layer: 0
+  m_Name: Male
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &304276910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 304276909}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2106747462}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &309468217
 GameObject:
   m_ObjectHideFlags: 0
@@ -2647,6 +2675,34 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 622444153}
   m_CullTransparentMesh: 0
+--- !u!1 &666129697
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 666129698}
+  m_Layer: 0
+  m_Name: Female
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &666129698
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 666129697}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2106747462}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &679413142 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1376447766046546, guid: 64d3709cb1c33994193a6b856c8a1c45,
@@ -8207,7 +8263,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.00002074914
+      value: -0.000040387447
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
@@ -8743,7 +8799,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 0.0625, y: 0.111111134, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 304276910}
+  - {fileID: 666129698}
   m_Father: {fileID: 1072465928}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8758,18 +8816,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84815e5f70f50614eb714a9083d8b6a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_modelTemplates:
+  m_femaleModelTemplates:
+  - {fileID: 1286544801381786, guid: dbc3e401ebd769f43b5fd2f208ef0600, type: 2}
+  m_maleModelTemplates:
   - {fileID: 1797140018953032, guid: 6d805167686e53e4db124a3f1610b4b4, type: 2}
   - {fileID: 1961746695574798, guid: cc11050a794ba504e87502a4d1032271, type: 2}
   - {fileID: 1654150684428526, guid: 1ca746b074fc1514385e7e4762328dc6, type: 2}
   - {fileID: 1966112239012490, guid: 5f38fcfbe679651469e9f7fa78e79fee, type: 2}
   - {fileID: 1581461528959244, guid: 02b2fc6eb4ee5c640a2cd2d8a12e7a3f, type: 2}
-  m_actualPlayerModels:
-  - {fileID: 1971112345168844, guid: aef4bda1226d0b94b8d93bb0cb4c0a58, type: 2}
-  - {fileID: 1535204917281962, guid: 1b6030231a6a3274985ca0a718bda609, type: 2}
-  - {fileID: 1757075727706646, guid: 8562ef6a03dfc3f428840809be04db97, type: 2}
-  - {fileID: 1233864661286974, guid: 2c271fda63104f04d9fb2c46596273e7, type: 2}
-  - {fileID: 1590212040645140, guid: 9b9118bc719764a4e97a02b0eeaedf5c, type: 2}
+  m_maleLocation: {fileID: 304276910}
+  m_femaleLocation: {fileID: 666129698}
   m_modelSpacing: 15
   m_swipeSpeed: 1
   m_interpolationType: 13
@@ -8780,6 +8836,7 @@ MonoBehaviour:
   m_weightVariation: 0.4
   m_heightVariation: 0.4
   m_currentModel: 0
+  m_currentRow: 0
 --- !u!1 &2122309282
 GameObject:
   m_ObjectHideFlags: 0
