@@ -61,6 +61,38 @@ public class NomadNetworkManager : NetworkManager
         {
             player = Instantiate(Resources.Load("PlayerModels/Player Model 02", typeof(GameObject))) as GameObject;
         }
+        else if (chosenModel == 2)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 03", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 3)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 04", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 4)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 05", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 5)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 06", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 6)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 07", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 7)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 08", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 8)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 09", typeof(GameObject))) as GameObject;
+        }
+        else if (chosenModel == 9)
+        {
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 010", typeof(GameObject))) as GameObject;
+        }
 
         player.transform.position = GetStartPosition().position;
         NetworkServer.AddPlayerForConnection(conn, player, playerControllerId);

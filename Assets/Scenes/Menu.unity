@@ -8207,7 +8207,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000780642
+      value: -0.00002074914
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
@@ -8761,9 +8761,15 @@ MonoBehaviour:
   m_modelTemplates:
   - {fileID: 1797140018953032, guid: 6d805167686e53e4db124a3f1610b4b4, type: 2}
   - {fileID: 1961746695574798, guid: cc11050a794ba504e87502a4d1032271, type: 2}
+  - {fileID: 1654150684428526, guid: 1ca746b074fc1514385e7e4762328dc6, type: 2}
+  - {fileID: 1966112239012490, guid: 5f38fcfbe679651469e9f7fa78e79fee, type: 2}
+  - {fileID: 1581461528959244, guid: 02b2fc6eb4ee5c640a2cd2d8a12e7a3f, type: 2}
   m_actualPlayerModels:
   - {fileID: 1971112345168844, guid: aef4bda1226d0b94b8d93bb0cb4c0a58, type: 2}
   - {fileID: 1535204917281962, guid: 1b6030231a6a3274985ca0a718bda609, type: 2}
+  - {fileID: 1757075727706646, guid: 8562ef6a03dfc3f428840809be04db97, type: 2}
+  - {fileID: 1233864661286974, guid: 2c271fda63104f04d9fb2c46596273e7, type: 2}
+  - {fileID: 1590212040645140, guid: 9b9118bc719764a4e97a02b0eeaedf5c, type: 2}
   m_modelSpacing: 15
   m_swipeSpeed: 1
   m_interpolationType: 13

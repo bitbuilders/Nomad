@@ -29,7 +29,6 @@ public class ColorValueSelector : MonoBehaviour
         m_point = point;
         SelectHue(false);
         m_rectTransform.GetLocalCorners(m_corners);
-        print(m_corners[2]);
         float x = m_point.x * 93.0f;
         float y = m_point.y * 93.0f;
         m_pointer.transform.localPosition = new Vector3(x - 46.0f, y - 46.0f, 0.0f);
