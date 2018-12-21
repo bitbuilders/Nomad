@@ -11,7 +11,7 @@ public class FloatPicker : MonoBehaviour
     public delegate void OnFloatChange(float value);
     public OnFloatChange OnValueChange;
 
-    Slider m_slider;
+    public Slider m_slider;
     float m_totalValue;
 
     private void Awake()

@@ -2464,6 +2464,14 @@ MonoBehaviour:
   m_OnlineScene: Lobby
   m_SpawnPrefabs:
   - {fileID: 1535204917281962, guid: 1b6030231a6a3274985ca0a718bda609, type: 2}
+  - {fileID: 1757075727706646, guid: 8562ef6a03dfc3f428840809be04db97, type: 2}
+  - {fileID: 1233864661286974, guid: 2c271fda63104f04d9fb2c46596273e7, type: 2}
+  - {fileID: 1590212040645140, guid: 9b9118bc719764a4e97a02b0eeaedf5c, type: 2}
+  - {fileID: 1227628616449840, guid: d986d372b803fd84ab7a169987971489, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -8623,7 +8631,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000003513088
+      value: -0.000012488089
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}

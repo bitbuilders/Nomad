@@ -63,29 +63,68 @@ public class ModelSelector : Singleton<ModelSelector>
     private void Start()
     {
         CreateModels();
-        if (m_randomStart)
+        if (m_randomStart && LocalPlayerData.Instance.FirstLoadIn)
         {
             m_currentRow = Random.Range(0, 2);
             m_currentModel = Random.Range(0, m_playerModels[m_currentRow].Count);
         }
-        UpdateNetworkModel();
 
         InitializeCharacterAttributes();
+        UpdateNetworkModel();
         SetTargetPositions(true);
         SetCallbacks();
+        SetModelData();
         m_rotation = Vector3.up * 180.0f;
         m_playerModels[m_currentRow][m_currentModel].transform.localEulerAngles = m_rotation;
     }
 
     void InitializeCharacterAttributes()
     {
+        if (!LocalPlayerData.Instance.FirstLoadIn)
+        {
+            LocalPlayerData.ModelData modelData = LocalPlayerData.Instance.Attributes.MData;
+            m_currentModel = modelData.ModelNumber;
+            m_currentRow = modelData.RowNumber;
+        }
         ModelViewData curModel = m_playerModels[m_currentRow][m_currentModel];
         m_startingWeight = curModel.transform.localScale.x;
         m_startingHeight = curModel.transform.localScale.y;
+        CurrentCharacterAttributes = new CharacterAttributes()
+        {
+            HairColor = curModel.HairMaterial.color,
+            GlassesColor = curModel.GlassesMaterial.color,
+            WeightVariation = 0.0f,
+            HeightVariation = 0.0f
+        };
+    }
 
-        CurrentCharacterAttributes = new CharacterAttributes() {
-            HairColor = curModel.HairMaterial.color, GlassesColor = curModel.GlassesMaterial.color,
-            WeightVariation = 0.0f, HeightVariation = 0.0f };
+    void SetModelData()
+    {
+        if (!LocalPlayerData.Instance.FirstLoadIn)
+        {
+            LocalPlayerData.ModelData modelData = LocalPlayerData.Instance.Attributes.MData;
+            m_hairColorSelector.m_hueSelector.m_slider.value = modelData.HairHue;
+            m_hairColorSelector.m_valueSelector.SetPoint(modelData.HairValue);
+            m_glassesColorSelector.m_hueSelector.m_slider.value = modelData.GlassesHue;
+            m_glassesColorSelector.m_valueSelector.SetPoint(modelData.GlassesValue);
+            m_weightSelector.m_slider.value = modelData.WeightValue;
+            m_heightSelector.m_slider.value = modelData.HeightValue;
+        }
+    }
+
+    public LocalPlayerData.ModelData GetModelData()
+    {
+        return new LocalPlayerData.ModelData()
+        {
+            ModelNumber = m_currentModel,
+            RowNumber = m_currentRow,
+            HairHue = m_hairColorSelector.m_hueSelector.m_slider.value,
+            HairValue = m_hairColorSelector.m_valueSelector.m_point,
+            GlassesHue = m_glassesColorSelector.m_hueSelector.m_slider.value,
+            GlassesValue = m_glassesColorSelector.m_valueSelector.m_point,
+            WeightValue = m_weightSelector.m_slider.value,
+            HeightValue = m_heightSelector.m_slider.value,
+        };
     }
 
     void CreateModels()
@@ -147,16 +186,6 @@ public class ModelSelector : Singleton<ModelSelector>
 
     void SetTargetPositions(bool setModelPositions)
     {
-        //for (int i = 0; i < m_models.Length; i++)
-        //{
-        //    int indexFromCurrent = i - m_currentModel;
-        //    float offset = m_modelSpacing * indexFromCurrent;
-        //    Vector3 target = new Vector3(offset, m_models[i].transform.position.y, 0.0f);
-        //    m_targetPoints[i].Start = m_targetPoints[i].Target;
-        //    m_targetPoints[i].Target = target;
-        //    if (setModelPositions)
-        //        m_models[i].transform.localPosition = target;
-        //}
         for (int i = 0; i < m_targetPoints.Length; i++)
         {
             int indexFromCurrentRow = i - m_currentRow;
@@ -185,6 +214,7 @@ public class ModelSelector : Singleton<ModelSelector>
 
     public void SwipeModel(SwipeDirection direction)
     {
+        bool changedRow = false;
         switch (direction)
         {
             case SwipeDirection.LEFT:
@@ -195,9 +225,11 @@ public class ModelSelector : Singleton<ModelSelector>
                 break;
             case SwipeDirection.UP:
                 m_currentRow++;
+                changedRow = true;
                 break;
             case SwipeDirection.DOWN:
                 m_currentRow--;
+                changedRow = true;
                 break;
         }
 
@@ -205,7 +237,9 @@ public class ModelSelector : Singleton<ModelSelector>
             m_currentRow = m_playerModels.Length - 1;
         else if (m_currentRow > m_playerModels.Length - 1)
             m_currentRow = 0;
-        if (m_currentModel < 0)
+        if (changedRow && m_currentModel > m_playerModels[m_currentRow].Count - 1)
+            m_currentModel = m_playerModels[m_currentRow].Count - 1;
+        else if (m_currentModel < 0)
             m_currentModel = m_playerModels[m_currentRow].Count - 1;
         else if (m_currentModel > m_playerModels[m_currentRow].Count - 1)
             m_currentModel = 0;

@@ -8,10 +8,10 @@ public class ColorValueSelector : MonoBehaviour
     [SerializeField] ColorPicker m_colorPicker = null;
     [SerializeField] GameObject m_pointer = null;
 
+    public Vector2 m_point;
     RectTransform m_rectTransform;
     Vector3[] m_corners;
     Color m_topRightColor;
-    Vector2 m_point;
     Material m_material;
 
     private void Start()

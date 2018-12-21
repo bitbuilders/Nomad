@@ -28,15 +28,29 @@ public class LocalPlayerData : MonoBehaviour
 
     }
 
+    public struct ModelData
+    {
+        public int ModelNumber;
+        public int RowNumber;
+        public float HairHue;
+        public Vector2 HairValue;
+        public float GlassesHue;
+        public Vector2 GlassesValue;
+        public float WeightValue;
+        public float HeightValue;
+    }
+
     public struct PlayerAttributes
     {
         public string Username;
         public string Color;
         public ModelSelector.CharacterAttributes Attributes;
+        public ModelData MData;
     }
 
     public PlayerAttributes Attributes;
     public Player LocalPlayer { get; set; }
+    public bool FirstLoadIn { get { return string.IsNullOrEmpty(Attributes.Username); } }
     //public string TempUsername { get; set; }
     //public string TempColor { get; set; }
 
@@ -55,9 +69,9 @@ public class LocalPlayerData : MonoBehaviour
         }
     }
 
-    public void SetAttributes(string username, string color, ModelSelector.CharacterAttributes attributes)
+    public void SetAttributes(string username, string color, ModelSelector.CharacterAttributes attributes, ModelData modelData)
     {
-        Attributes = new PlayerAttributes() { Username = username, Color = color, Attributes = attributes };
+        Attributes = new PlayerAttributes() { Username = username, Color = color, Attributes = attributes, MData = modelData };
     }
 
     public void Initialize(Player localPlayer)

@@ -9,7 +9,7 @@ public class ColorHueSelector : MonoBehaviour
 
     Vector3Int[] sections;
     float section;
-    Slider m_slider;
+    public Slider m_slider;
 
     private void Start()
     {

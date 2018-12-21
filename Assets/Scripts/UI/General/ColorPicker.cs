@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ColorPicker : MonoBehaviour
 {
-    [SerializeField] ColorValueSelector m_valueSelector = null;
-    [SerializeField] ColorHueSelector m_hueSelector = null;
+    [SerializeField] public ColorValueSelector m_valueSelector = null;
+    [SerializeField] public ColorHueSelector m_hueSelector = null;
     [SerializeField] bool m_randomStart = true;
 
     public delegate void OnColorChange(Color color);
@@ -15,7 +15,7 @@ public class ColorPicker : MonoBehaviour
 
     public void Initialize(Color startingColor)
     {
-        if (m_randomStart)
+        if (m_randomStart && LocalPlayerData.Instance.FirstLoadIn)
         {
             float hue = Random.Range(0.0f, 1.0f);
             Vector2 point = new Vector2();
