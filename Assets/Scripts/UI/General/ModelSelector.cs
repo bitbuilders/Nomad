@@ -29,9 +29,9 @@ public class ModelSelector : Singleton<ModelSelector>
     [Header("Input")]
     [SerializeField] GameObject[] m_femaleModelTemplates = null;
     [SerializeField] GameObject[] m_maleModelTemplates = null;
-    [SerializeField] Transform m_maleLocation = null;
-    [SerializeField] Transform m_femaleLocation = null;
+    [SerializeField] Transform[] m_rowLocations = null;
     [SerializeField] [Range(0.0f, 30.0f)] float m_modelSpacing = 15.0f;
+    [SerializeField] [Range(0.0f, 30.0f)] float m_rowSpacing = 10.0f;
     [SerializeField] [Range(0.0f, 10.0f)] float m_swipeSpeed = 1.0f;
     [SerializeField] CanvasTransitioner.InterpolationType m_interpolationType = CanvasTransitioner.InterpolationType.EXPO_OUT;
     [SerializeField] ColorPicker m_hairColorSelector = null;
@@ -42,6 +42,7 @@ public class ModelSelector : Singleton<ModelSelector>
     [Header("Values")]
     [SerializeField] [Range(0.0f, 5.0f)] float m_weightVariation = 0.25f;
     [SerializeField] [Range(0.0f, 5.0f)] float m_heightVariation = 0.5f;
+    [SerializeField] bool m_randomStart = true;
 
     public CharacterAttributes CurrentCharacterAttributes;
 
@@ -50,6 +51,7 @@ public class ModelSelector : Singleton<ModelSelector>
     
     List<ModelViewData>[] m_playerModels = null;
     List<TargetPoint>[] m_targetPoints;
+    TargetPoint[] m_rowTargetPoints;
     Vector3 m_rotation;
     Vector3 m_lastMousePosition;
     float m_startingWeight;
@@ -61,6 +63,13 @@ public class ModelSelector : Singleton<ModelSelector>
     private void Start()
     {
         CreateModels();
+        if (m_randomStart)
+        {
+            m_currentRow = Random.Range(0, 2);
+            m_currentModel = Random.Range(0, m_playerModels[m_currentRow].Count);
+        }
+        UpdateNetworkModel();
+
         InitializeCharacterAttributes();
         SetTargetPositions(true);
         SetCallbacks();
@@ -83,6 +92,7 @@ public class ModelSelector : Singleton<ModelSelector>
     {
         m_playerModels = new List<ModelViewData>[2];
         m_targetPoints = new List<TargetPoint>[m_playerModels.Length];
+        m_rowTargetPoints = new TargetPoint[m_playerModels.Length];
         for (int i = 0; i < m_playerModels.Length; i++)
         {
             if (i == 0)
@@ -91,9 +101,10 @@ public class ModelSelector : Singleton<ModelSelector>
                 m_targetPoints[i] = new List<TargetPoint>();
                 foreach (GameObject g in m_maleModelTemplates)
                 {
-                    GameObject go = Instantiate(g, m_maleLocation);
+                    GameObject go = Instantiate(g, m_rowLocations[i]);
                     ModelViewData data = go.GetComponent<ModelViewData>();
                     m_playerModels[i].Add(data);
+                    m_targetPoints[i].Add(new TargetPoint());
                 }
             }
             else if (i == 1)
@@ -102,11 +113,13 @@ public class ModelSelector : Singleton<ModelSelector>
                 m_targetPoints[i] = new List<TargetPoint>();
                 foreach (GameObject g in m_femaleModelTemplates)
                 {
-                    GameObject go = Instantiate(g, m_femaleLocation);
+                    GameObject go = Instantiate(g, m_rowLocations[i]);
                     ModelViewData data = go.GetComponent<ModelViewData>();
                     m_playerModels[i].Add(data);
+                    m_targetPoints[i].Add(new TargetPoint());
                 }
             }
+            m_rowTargetPoints[i] = new TargetPoint();
         }
     }
 
@@ -122,6 +135,16 @@ public class ModelSelector : Singleton<ModelSelector>
         m_heightSelector.Initialize(m_heightVariation);
     }
 
+    void UpdateNetworkModel()
+    {
+        int modelsBefore = 0;
+        for (int i = 0; i < m_currentRow; i++)
+        {
+            modelsBefore += m_playerModels[i].Count;
+        }
+        NomadNetworkManager.m_currentModel = m_currentModel + modelsBefore;
+    }
+
     void SetTargetPositions(bool setModelPositions)
     {
         //for (int i = 0; i < m_models.Length; i++)
@@ -134,20 +157,29 @@ public class ModelSelector : Singleton<ModelSelector>
         //    if (setModelPositions)
         //        m_models[i].transform.localPosition = target;
         //}
-
         for (int i = 0; i < m_targetPoints.Length; i++)
         {
+            int indexFromCurrentRow = i - m_currentRow;
+            float rowOffset = m_rowSpacing * indexFromCurrentRow;
+
             for (int j = 0; j < m_targetPoints[i].Count; j++)
             {
                 TargetPoint targetPoint = m_targetPoints[i][j];
-                int indexFromCurrent = i - m_currentModel;
+                int indexFromCurrent = j - m_currentModel;
                 float offset = m_modelSpacing * indexFromCurrent;
-                Vector3 target = new Vector3(offset, m_playerModels[i][j].transform.position.y, 0.0f);
+                Vector3 target = new Vector3(offset, -4.0f, 0.0f);
                 targetPoint.Start = targetPoint.Target;
                 targetPoint.Target = target;
+                m_targetPoints[i][j] = targetPoint;
                 if (setModelPositions)
                     m_playerModels[i][j].transform.localPosition = target;
             }
+            
+            Vector3 rowTarget = new Vector3(0.0f, rowOffset, 0.0f);
+            m_rowTargetPoints[i].Start = m_rowTargetPoints[i].Target;
+            m_rowTargetPoints[i].Target = rowTarget;
+            if (setModelPositions)
+                m_rowLocations[i].transform.localPosition = rowTarget;
         }
     }
 
@@ -161,19 +193,24 @@ public class ModelSelector : Singleton<ModelSelector>
             case SwipeDirection.RIGHT:
                 m_currentModel++;
                 break;
+            case SwipeDirection.UP:
+                m_currentRow++;
+                break;
+            case SwipeDirection.DOWN:
+                m_currentRow--;
+                break;
         }
 
+        if (m_currentRow < 0)
+            m_currentRow = m_playerModels.Length - 1;
+        else if (m_currentRow > m_playerModels.Length - 1)
+            m_currentRow = 0;
         if (m_currentModel < 0)
             m_currentModel = m_playerModels[m_currentRow].Count - 1;
         else if (m_currentModel > m_playerModels[m_currentRow].Count - 1)
             m_currentModel = 0;
 
-        int modelsBefore = 0;
-        for (int i = 0; i < m_currentRow; i++)
-        {
-            modelsBefore += m_playerModels[i].Count;
-        }
-        NomadNetworkManager.m_currentModel = m_currentModel + modelsBefore;
+        UpdateNetworkModel();
         
         SetTargetPositions(false);
         m_swiping = true;
@@ -190,6 +227,16 @@ public class ModelSelector : Singleton<ModelSelector>
     public void SwipeLeft()
     {
         SwipeModel(SwipeDirection.LEFT);
+    }
+
+    public void SwipeUp()
+    {
+        SwipeModel(SwipeDirection.UP);
+    }
+
+    public void SwipeDown()
+    {
+        SwipeModel(SwipeDirection.DOWN);
     }
 
     public void SetCharacterHairColor(Color color)
@@ -249,13 +296,25 @@ public class ModelSelector : Singleton<ModelSelector>
         {
             m_time += Time.deltaTime * m_swipeSpeed;
             CanvasTransitioner transitioner = CanvasTransitioner.Instance;
-            for (int i = 0; i < m_playerModels.Length; i++)
+            for (int i = 0; i < m_targetPoints.Length; i++)
             {
                 for (int j = 0; j < m_targetPoints[i].Count; j++)
                 {
                     TargetPoint target = m_targetPoints[i][j];
                     Vector3 position = transitioner.GetInterpolatedPosition(target.Start, target.Target, m_time, m_interpolationType);
                     m_playerModels[i][j].transform.localPosition = position;
+                    if (m_time >= 1.0f)
+                    {
+                        m_playerModels[i][j].transform.localPosition = target.Target;
+                    }
+                }
+
+                TargetPoint rowTarget = m_rowTargetPoints[i];
+                Vector3 rowPosition = transitioner.GetInterpolatedPosition(rowTarget.Start, rowTarget.Target, m_time, m_interpolationType);
+                m_rowLocations[i].transform.localPosition = rowPosition;
+                if (m_time >= 1.0f)
+                {
+                    m_rowLocations[i].transform.localPosition = rowTarget.Target;
                 }
             }
 

@@ -34,7 +34,6 @@ public class NomadNetworkManager : NetworkManager
 
         NetworkMessage test = new NetworkMessage();
         test.chosenModel = m_currentModel;
-        print(test.chosenModel);
         ClientScene.AddPlayer(conn, 0, test);
 
         //base.OnClientConnect(conn);
