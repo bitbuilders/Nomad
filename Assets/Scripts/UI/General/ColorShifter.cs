@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ColorShifter : MonoBehaviour
 {
     [SerializeField] Image m_image = null;
+    [SerializeField] TextMeshProUGUI m_text = null;
+    [SerializeField] bool m_useImage = true;
     [SerializeField] [Range(0.0f, 10.0f)] float m_colorShiftSpeed = 1.0f;
     [SerializeField] bool m_speedIsPerColor = true;
     [SerializeField] List<Color> m_colors = null;
@@ -43,6 +46,9 @@ public class ColorShifter : MonoBehaviour
     {
         float t = Mathf.PingPong(Time.realtimeSinceStartup * m_speed, 1.0f);
         Color c = m_gradient.Evaluate(t);
-        m_image.color = c;
+        if (m_useImage)
+            m_image.color = c;
+        else
+            m_text.color = c;
     }
 }

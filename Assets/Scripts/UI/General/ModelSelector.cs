@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ModelSelector : Singleton<ModelSelector>
 {
@@ -43,6 +44,13 @@ public class ModelSelector : Singleton<ModelSelector>
     [SerializeField] [Range(0.0f, 5.0f)] float m_weightVariation = 0.25f;
     [SerializeField] [Range(0.0f, 5.0f)] float m_heightVariation = 0.5f;
     [SerializeField] bool m_randomStart = true;
+    [Space(15)]
+    [Header("Icons")]
+    [SerializeField] Image m_genderImage = null;
+    [SerializeField] Sprite m_maleIcon = null;
+    [SerializeField] Color m_maleColor = Color.cyan;
+    [SerializeField] Sprite m_femaleIcon = null;
+    [SerializeField] Color m_femaleColor = Color.red;
 
     public CharacterAttributes CurrentCharacterAttributes;
 
@@ -74,6 +82,7 @@ public class ModelSelector : Singleton<ModelSelector>
         SetTargetPositions(true);
         SetCallbacks();
         SetModelData();
+        SetGenderIcon();
         m_rotation = Vector3.up * 180.0f;
         m_playerModels[m_currentRow][m_currentModel].transform.localEulerAngles = m_rotation;
     }
@@ -110,6 +119,26 @@ public class ModelSelector : Singleton<ModelSelector>
             m_weightSelector.m_slider.value = modelData.WeightValue;
             m_heightSelector.m_slider.value = modelData.HeightValue;
         }
+    }
+
+    void SetGenderIcon()
+    {
+        Sprite s = null;
+        Color c = Color.white;
+
+        if (m_currentRow == 0)
+        {
+            s = m_maleIcon;
+            c = m_maleColor;
+        }
+        else
+        {
+            s = m_femaleIcon;
+            c = m_femaleColor;
+        }
+
+        m_genderImage.sprite = s;
+        m_genderImage.color = c;
     }
 
     public LocalPlayerData.ModelData GetModelData()
@@ -251,6 +280,7 @@ public class ModelSelector : Singleton<ModelSelector>
         m_time = 0.0f;
 
         ApplyCharacterAttributes();
+        SetGenderIcon();
     }
 
     public void SwipeRight()
