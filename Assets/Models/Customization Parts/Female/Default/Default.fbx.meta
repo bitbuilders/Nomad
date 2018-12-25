@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 8941cd06caf33cc42a035d3828abc3c2
+guid: ad8b611c24b562542809d197a3d2c42f
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: Body
     100002: Bottoms
-    100004: //RootNode
-    100006: default
+    100004: default
+    100006: //RootNode
     100008: Eyelashes
     100010: Eyewear
     100012: Hair
@@ -81,8 +81,8 @@ ModelImporter:
     100150: Tops
     400000: Body
     400002: Bottoms
-    400004: //RootNode
-    400006: default
+    400004: default
+    400006: //RootNode
     400008: Eyelashes
     400010: Eyewear
     400012: Hair
@@ -156,18 +156,18 @@ ModelImporter:
     400148: Shoes
     400150: Tops
     2100000: Bodymat
-    2100002: Eyewearmat
+    2100002: Shoesmat
     2100004: Hairmat
     2100006: Bottommat
-    2100008: Shoesmat
+    2100008: Eyewearmat
     2100010: Topmat
     4300000: Eyelashes
     4300002: default
     4300004: Body
-    4300006: Eyewear
+    4300006: Shoes
     4300008: Hair
     4300010: Bottoms
-    4300012: Shoes
+    4300012: Eyewear
     4300014: Tops
     9500000: //RootNode
     13700000: Body

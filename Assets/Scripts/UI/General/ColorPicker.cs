@@ -19,8 +19,8 @@ public class ColorPicker : MonoBehaviour
         {
             float hue = Random.Range(0.0f, 1.0f);
             Vector2 point = new Vector2();
-            point.x = Random.Range(0.35f, 1.0f);
-            point.y = Random.Range(0.35f, 1.0f);
+            point.x = Random.Range(0.0f, 1.0f);
+            point.y = Random.Range(0.0f, 1.0f);
             m_hueSelector.SetValue(hue);
             m_valueSelector.UpdateColor(m_hueSelector.GetColor());
             m_valueSelector.SetPoint(point);
