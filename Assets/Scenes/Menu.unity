@@ -2228,7 +2228,7 @@ MonoBehaviour:
   - {fileID: 1757075727706646, guid: 8562ef6a03dfc3f428840809be04db97, type: 2}
   - {fileID: 1233864661286974, guid: 2c271fda63104f04d9fb2c46596273e7, type: 2}
   - {fileID: 1590212040645140, guid: 9b9118bc719764a4e97a02b0eeaedf5c, type: 2}
-  - {fileID: 1227628616449840, guid: d986d372b803fd84ab7a169987971489, type: 2}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -9047,7 +9047,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000047115915
+      value: -0.000007626002
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
@@ -9601,7 +9601,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_femaleModelTemplates:
-  - {fileID: 1286544801381786, guid: dbc3e401ebd769f43b5fd2f208ef0600, type: 2}
+  - {fileID: 1484650417859808, guid: dbc3e401ebd769f43b5fd2f208ef0600, type: 2}
+  - {fileID: 1961213354403476, guid: def61f8ce5417a84181c07c3d13130e7, type: 2}
   m_maleModelTemplates:
   - {fileID: 1797140018953032, guid: 6d805167686e53e4db124a3f1610b4b4, type: 2}
   - {fileID: 1961746695574798, guid: cc11050a794ba504e87502a4d1032271, type: 2}
