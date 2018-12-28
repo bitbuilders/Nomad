@@ -79,13 +79,13 @@ public class Player : NetworkBehaviour
 
     void SetWeight()
     {
-        float w = 1.0f + weight / 3.0f;
+        float w = 1.0f + weight / 4.0f;
         transform.localScale = new Vector3(w, transform.localScale.y, w);
     }
 
     void SetHeight()
     {
-        float h = 1.0f + height / 3.0f;
+        float h = 1.0f + height / 4.0f;
         transform.localScale = new Vector3(transform.localScale.x, h, transform.localScale.x);
     }
 
