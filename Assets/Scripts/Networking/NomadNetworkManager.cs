@@ -91,7 +91,7 @@ public class NomadNetworkManager : NetworkManager
         }
         else if (chosenModel == 9)
         {
-            player = Instantiate(Resources.Load("PlayerModels/Player Model 010", typeof(GameObject))) as GameObject;
+            player = Instantiate(Resources.Load("PlayerModels/Player Model 10", typeof(GameObject))) as GameObject;
         }
 
         player.transform.position = GetStartPosition().position;
