@@ -2228,11 +2228,11 @@ MonoBehaviour:
   - {fileID: 1757075727706646, guid: 8562ef6a03dfc3f428840809be04db97, type: 2}
   - {fileID: 1233864661286974, guid: 2c271fda63104f04d9fb2c46596273e7, type: 2}
   - {fileID: 1590212040645140, guid: 9b9118bc719764a4e97a02b0eeaedf5c, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1527856384152218, guid: d986d372b803fd84ab7a169987971489, type: 2}
+  - {fileID: 1770207576209116, guid: 14ec6429e1d1ce443bab9dfb2d2bef75, type: 2}
+  - {fileID: 1917208709305788, guid: a7877b85a25fd0843b598291a0d72f7c, type: 2}
+  - {fileID: 1135221184030350, guid: 1d81cc6122da1bd4099a4619438d7aad, type: 2}
+  - {fileID: 1524606937992536, guid: cd8a3f6dbb839d94ab4db936c28769f7, type: 2}
   m_CustomConfig: 0
   m_MaxConnections: 4
   m_ConnectionConfig:
@@ -9047,7 +9047,7 @@ Prefab:
     - target: {fileID: 224794026189160464, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000047607213
+      value: -0.00004911315
       objectReference: {fileID: 0}
     - target: {fileID: 224240240236893204, guid: 30318eb5da96bf04e9460c4c0a010d29,
         type: 2}
