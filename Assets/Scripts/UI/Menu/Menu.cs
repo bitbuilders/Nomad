@@ -29,6 +29,12 @@ public class Menu : Singleton<Menu>
         m_raycaster = GetComponent<GraphicRaycaster>();
         m_eventSystem = FindObjectOfType<EventSystem>();
         m_connectTime = -m_connectCooldown;
+
+        if (!LocalPlayerData.Instance.FirstLoadIn)
+        {
+            m_username.text = LocalPlayerData.Instance.Attributes.Username;
+            m_colorPicker.UpdateColor(Colors.StringToColor(LocalPlayerData.Instance.Attributes.Color));
+        }
     }
 
     private void Update()
