@@ -11,7 +11,7 @@ public class ColorHueSelector : MonoBehaviour
     float section;
     public Slider m_slider;
 
-    private void Start()
+    private void Awake()
     {
         m_slider = GetComponent<Slider>();
         sections = new Vector3Int[7] { new Vector3Int(1, 0, 0),

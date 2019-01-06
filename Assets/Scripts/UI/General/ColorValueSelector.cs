@@ -14,7 +14,7 @@ public class ColorValueSelector : MonoBehaviour
     Color m_topRightColor;
     Material m_material;
 
-    private void Start()
+    private void Awake()
     {
         m_rectTransform = GetComponent<RectTransform>();
         m_corners = new Vector3[4];

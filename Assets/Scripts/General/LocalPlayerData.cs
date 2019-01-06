@@ -56,7 +56,7 @@ public class LocalPlayerData : MonoBehaviour
 
     public static LocalPlayerData Instance;
 
-    private void Start()
+    private void Awake()
     {
         if (Instance == null)
         {

@@ -40,13 +40,11 @@ public class CharacterWindow : MonoBehaviour
         {
             if (result.gameObject == m_hairValue.gameObject)
             {
-                Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 offset = Input.mousePosition - m_hairValue.transform.position;
                 m_hairValue.GetLocalPointFromMousePosition(offset);
             }
             else if (result.gameObject == m_glassesValue.gameObject)
             {
-                Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector3 offset = Input.mousePosition - m_glassesValue.transform.position;
                 m_glassesValue.GetLocalPointFromMousePosition(offset);
             }
